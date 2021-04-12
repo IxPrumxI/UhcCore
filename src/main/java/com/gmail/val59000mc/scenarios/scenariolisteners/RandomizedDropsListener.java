@@ -1,9 +1,8 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.gmail.val59000mc.scenarios.Scenario;
+import com.gmail.val59000mc.scenarios.ScenarioListener;
+import com.gmail.val59000mc.utils.RandomUtils;
 import com.gmail.val59000mc.utils.VersionUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,10 +12,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.gmail.val59000mc.scenarios.ScenarioListener;
-import com.gmail.val59000mc.utils.RandomUtils;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class RandomizedDropsListener extends ScenarioListener{
+public class RandomizedDropsListener extends ScenarioListener {
 
 	private List<Material> items;
 	private final Map<Material, ItemStack> dropList;
@@ -32,18 +32,19 @@ public class RandomizedDropsListener extends ScenarioListener{
 
 	@EventHandler(ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event) {
-		//Create new HashMap so each each type of broken block drops the same random item every time it is broken (configurable
+		//Create new HashMap so each type of broken block drops the same random item every time it is broken (configurable
 		Block block = event.getBlock();
+		//to allow flower power to work while playing with randomized drops
+		if (getScenarioManager().isEnabled(Scenario.FLOWER_POWER) && VersionUtils.getVersionUtils().isFlower(block)) return;
 
 		ItemStack blockDrop;
-		if(dropList.containsKey(block.getType())) {
-			 blockDrop = dropList.get(block.getType());
-		}
-		else {
-			int itemindex = RandomUtils.randomInteger(1, items.size())-1;
+		if (dropList.containsKey(block.getType())) {
+			blockDrop = dropList.get(block.getType());
+		} else {
+			int itemindex = RandomUtils.randomInteger(1, items.size()) - 1;
 			Material material = items.get(itemindex);
 
-			 blockDrop = new ItemStack(material);
+			blockDrop = new ItemStack(material);
 			dropList.put(block.getType(), blockDrop);
 
 			items.remove(material);
@@ -62,5 +63,4 @@ public class RandomizedDropsListener extends ScenarioListener{
 			player.setItemInHand(tool);
 		}
 	}
-
 }

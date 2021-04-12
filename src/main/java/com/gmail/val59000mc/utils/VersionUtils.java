@@ -123,4 +123,31 @@ public abstract class VersionUtils{
 
 	public abstract void setItemUnbreakable(ItemMeta meta, boolean b);
 
+	public boolean isFlower(Block block){
+		final UniversalMaterial[] FLOWERS = new UniversalMaterial[]{
+				UniversalMaterial.POPPY,
+				UniversalMaterial.BLUE_ORCHID,
+				UniversalMaterial.ALLIUM,
+				UniversalMaterial.AZURE_BLUET,
+				UniversalMaterial.RED_TULIP,
+				UniversalMaterial.ORANGE_TULIP,
+				UniversalMaterial.WHITE_TULIP,
+				UniversalMaterial.PINK_TULIP,
+				UniversalMaterial.OXEYE_DAISY,
+				UniversalMaterial.SUNFLOWER,
+				UniversalMaterial.LILAC,
+				UniversalMaterial.ROSE_BUSH,
+				UniversalMaterial.PEONY,
+				UniversalMaterial.DEAD_BUSH,
+				UniversalMaterial.DANDELION
+		};
+
+		for (UniversalMaterial flower : FLOWERS){
+			if (flower.equals(block)){
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

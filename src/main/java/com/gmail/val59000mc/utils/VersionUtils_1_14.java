@@ -5,6 +5,7 @@ import com.gmail.val59000mc.maploader.MapLoader;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.event.player.PlayerPortalEvent;
 
 public class VersionUtils_1_14 extends VersionUtils_1_13{
@@ -32,4 +33,13 @@ public class VersionUtils_1_14 extends VersionUtils_1_13{
 		return material.isAir();
 	}
 
+	@Override
+	public boolean isFlower(Block block) {
+		// LILY_OF_THE_VALLEY and CORNFLOWER and WITHER_ROSE were introduced in 1.14
+		if(block.getType() == Material.LILY_OF_THE_VALLEY || block.getType() == Material.CORNFLOWER || block.getType() == Material.WITHER_ROSE) {
+			return true;
+		}
+
+		return super.isFlower(block);
+	}
 }

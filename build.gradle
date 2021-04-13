@@ -85,7 +85,6 @@ dependencies {
     compile project('Support-WorldEdit-6')
     compile project('Support-WorldEdit-7')
     compileOnly 'com.discordsrv:discordsrv:1.22.0'
-    compile 'com.jagrosh:jda-utilities:3.0.5'
 }
 
 shadowJar {

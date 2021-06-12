@@ -252,8 +252,13 @@ public class GameManager{
 
 	public void startWaitingPlayers() {
 		mapLoader.prepareWorlds();
+
 		setPvp(false);
 		setGameState(GameState.WAITING);
+
+		// Enable default scenarios
+		scenarioManager.loadDefaultScenarios(config);
+
 		Bukkit.getLogger().info(Lang.DISPLAY_MESSAGE_PREFIX+" Players are now allowed to join");
 		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new PreStartThread(this),0);
 	}
@@ -317,7 +322,7 @@ public class GameManager{
 		new Lang();
 
 		try{
-			File configFile = FileUtils.getResourceFile("config.yml", false);
+			File configFile = FileUtils.getResourceFile(UhcCore.getPlugin(), "config.yml");
 			config.setConfigurationFile(configFile);
 			config.load();
 		} catch (InvalidConfigurationException | IOException ex) {
@@ -336,9 +341,6 @@ public class GameManager{
 
 		// Config
 		config.preLoad();
-
-		// Default scenarios
-		scenarioManager.loadDefaultScenarios(config);
 
 		// Set remaining time
 		if(config.get(MainConfig.ENABLE_DEATHMATCH)){

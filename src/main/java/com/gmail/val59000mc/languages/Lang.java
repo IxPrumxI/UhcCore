@@ -224,7 +224,7 @@ public class Lang{
 		boolean pathChanges = false;
 
 		try{
-			lang = FileUtils.saveResourceIfNotAvailable("lang.yml");
+			lang = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "lang.yml");
 		}catch (InvalidConfigurationException ex){
 			ex.printStackTrace();
 			return;

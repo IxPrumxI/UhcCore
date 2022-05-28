@@ -15,7 +15,7 @@ public class TeleportPlayersThread implements Runnable{
 
 	private final GameManager gameManager;
 	private final UhcTeam team;
-	
+
 	public TeleportPlayersThread(GameManager gameManager, UhcTeam team) {
 		this.gameManager = gameManager;
 		this.team = team;
@@ -23,7 +23,7 @@ public class TeleportPlayersThread implements Runnable{
 
 	@Override
 	public void run() {
-		
+
 		for(UhcPlayer uhcPlayer : team.getMembers()){
 			Player player;
 			try {

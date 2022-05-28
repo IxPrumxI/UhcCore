@@ -18,57 +18,57 @@ import javax.annotation.Nullable;
 
 public class VersionUtils_1_15 extends VersionUtils_1_14{
 
-    @Override
-    public void removeRecipe(ItemStack item, Recipe recipe){
-        NamespacedKey key;
+	@Override
+	public void removeRecipe(ItemStack item, Recipe recipe){
+		NamespacedKey key;
 
-        if (recipe instanceof Keyed){
-            key = ((Keyed) recipe).getKey();
-        }else{
-            key = item.getType().getKey();
-        }
+		if (recipe instanceof Keyed){
+			key = ((Keyed) recipe).getKey();
+		}else{
+			key = item.getType().getKey();
+		}
 
-        boolean removed = Bukkit.removeRecipe(key);
+		boolean removed = Bukkit.removeRecipe(key);
 
-        if (removed){
-            Bukkit.getLogger().info("[UhcCore] Removed recipe for "+key.toString());
-        }else {
-            Bukkit.getLogger().info("[UhcCore] Failed to remove recipe for " + key.toString() + "!");
-        }
-    }
+		if (removed){
+			Bukkit.getLogger().info("[UhcCore] Removed recipe for "+key.toString());
+		}else {
+			Bukkit.getLogger().info("[UhcCore] Failed to remove recipe for " + key.toString() + "!");
+		}
+	}
 
-    @Nullable
-    @Override
-    public JsonArray getSuspiciousStewEffects(ItemMeta meta){
-        if (!(meta instanceof SuspiciousStewMeta)){
-            return null;
-        }
+	@Nullable
+	@Override
+	public JsonArray getSuspiciousStewEffects(ItemMeta meta){
+		if (!(meta instanceof SuspiciousStewMeta)){
+			return null;
+		}
 
-        SuspiciousStewMeta stewMeta = (SuspiciousStewMeta) meta;
+		SuspiciousStewMeta stewMeta = (SuspiciousStewMeta) meta;
 
-        JsonArray customEffects = new JsonArray();
-        for (PotionEffect effect : stewMeta.getCustomEffects()){
-            customEffects.add(JsonItemUtils.getPotionEffectJson(effect));
-        }
+		JsonArray customEffects = new JsonArray();
+		for (PotionEffect effect : stewMeta.getCustomEffects()){
+			customEffects.add(JsonItemUtils.getPotionEffectJson(effect));
+		}
 
-        return customEffects;
-    }
+		return customEffects;
+	}
 
-    @Override
-    public ItemMeta applySuspiciousStewEffects(ItemMeta meta, JsonArray effects) throws ParseException{
-        SuspiciousStewMeta stewMeta = (SuspiciousStewMeta) meta;
+	@Override
+	public ItemMeta applySuspiciousStewEffects(ItemMeta meta, JsonArray effects) throws ParseException{
+		SuspiciousStewMeta stewMeta = (SuspiciousStewMeta) meta;
 
-        for (JsonElement jsonElement : effects){
-            JsonObject effect = jsonElement.getAsJsonObject();
-            stewMeta.addCustomEffect(JsonItemUtils.parsePotionEffect(effect), true);
-        }
+		for (JsonElement jsonElement : effects){
+			JsonObject effect = jsonElement.getAsJsonObject();
+			stewMeta.addCustomEffect(JsonItemUtils.parsePotionEffect(effect), true);
+		}
 
-        return stewMeta;
-    }
+		return stewMeta;
+	}
 
-    @Override
-    public void killPlayer(Player player) {
-        player.damage(player.getHealth() + player.getAbsorptionAmount());
-    }
+	@Override
+	public void killPlayer(Player player) {
+		player.damage(player.getHealth() + player.getAbsorptionAmount());
+	}
 
 }

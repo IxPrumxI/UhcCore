@@ -34,14 +34,14 @@ public class PlayerConnectionListener implements Listener{
 		this.playerDeathHandler = playerDeathHandler;
 		this.scoreboardHandler = scoreboardHandler;
 	}
-	
+
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerLogin(PlayerLoginEvent event){
 		// Player is not allowed to join so don't create UhcPlayer. (Server full, whitelist, ban, ...)
 		if (event.getResult() != Result.ALLOWED){
 			return;
 		}
-		
+
 		try{
 			boolean allowedToJoin = playerManager.isPlayerAllowedToJoin(event.getPlayer());
 
@@ -56,7 +56,7 @@ public class PlayerConnectionListener implements Listener{
 			event.setResult(Result.KICK_OTHER);
 		}
 	}
-	
+
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerJoin(final PlayerJoinEvent event){
 		Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), () -> playerManager.playerJoinsTheGame(event.getPlayer()), 1);
@@ -92,7 +92,7 @@ public class PlayerConnectionListener implements Listener{
 			if(gameManager.getConfig().get(MainConfig.ENABLE_KILL_DISCONNECTED_PLAYERS) && uhcPlayer.getState().equals(PlayerState.PLAYING)){
 
 				KillDisconnectedPlayerThread killDisconnectedPlayerThread = new KillDisconnectedPlayerThread(
-                        playerDeathHandler, event.getPlayer().getUniqueId(),
+						playerDeathHandler, event.getPlayer().getUniqueId(),
 						gameManager.getConfig().get(MainConfig.MAX_DISCONNECT_PLAYERS_TIME)
 				);
 

@@ -10,23 +10,23 @@ import org.bukkit.inventory.ItemStack;
 
 public class BowlessListener extends ScenarioListener{
 
-    @EventHandler
-    public void onCraftItem(CraftItemEvent e) {
-        ItemStack item = e.getCurrentItem();
+	@EventHandler
+	public void onCraftItem(CraftItemEvent e) {
+		ItemStack item = e.getCurrentItem();
 
-        if (item.getType().equals(Material.BOW) || item.getType().equals(Material.ARROW)) {
-            e.getWhoClicked().sendMessage(Lang.SCENARIO_BOWLESS_ERROR);
-            e.setCancelled(true);
-        }
-    }
+		if (item.getType().equals(Material.BOW) || item.getType().equals(Material.ARROW)) {
+			e.getWhoClicked().sendMessage(Lang.SCENARIO_BOWLESS_ERROR);
+			e.setCancelled(true);
+		}
+	}
 
-    @EventHandler
-    public void onItemSpawn(ItemSpawnEvent e) {
-        ItemStack item = e.getEntity().getItemStack();
+	@EventHandler
+	public void onItemSpawn(ItemSpawnEvent e) {
+		ItemStack item = e.getEntity().getItemStack();
 
-        if ((item.getType().equals(Material.BOW) || item.getType().equals(Material.ARROW))) {
-            e.setCancelled(true);
-        }
-    }
+		if ((item.getType().equals(Material.BOW) || item.getType().equals(Material.ARROW))) {
+			e.setCancelled(true);
+		}
+	}
 
 }

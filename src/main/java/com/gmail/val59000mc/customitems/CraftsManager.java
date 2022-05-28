@@ -28,13 +28,13 @@ import java.io.IOException;
 import java.util.*;
 
 public class CraftsManager {
-	
+
 	private final static List<Craft> crafts;
 
 	static{
 		crafts = new ArrayList<>();
 	}
-	
+
 	public static List<Craft> getCrafts(){
 		return crafts;
 	}
@@ -97,21 +97,21 @@ public class CraftsManager {
 				Bukkit.getLogger().severe("[UhcCore] custom-crafts."+name + " section does not exist!");
 				continue;
 			}
-			
+
 			List<ItemStack> recipe = new ArrayList<>();
 			ItemStack craftItem;
 			int limit;
 			boolean defaultName, reviveItem, reviveWithInventory;
-			
+
 			try{
 				Bukkit.getLogger().info("[UhcCore] Loading custom craft "+name);
-				
+
 				// Recipe
 				String[] lines = new String[3];
 				lines[0] = section.getString("1", "");
 				lines[1] = section.getString("2", "");
 				lines[2] = section.getString("3", "");
-				
+
 				for(int i=0 ; i<3; i++){
 					String[] itemsInLine = lines[i].split(" ");
 
@@ -123,7 +123,7 @@ public class CraftsManager {
 						recipe.add(JsonItemUtils.getItemFromJson(itemsInLine[j]));
 					}
 				}
-				
+
 				// Craft
 				String craftString = section.getString("craft","");
 
@@ -132,7 +132,7 @@ public class CraftsManager {
 				}else {
 					throw new IllegalArgumentException("The craft result must be formatted according to the json item format (Use /iteminfo).");
 				}
-				
+
 				// Limit
 				limit = section.getInt("limit",-1);
 				defaultName = section.getBoolean("default-name", false);
@@ -155,7 +155,7 @@ public class CraftsManager {
 				Bukkit.getLogger().warning("[UhcCore] Failed to register "+name+" custom craft : syntax error");
 				Bukkit.getLogger().warning(e.getMessage());
 			}
-			
+
 		}
 	}
 
@@ -247,7 +247,7 @@ public class CraftsManager {
 		}
 		return null;
 	}
-	
+
 	public static void openCraftBookInventory(Player player){
 		Validate.notNull(player);
 
@@ -260,7 +260,7 @@ public class CraftsManager {
 				slot++;
 			}
 		}
-		
+
 		player.openInventory(inv);
 	}
 
@@ -273,8 +273,8 @@ public class CraftsManager {
 			String name = item.getItemMeta().getDisplayName();
 
 			for(Craft craft : getCrafts()){
-				 if(name.equals(craft.getDisplayItem().getItemMeta().getDisplayName())
-				   && item.getType().equals(craft.getCraft().getType()))
+				if(name.equals(craft.getDisplayItem().getItemMeta().getDisplayName())
+						&& item.getType().equals(craft.getCraft().getType()))
 					return true;
 			}
 		}
@@ -296,11 +296,11 @@ public class CraftsManager {
 		for(int i = 0 ; i < maxSlots-9 ; i++){
 			inv.setItem(i, UniversalMaterial.BLACK_STAINED_GLASS_PANE.getStack());
 		}
-		
+
 		for(int i = maxSlots-9 ; i < maxSlots ; i++){
 			inv.setItem(i, UniversalMaterial.WHITE_STAINED_GLASS_PANE.getStack());
 		}
-		
+
 		// Recipe
 		inv.setItem(11, craft.getRecipe().get(0));
 		inv.setItem(12, craft.getRecipe().get(1));
@@ -311,9 +311,9 @@ public class CraftsManager {
 		inv.setItem(29, craft.getRecipe().get(6));
 		inv.setItem(30, craft.getRecipe().get(7));
 		inv.setItem(31, craft.getRecipe().get(8));
-		
+
 		// Craft
-		inv.setItem(24, craft.getCraft());		
+		inv.setItem(24, craft.getCraft());
 
 		// Back
 		ItemStack back = UniversalMaterial.PUFFERFISH.getStack();
@@ -321,9 +321,9 @@ public class CraftsManager {
 		im.setDisplayName(Lang.ITEMS_CRAFT_BOOK_BACK);
 		back.setItemMeta(im);
 		inv.setItem(49, back);
-		
+
 		player.openInventory(inv);
-		
+
 	}
 
 	@SuppressWarnings("deprecation")

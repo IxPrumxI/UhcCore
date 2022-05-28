@@ -20,12 +20,12 @@ public class PlayerDeathListener implements Listener {
 	public PlayerDeathListener(PlayerDeathHandler playerDeathHandler) {
 		this.playerDeathHandler = playerDeathHandler;
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		playerDeathHandler.handlePlayerDeath(event);
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerRespawn(PlayerRespawnEvent event){
 		PlayerManager pm = GameManager.getGameManager().getPlayerManager();
@@ -35,5 +35,5 @@ public class PlayerDeathListener implements Listener {
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), () -> pm.setPlayerSpectateAtLobby(uhcPlayer), 1);
 		}
 	}
-	
+
 }

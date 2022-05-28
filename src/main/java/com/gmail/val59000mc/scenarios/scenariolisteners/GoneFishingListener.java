@@ -14,40 +14,40 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class GoneFishingListener extends ScenarioListener{
 
-    @Option(key = "lure-enchantment-level")
-    private int lureLevel = 3;
-    @Option(key = "luck-enchantment-level")
-    private int luckLevel = 3;
-    @Option(key = "infinite-enchants-items")
-    private boolean infiniteEnchantsItems = false;
+	@Option(key = "lure-enchantment-level")
+	private int lureLevel = 3;
+	@Option(key = "luck-enchantment-level")
+	private int luckLevel = 3;
+	@Option(key = "infinite-enchants-items")
+	private boolean infiniteEnchantsItems = false;
 
-    @EventHandler
-    public void onGameStarted(UhcStartedEvent e){
-        ItemStack rod = new ItemStack(Material.FISHING_ROD);
-        rod.addUnsafeEnchantment(Enchantment.LURE, lureLevel);
-        rod.addUnsafeEnchantment(Enchantment.LUCK, luckLevel);
+	@EventHandler
+	public void onGameStarted(UhcStartedEvent e){
+		ItemStack rod = new ItemStack(Material.FISHING_ROD);
+		rod.addUnsafeEnchantment(Enchantment.LURE, lureLevel);
+		rod.addUnsafeEnchantment(Enchantment.LUCK, luckLevel);
 
-        ItemMeta meta = rod.getItemMeta();
-        VersionUtils.getVersionUtils().setItemUnbreakable(meta, true);
-        rod.setItemMeta(meta);
+		ItemMeta meta = rod.getItemMeta();
+		VersionUtils.getVersionUtils().setItemUnbreakable(meta, true);
+		rod.setItemMeta(meta);
 
-        ItemStack anvils = new ItemStack(Material.ANVIL, 64);
+		ItemStack anvils = new ItemStack(Material.ANVIL, 64);
 
-        for (UhcPlayer uhcPlayer : e.getPlayerManager().getOnlinePlayingPlayers()){
-            try {
-                // Give the rod
-                uhcPlayer.getPlayer().getInventory().addItem(rod);
+		for (UhcPlayer uhcPlayer : e.getPlayerManager().getOnlinePlayingPlayers()){
+			try {
+				// Give the rod
+				uhcPlayer.getPlayer().getInventory().addItem(rod);
 
-                if (infiniteEnchantsItems) {
-                    // Give player 10000 xp levels
-                    uhcPlayer.getPlayer().setLevel(10000);
-                    // Give player 64 anvils
-                    uhcPlayer.getPlayer().getInventory().addItem(anvils);
-                }
-            }catch (UhcPlayerNotOnlineException ex){
-                // No rod for offline players
-            }
-        }
-    }
+				if (infiniteEnchantsItems) {
+					// Give player 10000 xp levels
+					uhcPlayer.getPlayer().setLevel(10000);
+					// Give player 64 anvils
+					uhcPlayer.getPlayer().getInventory().addItem(anvils);
+				}
+			}catch (UhcPlayerNotOnlineException ex){
+				// No rod for offline players
+			}
+		}
+	}
 
 }

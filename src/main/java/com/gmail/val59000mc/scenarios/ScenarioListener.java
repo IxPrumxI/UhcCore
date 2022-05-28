@@ -14,47 +14,47 @@ import org.bukkit.event.Listener;
  */
 public abstract class ScenarioListener implements Listener {
 
-    public GameManager getGameManager(){
-        return GameManager.getGameManager();
-    }
+	public GameManager getGameManager(){
+		return GameManager.getGameManager();
+	}
 
-    public PlayerManager getPlayerManager(){
-        return getGameManager().getPlayerManager();
-    }
+	public PlayerManager getPlayerManager(){
+		return getGameManager().getPlayerManager();
+	}
 
-    public TeamManager getTeamManager(){
-        return getGameManager().getTeamManager();
-    }
+	public TeamManager getTeamManager(){
+		return getGameManager().getTeamManager();
+	}
 
-    public ScoreboardManager getScoreboardManager(){
-        return getGameManager().getScoreboardManager();
-    }
+	public ScoreboardManager getScoreboardManager(){
+		return getGameManager().getScoreboardManager();
+	}
 
-    public ScenarioManager getScenarioManager(){
-        return getGameManager().getScenarioManager();
-    }
+	public ScenarioManager getScenarioManager(){
+		return getGameManager().getScenarioManager();
+	}
 
-    public MainConfig getConfiguration(){
-        return getGameManager().getConfig();
-    }
+	public MainConfig getConfiguration(){
+		return getGameManager().getConfig();
+	}
 
-    /**
-     * Used to check if a scenario is enabled.
-     * @param scenario Scenario to check.
-     * @return Returns true if the scenario is enabled.
-     */
-    public boolean isEnabled(Scenario scenario) {
-        return getScenarioManager().isEnabled(scenario);
-    }
+	/**
+	 * Used to check if a scenario is enabled.
+	 * @param scenario Scenario to check.
+	 * @return Returns true if the scenario is enabled.
+	 */
+	public boolean isEnabled(Scenario scenario) {
+		return getScenarioManager().isEnabled(scenario);
+	}
 
-    /**
-     * Gets called when the scenario is enabled.
-     */
-    public void onEnable() {}
+	/**
+	 * Gets called when the scenario is enabled.
+	 */
+	public void onEnable() {}
 
-    /**
-     * Gets called when the scenario is disabled.
-     */
-    public void onDisable() {}
+	/**
+	 * Gets called when the scenario is disabled.
+	 */
+	public void onDisable() {}
 
 }

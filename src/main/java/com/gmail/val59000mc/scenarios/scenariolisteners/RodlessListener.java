@@ -9,14 +9,14 @@ import org.bukkit.inventory.ItemStack;
 
 public class RodlessListener extends ScenarioListener {
 
-    @EventHandler
-    public void onCraftItem(CraftItemEvent e) {
-        ItemStack item = e.getCurrentItem();
+	@EventHandler
+	public void onCraftItem(CraftItemEvent e) {
+		ItemStack item = e.getCurrentItem();
 
-        if (item.getType().equals(Material.FISHING_ROD)) {
-            e.getWhoClicked().sendMessage(Lang.SCENARIO_RODLESS_ERROR);
-            e.setCancelled(true);
-        }
-    }
+		if (item.getType().equals(Material.FISHING_ROD)) {
+			e.getWhoClicked().sendMessage(Lang.SCENARIO_RODLESS_ERROR);
+			e.setCancelled(true);
+		}
+	}
 
 }

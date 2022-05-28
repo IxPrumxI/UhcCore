@@ -20,7 +20,7 @@ public class EndThread implements Runnable{
 	static{
 		instance = new EndThread();
 	}
-	
+
 	@Override
 	public void run() {
 		if (!run){

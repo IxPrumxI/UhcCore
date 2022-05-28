@@ -31,7 +31,7 @@ public class BlockListener implements Listener{
 	private final MainConfig configuration;
 	private final Map<Material, LootConfiguration<Material>> blockLoots;
 	private final int maxBuildingHeight;
-	
+
 	public BlockListener(GameManager gameManager){
 		playerManager = gameManager.getPlayerManager();
 		configuration = gameManager.getConfig();

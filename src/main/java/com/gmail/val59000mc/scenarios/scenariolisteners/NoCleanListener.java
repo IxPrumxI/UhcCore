@@ -18,98 +18,98 @@ import java.util.UUID;
 
 public class NoCleanListener extends ScenarioListener{
 
-    private final Map<UUID, Long> pvpCooldown;
+	private final Map<UUID, Long> pvpCooldown;
 
-    @Option
-    private long duration = 30;
+	@Option
+	private long duration = 30;
 
-    public NoCleanListener(){
-        pvpCooldown = new HashMap<>();
-    }
+	public NoCleanListener(){
+		pvpCooldown = new HashMap<>();
+	}
 
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e){
-        if (e.getEntity().getKiller() != null){
-            Player killer = e.getEntity().getKiller().getPlayer();
-            pvpCooldown.put(killer.getUniqueId(), System.currentTimeMillis() + duration*TimeUtils.SECOND);
-            killer.sendMessage(Lang.SCENARIO_NOCLEAN_INVULNERABLE);
-        }
-    }
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent e){
+		if (e.getEntity().getKiller() != null){
+			Player killer = e.getEntity().getKiller().getPlayer();
+			pvpCooldown.put(killer.getUniqueId(), System.currentTimeMillis() + duration*TimeUtils.SECOND);
+			killer.sendMessage(Lang.SCENARIO_NOCLEAN_INVULNERABLE);
+		}
+	}
 
-    @EventHandler
-    public void onPlayerDamage(EntityDamageByEntityEvent e){
+	@EventHandler
+	public void onPlayerDamage(EntityDamageByEntityEvent e){
 
-        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player){
+		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player){
 
-            Player player = ((Player) e.getEntity()).getPlayer();
-            Player damager = ((Player) e.getDamager()).getPlayer();
+			Player player = ((Player) e.getEntity()).getPlayer();
+			Player damager = ((Player) e.getDamager()).getPlayer();
 
-            if (pvpCooldown.containsKey(player.getUniqueId())){
-                if (pvpCooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
-                    e.setCancelled(true);
-                    damager.sendMessage(Lang.SCENARIO_NOCLEAN_ERROR);
-                }
-            }
+			if (pvpCooldown.containsKey(player.getUniqueId())){
+				if (pvpCooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
+					e.setCancelled(true);
+					damager.sendMessage(Lang.SCENARIO_NOCLEAN_ERROR);
+				}
+			}
 
-            if (pvpCooldown.containsKey(damager.getUniqueId())){
+			if (pvpCooldown.containsKey(damager.getUniqueId())){
 
-                if (pvpCooldown.get(damager.getUniqueId()) > System.currentTimeMillis()){
-                    damager.sendMessage(Lang.SCENARIO_NOCLEAN_VULNERABLE);
-                }
-                pvpCooldown.remove(damager.getUniqueId());
-            }
+				if (pvpCooldown.get(damager.getUniqueId()) > System.currentTimeMillis()){
+					damager.sendMessage(Lang.SCENARIO_NOCLEAN_VULNERABLE);
+				}
+				pvpCooldown.remove(damager.getUniqueId());
+			}
 
-        }
+		}
 
-        if (e.getEntity() instanceof Player && e.getDamager() instanceof Arrow){
+		if (e.getEntity() instanceof Player && e.getDamager() instanceof Arrow){
 
-            Arrow arrow = (Arrow) e.getDamager();
+			Arrow arrow = (Arrow) e.getDamager();
 
-            if (!(arrow.getShooter() instanceof Player)){
-                return;
-            }
+			if (!(arrow.getShooter() instanceof Player)){
+				return;
+			}
 
-            Player player = ((Player) e.getEntity()).getPlayer();
-            Player damager = (Player) arrow.getShooter();
+			Player player = ((Player) e.getEntity()).getPlayer();
+			Player damager = (Player) arrow.getShooter();
 
-            if (pvpCooldown.containsKey(player.getUniqueId())){
-                if (pvpCooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
-                    e.setCancelled(true);
-                    damager.sendMessage(Lang.SCENARIO_NOCLEAN_ERROR);
-                }
-            }
+			if (pvpCooldown.containsKey(player.getUniqueId())){
+				if (pvpCooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
+					e.setCancelled(true);
+					damager.sendMessage(Lang.SCENARIO_NOCLEAN_ERROR);
+				}
+			}
 
-            if (pvpCooldown.containsKey(damager.getUniqueId())){
+			if (pvpCooldown.containsKey(damager.getUniqueId())){
 
-                if (pvpCooldown.get(damager.getUniqueId()) > System.currentTimeMillis()){
-                    damager.sendMessage(Lang.SCENARIO_NOCLEAN_VULNERABLE);
-                }
-                pvpCooldown.remove(damager.getUniqueId());
-            }
-        }
-    }
+				if (pvpCooldown.get(damager.getUniqueId()) > System.currentTimeMillis()){
+					damager.sendMessage(Lang.SCENARIO_NOCLEAN_VULNERABLE);
+				}
+				pvpCooldown.remove(damager.getUniqueId());
+			}
+		}
+	}
 
-    @EventHandler
-    public void onPlayerDamage(EntityDamageEvent e){
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent e){
 
-        if (e.getEntityType() != EntityType.PLAYER || e.isCancelled()){
-            return;
-        }
+		if (e.getEntityType() != EntityType.PLAYER || e.isCancelled()){
+			return;
+		}
 
-        if (
-                e.getCause() != EntityDamageEvent.DamageCause.FIRE &&
-                e.getCause() != EntityDamageEvent.DamageCause.LAVA &&
-                e.getCause() != EntityDamageEvent.DamageCause.FIRE_TICK){
-            return;
-        }
+		if (
+				e.getCause() != EntityDamageEvent.DamageCause.FIRE &&
+				e.getCause() != EntityDamageEvent.DamageCause.LAVA &&
+				e.getCause() != EntityDamageEvent.DamageCause.FIRE_TICK){
+			return;
+		}
 
-        Player player = (Player) e.getEntity();
+		Player player = (Player) e.getEntity();
 
-        if (pvpCooldown.containsKey(player.getUniqueId())){
-            if (pvpCooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
-                e.setCancelled(true);
-            }
-        }
-    }
+		if (pvpCooldown.containsKey(player.getUniqueId())){
+			if (pvpCooldown.get(player.getUniqueId()) > System.currentTimeMillis()){
+				e.setCancelled(true);
+			}
+		}
+	}
 
 }

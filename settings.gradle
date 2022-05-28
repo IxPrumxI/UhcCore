@@ -1,11 +1,11 @@
 pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven {
-            name "PaperMC"
-            url "https://papermc.io/repo/repository/maven-public/"
-        }
-    }
+	repositories {
+		gradlePluginPortal()
+		maven {
+			name "PaperMC"
+			url "https://papermc.io/repo/repository/maven-public/"
+		}
+	}
 }
 
 rootProject.name = 'UhcCore'

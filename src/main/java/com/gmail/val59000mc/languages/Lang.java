@@ -258,11 +258,11 @@ public class Lang{
 		DISPLAY_MESSAGE_PREFIX = getString(lang, "display.message-prefix", "&a[UhcCore]&r");
 		DISPLAY_EPISODE_MARK = getString(lang, "display.episode-mark", "End of episode %episode%!");
 		DISPLAY_SPECTATOR_CHAT = getString(lang, "display.spectator-chat", "&7[Spec] &r%player%&r: %message%");
-		DISPLAY_MOTD_LOADING  = getString(lang, "display.motd-loading", "Loading ...");
-		DISPLAY_MOTD_WAITING  = getString(lang, "display.motd-waiting", "Waiting ...");
-		DISPLAY_MOTD_STARTING  = getString(lang, "display.motd-starting", "Starting");
-		DISPLAY_MOTD_PLAYING  = getString(lang, "display.motd-playing", "Playing");
-		DISPLAY_MOTD_ENDED  = getString(lang, "display.motd-ended", "Ended");
+		DISPLAY_MOTD_LOADING = getString(lang, "display.motd-loading", "Loading ...");
+		DISPLAY_MOTD_WAITING = getString(lang, "display.motd-waiting", "Waiting ...");
+		DISPLAY_MOTD_STARTING = getString(lang, "display.motd-starting", "Starting");
+		DISPLAY_MOTD_PLAYING = getString(lang, "display.motd-playing", "Playing");
+		DISPLAY_MOTD_ENDED = getString(lang, "display.motd-ended", "Ended");
 
 		// Kick
 		KICK_LOADING = getString(lang, "kick.loading", "Loading. Please retry in a few minutes.");
@@ -288,14 +288,14 @@ public class Lang{
 		COMMAND_SPECTATE_SPECTATING = getString(lang, "command.spectate.spectating", "&aYou're now spectating!");
 
 		// Team Inventories
-		TEAM_INVENTORY_MAIN  = getString(lang, "team.inventory.main", "&2Team Menu", 32);
-		TEAM_INVENTORY_TEAMS_LIST  = getString(lang, "team.inventory.teams-list", "&2Teams List", 32);
-		TEAM_INVENTORY_TEAM_VIEW  = getString(lang, "team.inventory.team-view", "&2Viewing Team", 32);
-		TEAM_INVENTORY_SETTINGS  = getString(lang, "team.inventory.settings", "&2Team Settings", 32);
-		TEAM_INVENTORY_RENAME  = getString(lang, "team.inventory.rename", "&2Rename Team", 32);
-		TEAM_INVENTORY_INVITES  = getString(lang, "team.inventory.invites", "&2Team Invites", 32);
-		TEAM_INVENTORY_REPLY_INVITE  = getString(lang, "team.inventory.reply-invite", "&2Reply To Invite", 32);
-		TEAM_INVENTORY_INVITE_PLAYER  = getString(lang, "team.inventory.invite-player", "&2Invite a Player", 32);
+		TEAM_INVENTORY_MAIN = getString(lang, "team.inventory.main", "&2Team Menu", 32);
+		TEAM_INVENTORY_TEAMS_LIST = getString(lang, "team.inventory.teams-list", "&2Teams List", 32);
+		TEAM_INVENTORY_TEAM_VIEW = getString(lang, "team.inventory.team-view", "&2Viewing Team", 32);
+		TEAM_INVENTORY_SETTINGS = getString(lang, "team.inventory.settings", "&2Team Settings", 32);
+		TEAM_INVENTORY_RENAME = getString(lang, "team.inventory.rename", "&2Rename Team", 32);
+		TEAM_INVENTORY_INVITES = getString(lang, "team.inventory.invites", "&2Team Invites", 32);
+		TEAM_INVENTORY_REPLY_INVITE = getString(lang, "team.inventory.reply-invite", "&2Reply To Invite", 32);
+		TEAM_INVENTORY_INVITE_PLAYER = getString(lang, "team.inventory.invite-player", "&2Invite a Player", 32);
 		TEAM_INVENTORY_COLOR = getString(lang, "team.inventory.color", "&2Select a team color", 32);
 
 		// Team Items
@@ -354,7 +354,7 @@ public class Lang{
 		ITEMS_COMPASS_PLAYING_POINTING = getString(lang, "items.compass-playing-pointing", "&aPointing towards %player%'s last location (%distance% blocks)");
 		ITEMS_KIT_SELECTION = getString(lang, "items.kit-selection", "&aRight click to choose a kit");
 		ITEMS_KIT_INVENTORY = getString(lang, "items.kit-inventory", "&2Kit selection", 32);
-		ITEMS_KIT_SELECTED =  getString(lang, "items.kit-selected", "&aYou selected the kit %kit%");
+		ITEMS_KIT_SELECTED = getString(lang, "items.kit-selected", "&aYou selected the kit %kit%");
 		ITEMS_KIT_NO_PERMISSION = getString(lang, "items.kit-no-permission", "&cYou don't have the permission to use that kit");
 		ITEMS_KIT_SCOREBOARD_NO_KIT = getString(lang, "items.kit-scoreboard-no-kit", "No kit");
 		ITEMS_CRAFT_NO_PERMISSION = getString(lang, "items.craft-no-permission", "&cYou don't have the permission to craft %craft%");

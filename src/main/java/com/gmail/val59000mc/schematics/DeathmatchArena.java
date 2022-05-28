@@ -23,7 +23,7 @@ public class DeathmatchArena extends Schematic {
 
 	private boolean enable;
 	private List<Location> teleportSpots;
-	
+
 	public DeathmatchArena(Location location){
 		super(SCHEMATIC_NAME, location, 3);
 
@@ -57,7 +57,7 @@ public class DeathmatchArena extends Schematic {
 	public int getMaxSize() {
 		return Math.max(getLength(), getWidth());
 	}
-	
+
 	public void calculateTeleportSpots(){
 		Material spotMaterial = GameManager.getGameManager().getConfig().get(MainConfig.ARENA_TELEPORT_SPOT_BLOCK);
 		YamlFile storage;
@@ -129,7 +129,7 @@ public class DeathmatchArena extends Schematic {
 		Block up2 = up1.getRelative(BlockFace.UP);
 		return up1.getType() == Material.AIR && up2.getType() == Material.AIR;
 	}
-	
+
 	public List<Location> getTeleportSpots(){
 		return teleportSpots;
 	}

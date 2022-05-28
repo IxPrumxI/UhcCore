@@ -17,39 +17,39 @@ import org.bukkit.potion.PotionEffectType;
 
 public class ChildrenLeftUnattended extends ScenarioListener{
 
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e){
-        Player player = e.getEntity();
-        UhcPlayer uhcPlayer = getPlayerManager().getUhcPlayer(player);
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent e){
+		Player player = e.getEntity();
+		UhcPlayer uhcPlayer = getPlayerManager().getUhcPlayer(player);
 
-        for (UhcPlayer uhcMember : uhcPlayer.getTeam().getOnlinePlayingMembers()){
-            if (uhcMember == uhcPlayer) continue;
+		for (UhcPlayer uhcMember : uhcPlayer.getTeam().getOnlinePlayingMembers()){
+			if (uhcMember == uhcPlayer) continue;
 
-            try {
-                giveTeamReward(uhcMember.getPlayer());
-            }catch (UhcPlayerNotOnlineException ex){
-                ex.printStackTrace();
-            }
-        }
-    }
+			try {
+				giveTeamReward(uhcMember.getPlayer());
+			}catch (UhcPlayerNotOnlineException ex){
+				ex.printStackTrace();
+			}
+		}
+	}
 
-    private void giveTeamReward(Player player){
-        Wolf wolf = (Wolf) player.getWorld().spawnEntity(player.getLocation(), EntityType.WOLF);
-        wolf.setTamed(true);
-        wolf.setOwner(player);
-        wolf.setAdult();
+	private void giveTeamReward(Player player){
+		Wolf wolf = (Wolf) player.getWorld().spawnEntity(player.getLocation(), EntityType.WOLF);
+		wolf.setTamed(true);
+		wolf.setOwner(player);
+		wolf.setAdult();
 
-        ItemStack potion = new ItemStack(Material.POTION);
-        PotionMeta meta = (PotionMeta) potion.getItemMeta();
-        meta.setMainEffect(PotionEffectType.SPEED);
-        PotionEffect potionEffect = new PotionEffect(PotionEffectType.SPEED, 8*60*20, 0);
-        meta.addCustomEffect(potionEffect, true);
+		ItemStack potion = new ItemStack(Material.POTION);
+		PotionMeta meta = (PotionMeta) potion.getItemMeta();
+		meta.setMainEffect(PotionEffectType.SPEED);
+		PotionEffect potionEffect = new PotionEffect(PotionEffectType.SPEED, 8*60*20, 0);
+		meta.addCustomEffect(potionEffect, true);
 
-        meta.setDisplayName(ChatColor.WHITE + "Potion of Swiftness");
+		meta.setDisplayName(ChatColor.WHITE + "Potion of Swiftness");
 
-        potion.setItemMeta(meta);
+		potion.setItemMeta(meta);
 
-        player.getWorld().dropItem(player.getLocation(), potion);
-    }
+		player.getWorld().dropItem(player.getLocation(), potion);
+	}
 
 }

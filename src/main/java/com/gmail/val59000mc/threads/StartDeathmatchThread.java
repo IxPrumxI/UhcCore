@@ -20,7 +20,7 @@ public class StartDeathmatchThread implements Runnable{
 		this.timeBeforePVP = 31;
 		this.shrinkBorder = shrinkBorder;
 	}
-	
+
 	@Override
 	public void run() {
 		timeBeforePVP --;

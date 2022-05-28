@@ -11,14 +11,14 @@ import java.util.Random;
 
 public class RandomUtils {
 	private final static Random r = new Random();
-	
+
 	public static int randomInteger(int min, int max){
 		int realMin = Math.min(min, max);
 		int realMax = Math.max(min, max);
 		int exclusiveSize = realMax-realMin;
 		return r.nextInt(exclusiveSize+1)+min;
 	}
-	
+
 	public static BlockFace randomAdjacentFace(){
 		BlockFace[] faces = new BlockFace[]{
 			BlockFace.DOWN,
@@ -36,5 +36,5 @@ public class RandomUtils {
 		double z = 2*maxDistance*r.nextDouble()-maxDistance;
 		return new Location(world,x,250,z);
 	}
-	
+
 }

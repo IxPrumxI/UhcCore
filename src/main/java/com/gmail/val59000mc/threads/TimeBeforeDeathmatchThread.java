@@ -17,14 +17,14 @@ public class TimeBeforeDeathmatchThread implements Runnable{
 		this.gameManager = gameManager;
 		this.deathmatchHandler = deathmatchHandler;
 	}
-	
+
 	@Override
 	public void run() {
 		long remainingTime = gameManager.getRemainingTime();
 
 		remainingTime--;
 		gameManager.setRemainingTime(remainingTime);
-		
+
 		if(remainingTime >= 0 && remainingTime <= 60 && (remainingTime%10 == 0 || remainingTime <= 10)){
 			gameManager.getPlayerManager().playSoundToAll(UniversalSound.CLICK);
 		}
@@ -35,5 +35,5 @@ public class TimeBeforeDeathmatchThread implements Runnable{
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), this, TimeUtils.SECOND_TICKS);
 		}
 	}
-	
+
 }

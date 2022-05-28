@@ -17,7 +17,7 @@ public class Lobby extends Schematic {
 		// Dimensions for glass box
 		width = 10;
 		length = 10;
-		height = 3; 
+		height = 3;
 	}
 
 	@Override
@@ -37,12 +37,12 @@ public class Lobby extends Schematic {
 			for(int i = -width; i <= width; i++){
 				for(int j = -height; j <= height; j++){
 					for(int k = -length ; k <= length ; k++){
-						if(    i == -10
-								|| i == 10
-								|| j == -3
-								|| j == 3
-								|| k == -10
-								|| k == 10
+						if(i == -10
+							|| i == 10
+							|| j == -3
+							|| j == 3
+							|| k == -10
+							|| k == 10
 						){
 							world.getBlockAt(x+i,y+j,z+k).setType(Material.GLASS);
 						}else{
@@ -53,7 +53,7 @@ public class Lobby extends Schematic {
 			}
 		}
 	}
-	
+
 	public void destroyBoundingBox(){
 		int lobbyX = getLocation().getBlockX(), lobbyY = getLocation().getBlockY()+2, lobbyZ = getLocation().getBlockZ();
 

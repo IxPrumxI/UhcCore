@@ -7,14 +7,14 @@ import com.gmail.val59000mc.players.UhcPlayer;
  */
 public class PlayerStartsPlayingEvent extends UhcEvent{
 
-    private final UhcPlayer uhcPlayer;
+	private final UhcPlayer uhcPlayer;
 
-    public PlayerStartsPlayingEvent(UhcPlayer uhcPlayer){
-        this.uhcPlayer = uhcPlayer;
-    }
+	public PlayerStartsPlayingEvent(UhcPlayer uhcPlayer){
+		this.uhcPlayer = uhcPlayer;
+	}
 
-    public UhcPlayer getUhcPlayer() {
-        return uhcPlayer;
-    }
+	public UhcPlayer getUhcPlayer() {
+		return uhcPlayer;
+	}
 
 }

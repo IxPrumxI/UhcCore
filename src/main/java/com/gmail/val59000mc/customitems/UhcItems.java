@@ -320,7 +320,7 @@ public class UhcItems{
 
 	public static boolean isRegenHeadItem(ItemStack item) {
 		return (
-				item != null 
+				item != null
 				&& item.getType() == UniversalMaterial.PLAYER_HEAD.getType()
 				&& item.hasItemMeta()
 				&& item.getItemMeta().hasLore()
@@ -343,7 +343,7 @@ public class UhcItems{
 
 	public static void spawnExtraXp(Location location, int quantity) {
 		ExperienceOrb orb = (ExperienceOrb) location.getWorld().spawnEntity(location, EntityType.EXPERIENCE_ORB);
-		orb.setExperience(quantity);	
+		orb.setExperience(quantity);
 	}
 
 	public static ItemStack createGoldenHeadPlayerSkull(String name, UUID uuid){

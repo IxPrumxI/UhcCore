@@ -15,7 +15,7 @@ public class TimeUtils{
 		time -= h * (60 * 60);
 		m = (int) time / 60;
 		time -= m * 60;
-		
+
 		if(h == 0){
 			if(m == 0){
 				return time+"s";

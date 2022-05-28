@@ -26,14 +26,14 @@ public class PlayerChatListener implements Listener{
 		Player player = e.getPlayer();
 
 		if (e.isCancelled()){
-		    return;
-        }
+			return;
+		}
 
 		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(player);
 
 		// Spec chat
-        if(!configuration.get(MainConfig.CAN_SEND_MESSAGES_AFTER_DEATH) && uhcPlayer.getState() == PlayerState.DEAD){
-        	// check if has override permissions
+		if(!configuration.get(MainConfig.CAN_SEND_MESSAGES_AFTER_DEATH) && uhcPlayer.getState() == PlayerState.DEAD){
+			// check if has override permissions
 			if (player.hasPermission("uhc-core.chat.override")) return;
 
 			// Send message in spec chat.
@@ -46,17 +46,17 @@ public class PlayerChatListener implements Listener{
 					.filter(UhcPlayer::isDeath)
 					.forEach(p -> p.sendMessage(message));
 
-            e.setCancelled(true);
-            return;
-        }
+			e.setCancelled(true);
+			return;
+		}
 
-        // Team chat
+		// Team chat
 		if (
 				uhcPlayer.getState() == PlayerState.PLAYING && isTeamMessage(e, uhcPlayer)
 		){
 			e.setCancelled(true);
 			uhcPlayer.getTeam().sendChatMessageToTeamMembers(uhcPlayer, e.getMessage());
-        }
+		}
 
 	}
 

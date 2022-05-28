@@ -8,15 +8,15 @@ import org.bukkit.event.EventHandler;
 
 public class FlyHighListener extends ScenarioListener{
 
-    @EventHandler
-    public void onGameStart(UhcStartedEvent e){
-        getPlayerManager().getOnlinePlayingPlayers().forEach(uhcPlayer -> {
-            try{
-                uhcPlayer.getPlayer().getInventory().addItem(UniversalMaterial.ELYTRA.getStack());
-            }catch (UhcPlayerNotOnlineException ex){
-                // No elytra for offline players.
-            }
-        });
-    }
+	@EventHandler
+	public void onGameStart(UhcStartedEvent e){
+		getPlayerManager().getOnlinePlayingPlayers().forEach(uhcPlayer -> {
+			try{
+				uhcPlayer.getPlayer().getInventory().addItem(UniversalMaterial.ELYTRA.getStack());
+			}catch (UhcPlayerNotOnlineException ex){
+				// No elytra for offline players.
+			}
+		});
+	}
 
 }

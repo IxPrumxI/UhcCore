@@ -20,7 +20,7 @@ public class PreStartThread implements Runnable{
 	private final int minPlayers;
 	private final boolean teamsAlwaysReady;
 	private boolean pause, force;
-	
+
 	public PreStartThread(GameManager gameManager){
 		this.gameManager = gameManager;
 		MainConfig cfg = gameManager.getConfig();
@@ -32,17 +32,17 @@ public class PreStartThread implements Runnable{
 		this.pause = false;
 		this.force = false;
 	}
-	
+
 	public static String togglePause(){
 		instance.pause = !instance.pause;
 		return "pause:"+instance.pause+"  "+"force:"+instance.force;
 	}
-	
+
 	public static String toggleForce(){
 		instance.force = !instance.force;
 		return "pause:"+instance.pause+"  "+"force:"+instance.force;
 	}
-	
+
 	@Override
 	public void run() {
 		List<UhcTeam> teams = gameManager.getPlayerManager().listUhcTeams();

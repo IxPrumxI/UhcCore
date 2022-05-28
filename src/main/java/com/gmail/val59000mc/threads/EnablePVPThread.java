@@ -12,12 +12,12 @@ public class EnablePVPThread implements Runnable{
 
 	private final GameManager gameManager;
 	private int timeBeforePvp;
-	
+
 	public EnablePVPThread(GameManager gameManager){
 		this.gameManager = gameManager;
 		timeBeforePvp = gameManager.getConfig().get(MainConfig.TIME_BEFORE_PVP);
 	}
-	
+
 	@Override
 	public void run() {
 		if(!gameManager.getGameState().equals(GameState.PLAYING)) {

@@ -16,7 +16,7 @@ public class FinalHealThread implements Runnable{
 		this.gameManager = gameManager;
 		this.playerManager = playerManager;
 	}
-	
+
 	@Override
 	public void run() {
 

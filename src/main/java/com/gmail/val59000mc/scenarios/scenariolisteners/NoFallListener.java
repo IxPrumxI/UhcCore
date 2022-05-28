@@ -7,15 +7,15 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class NoFallListener extends ScenarioListener{
 
-    @EventHandler
-    public void onPlayerDamage(EntityDamageEvent e) {
-        if (e.getEntity() instanceof Player) {
+	@EventHandler
+	public void onPlayerDamage(EntityDamageEvent e) {
+		if (e.getEntity() instanceof Player) {
 
-            if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
-                e.setCancelled(true);
-            }
+			if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+				e.setCancelled(true);
+			}
 
-        }
-    }
+		}
+	}
 
 }

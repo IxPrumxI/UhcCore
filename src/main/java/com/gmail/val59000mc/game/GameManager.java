@@ -55,7 +55,7 @@ public class GameManager{
 	private final PlayerDeathHandler playerDeathHandler;
 	private final StatsHandler statsHandler;
 
-    private GameState gameState;
+	private GameState gameState;
 	private boolean pvp;
 	private boolean gameIsEnding;
 	private int episodeNumber;
@@ -63,8 +63,8 @@ public class GameManager{
 	private long elapsedTime;
 
 	static{
-	    gameManager = null;
-    }
+		gameManager = null;
+	}
 
 	public GameManager() {
 		gameManager = this;
@@ -162,19 +162,19 @@ public class GameManager{
 		pvp = state;
 	}
 
-    public void setGameState(GameState gameState){
-        Validate.notNull(gameState);
+	public void setGameState(GameState gameState){
+		Validate.notNull(gameState);
 
-        if (this.gameState == gameState){
-            return; // Don't change the game state when the same.
-        }
+		if (this.gameState == gameState){
+			return; // Don't change the game state when the same.
+		}
 
-        GameState oldGameState = this.gameState;
-        this.gameState = gameState;
+		GameState oldGameState = this.gameState;
+		this.gameState = gameState;
 
-        // Call UhcGameStateChangedEvent
-        Bukkit.getPluginManager().callEvent(new UhcGameStateChangedEvent(oldGameState, gameState));
-    }
+		// Call UhcGameStateChangedEvent
+		Bukkit.getPluginManager().callEvent(new UhcGameStateChangedEvent(oldGameState, gameState));
+	}
 
 	public void loadNewGame() {
 		statsHandler.startRegisteringStats();
@@ -250,8 +250,8 @@ public class GameManager{
 		}
 
 		if (config.get(MainConfig.ENABLE_FINAL_HEAL)){
-            Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new FinalHealThread(this, playerManager), config.get(MainConfig.FINAL_HEAL_DELAY)*20);
-        }
+			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new FinalHealThread(this, playerManager), config.get(MainConfig.FINAL_HEAL_DELAY)*20);
+		}
 
 		Bukkit.getPluginManager().callEvent(new UhcStartedEvent());
 		statsHandler.addGameToStatistics();

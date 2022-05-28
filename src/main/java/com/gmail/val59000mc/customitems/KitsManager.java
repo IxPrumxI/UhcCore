@@ -29,9 +29,9 @@ public class KitsManager{
 	static{
 		kits = new ArrayList<>();
 	}
-	
+
 	public static boolean isAtLeastOneKit(){
-		return (kits != null && kits.size() > 0); 
+		return (kits != null && kits.size() > 0);
 	}
 
 	public static Kit getFirstKitFor(Player player){
@@ -42,7 +42,7 @@ public class KitsManager{
 		}
 		return null;
 	}
-	
+
 	public static void loadKits(){
 		Bukkit.getLogger().info("[UhcCore] Start loading kits");
 
@@ -124,10 +124,10 @@ public class KitsManager{
 				slot++;
 			}
 		}
-		
+
 		player.openInventory(inv);
 	}
-	
+
 	public static void giveKitTo(Player player){
 		UhcPlayer uhcPlayer = GameManager.getGameManager().getPlayerManager().getUhcPlayer(player);
 		if(!uhcPlayer.hasKitSelected()){
@@ -142,7 +142,7 @@ public class KitsManager{
 	public static boolean isKitItem(ItemStack item){
 		if(item == null || item.getType().equals(Material.AIR))
 			return false;
-		
+
 		for(Kit kit : kits){
 			if(item.getItemMeta().getDisplayName().equals(ChatColor.GREEN+kit.getName()))
 				return true;

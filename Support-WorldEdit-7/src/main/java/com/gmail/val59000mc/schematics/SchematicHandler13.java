@@ -21,34 +21,34 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class SchematicHandler13{
-	
+
 	public static ArrayList<Integer> pasteSchematic(Location loc, String path) throws Exception{
 		Bukkit.getLogger().info("[UhcCore] Pasting "+path);
 		File schematic = new File(path);
-        World world = BukkitAdapter.adapt(loc.getWorld());
+		World world = BukkitAdapter.adapt(loc.getWorld());
 
-        ClipboardFormat format = ClipboardFormats.findByFile(schematic);
-        ClipboardReader reader = format.getReader(new FileInputStream(schematic));
-        Clipboard clipboard = reader.read();
+		ClipboardFormat format = ClipboardFormats.findByFile(schematic);
+		ClipboardReader reader = format.getReader(new FileInputStream(schematic));
+		Clipboard clipboard = reader.read();
 
-        EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(world, -1);
+		EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(world, -1);
 
-        enableWatchdog(editSession);
+		enableWatchdog(editSession);
 
-        Operation operation = new ClipboardHolder(clipboard)
-                .createPaste(editSession)
-                .to(BlockVector3.at(loc.getX(), loc.getY(), loc.getZ()))
-                .ignoreAirBlocks(false)
-                .build();
+		Operation operation = new ClipboardHolder(clipboard)
+				.createPaste(editSession)
+				.to(BlockVector3.at(loc.getX(), loc.getY(), loc.getZ()))
+				.ignoreAirBlocks(false)
+				.build();
 
-        Operations.complete(operation);
-        editSession.flushSession();
+		Operations.complete(operation);
+		editSession.flushSession();
 
 		ArrayList<Integer> dimensions = new ArrayList<>();
 		dimensions.add(clipboard.getDimensions().getY());
 		dimensions.add(clipboard.getDimensions().getX());
 		dimensions.add(clipboard.getDimensions().getZ());
-		
+
 		Bukkit.getLogger().info("[UhcCore] Successfully pasted '"+path+"' at "+loc.getBlockX()+" "+loc.getBlockY()+" "+loc.getBlockZ());
 		return dimensions;
 	}

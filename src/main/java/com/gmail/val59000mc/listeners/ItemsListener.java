@@ -91,7 +91,7 @@ public class ItemsListener implements Listener {
 			player.getInventory().remove(hand);
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onClickInInventory(InventoryClickEvent event){
 		handleScenarioInventory(event);
@@ -136,7 +136,7 @@ public class ItemsListener implements Listener {
 				event.setCancelled(true);
 			}
 		}
-		
+
 		// Click on a player head to join a team
 		if(event.getView().getTitle().equals(Lang.ITEMS_KIT_INVENTORY)){
 			if(KitsManager.isKitItem(item)){
@@ -208,7 +208,7 @@ public class ItemsListener implements Listener {
 
 		if(event.getView().getTitle().equals(Lang.ITEMS_CRAFT_BOOK_INVENTORY)){
 			event.setCancelled(true);
-			
+
 			if(CraftsManager.isCraftItem(item)){
 				player.closeInventory();
 				Craft craft = CraftsManager.getCraftByDisplayName(item.getItemMeta().getDisplayName());
@@ -218,15 +218,15 @@ public class ItemsListener implements Listener {
 					player.sendMessage(Lang.ITEMS_CRAFT_NO_PERMISSION.replace("%craft%", craft.getName()));
 				}
 			}
-			
+
 			if(CraftsManager.isCraftBookBackItem(item)){
 				event.setCancelled(true);
 				player.closeInventory();
 				CraftsManager.openCraftBookInventory(player);
 			}
-			
+
 		}
-		
+
 		// Ban level 2 potions
 		if(event.getInventory().getType().equals(InventoryType.BREWING) && config.get(MainConfig.BAN_LEVEL_TWO_POTIONS)){
 			final BrewerInventory inv = (BrewerInventory) event.getInventory();
@@ -375,32 +375,32 @@ public class ItemsListener implements Listener {
 		if(inv.getType().equals(InventoryType.BREWING) && config.get(MainConfig.BAN_LEVEL_TWO_POTIONS) && inv.getHolder() instanceof BrewingStand){
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new CheckBrewingStandAfterClick((BrewingStand) inv.getHolder(), null),1);
 		}
-		
+
 	}
-	
+
 	private static class CheckBrewingStandAfterClick implements Runnable{
-        private final BrewingStand stand;
-        private final HumanEntity human;
+		private final BrewingStand stand;
+		private final HumanEntity human;
 
-        private CheckBrewingStandAfterClick(BrewingStand stand, HumanEntity human) {
-        	this.stand = stand;
-        	this.human = human;
-        }
+		private CheckBrewingStandAfterClick(BrewingStand stand, HumanEntity human) {
+			this.stand = stand;
+			this.human = human;
+		}
 
-        @Override
-        public void run(){
-        	ItemStack ingredient = stand.getInventory().getIngredient();
+		@Override
+		public void run(){
+			ItemStack ingredient = stand.getInventory().getIngredient();
 			if(ingredient != null && ingredient.getType().equals(Material.GLOWSTONE_DUST)){
 				if(human != null){
-                    human.sendMessage(Lang.ITEMS_POTION_BANNED);
-                }
+					human.sendMessage(Lang.ITEMS_POTION_BANNED);
+				}
 
 				stand.getLocation().getWorld().dropItemNaturally(stand.getLocation(), ingredient.clone());
 				stand.getInventory().setIngredient(new ItemStack(Material.AIR));
 			}
-        }
+		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerDropItem(PlayerDropItemEvent event) {
 		ItemStack item = event.getItemDrop().getItemStack();
@@ -518,7 +518,7 @@ public class ItemsListener implements Listener {
 				uhcPlayer.getScenarioVotes().add(scenario);
 			}
 			player.openInventory(scenarioManager.getScenarioVoteInventory(uhcPlayer));
-        }
+		}
 	}
 
 }

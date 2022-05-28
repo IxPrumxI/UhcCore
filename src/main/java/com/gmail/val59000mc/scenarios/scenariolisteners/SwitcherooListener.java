@@ -10,40 +10,40 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class SwitcherooListener extends ScenarioListener{
 
-    @EventHandler
-    public void onPlayerDamage(EntityDamageByEntityEvent e){
-        if (!(e.getEntity() instanceof Player)){
-            return;
-        }
+	@EventHandler
+	public void onPlayerDamage(EntityDamageByEntityEvent e){
+		if (!(e.getEntity() instanceof Player)){
+			return;
+		}
 
-        Player player = ((Player) e.getEntity()).getPlayer();
+		Player player = ((Player) e.getEntity()).getPlayer();
 
-        if (!(e.getDamager() instanceof Arrow)){
-            return;
-        }
+		if (!(e.getDamager() instanceof Arrow)){
+			return;
+		}
 
-        Arrow arrow = (Arrow) e.getDamager();
+		Arrow arrow = (Arrow) e.getDamager();
 
-        if (!(arrow.getShooter() instanceof  Player)){
-            return;
-        }
+		if (!(arrow.getShooter() instanceof Player)){
+			return;
+		}
 
-        Player shooter = ((Player) arrow.getShooter()).getPlayer();
+		Player shooter = ((Player) arrow.getShooter()).getPlayer();
 
-        if (player.equals(shooter)){
-            return;
-        }
+		if (player.equals(shooter)){
+			return;
+		}
 
-        arrow.remove();
+		arrow.remove();
 
-        Location playerLoc = player.getLocation();
-        Location shooterLoc = shooter.getLocation();
+		Location playerLoc = player.getLocation();
+		Location shooterLoc = shooter.getLocation();
 
-        player.teleport(shooterLoc);
-        shooter.teleport(playerLoc);
+		player.teleport(shooterLoc);
+		shooter.teleport(playerLoc);
 
-        player.sendMessage(Lang.SCENARIO_SWITCHEROO_SWITCH.replace("%player%", shooter.getName()));
-        shooter.sendMessage(Lang.SCENARIO_SWITCHEROO_SWITCH.replace("%player%", player.getName()));
-    }
+		player.sendMessage(Lang.SCENARIO_SWITCHEROO_SWITCH.replace("%player%", shooter.getName()));
+		shooter.sendMessage(Lang.SCENARIO_SWITCHEROO_SWITCH.replace("%player%", player.getName()));
+	}
 
 }

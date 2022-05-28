@@ -24,7 +24,7 @@ public class PlayerDamageListener implements Listener{
 		this.gameManager = gameManager;
 		friendlyFire = gameManager.getConfig().get(MainConfig.ENABLE_FRIENDLY_FIRE);
 	}
-	
+
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void onPlayerDamage(EntityDamageByEntityEvent event){
 		handlePvpAndFriendlyFire(event);
@@ -36,7 +36,7 @@ public class PlayerDamageListener implements Listener{
 	public void onPlayerDamage(EntityDamageEvent event){
 		handleAnyDamage(event);
 	}
-	
+
 	///////////////////////
 	// EntityDamageEvent //
 	///////////////////////
@@ -57,22 +57,22 @@ public class PlayerDamageListener implements Listener{
 			}
 		}
 	}
-	
+
 	///////////////////////////////
 	// EntityDamageByEntityEvent //
 	///////////////////////////////
-	
+
 	private void handlePvpAndFriendlyFire(EntityDamageByEntityEvent event){
 
 		PlayerManager pm = gameManager.getPlayerManager();
-		
-		
+
+
 		if(event.getDamager() instanceof Player && event.getEntity() instanceof Player){
 			if(!gameManager.getPvp()){
 				event.setCancelled(true);
 				return;
 			}
-			
+
 			Player damager = (Player) event.getDamager();
 			Player damaged = (Player) event.getEntity();
 			UhcPlayer uhcDamager = pm.getUhcPlayer(damager);
@@ -84,21 +84,21 @@ public class PlayerDamageListener implements Listener{
 			}
 		}
 	}
-	
+
 	private void handleLightningStrike(EntityDamageByEntityEvent event){
 		if(event.getDamager() instanceof LightningStrike && event.getEntity() instanceof Player){
 			event.setCancelled(true);
 		}
 	}
-	
+
 	private void handleProjectiles(EntityDamageByEntityEvent event) {
 		PlayerManager pm = gameManager.getPlayerManager();
-		
+
 		if(event.getEntity() instanceof Player && event.getDamager() instanceof Projectile){
 			Projectile projectile = (Projectile) event.getDamager();
 			final Player shot = (Player) event.getEntity();
 			if(projectile.getShooter() instanceof Player){
-				
+
 				if(!gameManager.getPvp()){
 					event.setCancelled(true);
 					return;

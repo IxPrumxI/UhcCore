@@ -24,112 +24,112 @@ import java.util.List;
 
 public class ProtocolUtils{
 
-    private static ProtocolUtils protocolUtils;
+	private static ProtocolUtils protocolUtils;
 
-    private ProtocolUtils(){
-        protocolUtils = this;
+	private ProtocolUtils(){
+		protocolUtils = this;
 
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(UhcCore.getPlugin(), PacketType.Play.Server.PLAYER_INFO) {
+		ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(UhcCore.getPlugin(), PacketType.Play.Server.PLAYER_INFO) {
 
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                if (event.getPacket().getPlayerInfoAction().read(0) != EnumWrappers.PlayerInfoAction.ADD_PLAYER){
-                    return;
-                }
+			@Override
+			public void onPacketSending(PacketEvent event) {
+				if (event.getPacket().getPlayerInfoAction().read(0) != EnumWrappers.PlayerInfoAction.ADD_PLAYER){
+					return;
+				}
 
-                List<PlayerInfoData> newPlayerInfoDataList = new ArrayList<>();
-                List<PlayerInfoData> playerInfoDataList = event.getPacket().getPlayerInfoDataLists().read(0);
-                PlayerManager pm = GameManager.getGameManager().getPlayerManager();
+				List<PlayerInfoData> newPlayerInfoDataList = new ArrayList<>();
+				List<PlayerInfoData> playerInfoDataList = event.getPacket().getPlayerInfoDataLists().read(0);
+				PlayerManager pm = GameManager.getGameManager().getPlayerManager();
 
-                for (PlayerInfoData playerInfoData : playerInfoDataList) {
-                    if (
-                            playerInfoData == null ||
-                            playerInfoData.getProfile() == null ||
-                            Bukkit.getPlayer(playerInfoData.getProfile().getUUID()) == null
-                    ){ // Unknown player
-                        newPlayerInfoDataList.add(playerInfoData);
-                        continue;
-                    }
+				for (PlayerInfoData playerInfoData : playerInfoDataList) {
+					if (
+							playerInfoData == null ||
+							playerInfoData.getProfile() == null ||
+							Bukkit.getPlayer(playerInfoData.getProfile().getUUID()) == null
+					){ // Unknown player
+						newPlayerInfoDataList.add(playerInfoData);
+						continue;
+					}
 
-                    WrappedGameProfile profile = playerInfoData.getProfile();
-                    UhcPlayer uhcPlayer;
+					WrappedGameProfile profile = playerInfoData.getProfile();
+					UhcPlayer uhcPlayer;
 
-                    try {
-                        uhcPlayer = pm.getUhcPlayer(profile.getUUID());
-                    }catch (UhcPlayerDoesNotExistException ex){ // UhcPlayer does not exist
-                        newPlayerInfoDataList.add(playerInfoData);
-                        continue;
-                    }
+					try {
+						uhcPlayer = pm.getUhcPlayer(profile.getUUID());
+					}catch (UhcPlayerDoesNotExistException ex){ // UhcPlayer does not exist
+						newPlayerInfoDataList.add(playerInfoData);
+						continue;
+					}
 
-                    // No display-name so don't change player data.
-                    if (!uhcPlayer.hasNickName()){
-                        newPlayerInfoDataList.add(playerInfoData);
-                        continue;
-                    }
+					// No display-name so don't change player data.
+					if (!uhcPlayer.hasNickName()){
+						newPlayerInfoDataList.add(playerInfoData);
+						continue;
+					}
 
-                    profile = profile.withName(uhcPlayer.getName());
+					profile = profile.withName(uhcPlayer.getName());
 
-                    PlayerInfoData newPlayerInfoData = new PlayerInfoData(profile, playerInfoData.getPing(), playerInfoData.getGameMode(), playerInfoData.getDisplayName());
-                    newPlayerInfoDataList.add(newPlayerInfoData);
-                }
-                event.getPacket().getPlayerInfoDataLists().write(0, newPlayerInfoDataList);
-            }
+					PlayerInfoData newPlayerInfoData = new PlayerInfoData(profile, playerInfoData.getPing(), playerInfoData.getGameMode(), playerInfoData.getDisplayName());
+					newPlayerInfoDataList.add(newPlayerInfoData);
+				}
+				event.getPacket().getPlayerInfoDataLists().write(0, newPlayerInfoDataList);
+			}
 
-        });
-    }
+		});
+	}
 
-    public static void register(){
-        if (protocolUtils != null){
-            ProtocolLibrary.getProtocolManager().removePacketListeners(UhcCore.getPlugin());
-            protocolUtils = null;
-        }
+	public static void register(){
+		if (protocolUtils != null){
+			ProtocolLibrary.getProtocolManager().removePacketListeners(UhcCore.getPlugin());
+			protocolUtils = null;
+		}
 
-        new ProtocolUtils();
-    }
+		new ProtocolUtils();
+	}
 
-    /***
-     * This method is used to change the player display name using ProtocolLib
-     * @param uhcPlayer The player you want to change the display-name for.
-     * @param nickName The wanted nick-name, set to null to reset. (Make sure its not over 16 characters long!)
-     */
-    public static void setPlayerNickName(UhcPlayer uhcPlayer, String nickName){
-        uhcPlayer.setNickName(nickName);
+	/***
+	 * This method is used to change the player display name using ProtocolLib
+	 * @param uhcPlayer The player you want to change the display-name for.
+	 * @param nickName The wanted nick-name, set to null to reset. (Make sure its not over 16 characters long!)
+	 */
+	public static void setPlayerNickName(UhcPlayer uhcPlayer, String nickName){
+		uhcPlayer.setNickName(nickName);
 
-        try {
-            // Make the player disappear and appear to update their name.
-            updatePlayer(uhcPlayer.getPlayer());
-        }catch (UhcPlayerNotOnlineException ex){
-            // Don't update offline players
-        }
-    }
+		try {
+			// Make the player disappear and appear to update their name.
+			updatePlayer(uhcPlayer.getPlayer());
+		}catch (UhcPlayerNotOnlineException ex){
+			// Don't update offline players
+		}
+	}
 
-    /***
-     * This method can be used to change the tab header and footer.
-     * @param player The player to change the header / footer for
-     * @param header The new header
-     * @param footer The new footer
-     */
-    public static void setPlayerHeaderFooter(Player player, String header, String footer){
-        PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
-        packet.getChatComponents().write(0, WrappedChatComponent.fromText(header));
-        packet.getChatComponents().write(1, WrappedChatComponent.fromText(footer));
-        try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
-        }catch (InvocationTargetException ex){
-            ex.printStackTrace();
-        }
-    }
+	/***
+	 * This method can be used to change the tab header and footer.
+	 * @param player The player to change the header / footer for
+	 * @param header The new header
+	 * @param footer The new footer
+	 */
+	public static void setPlayerHeaderFooter(Player player, String header, String footer){
+		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
+		packet.getChatComponents().write(0, WrappedChatComponent.fromText(header));
+		packet.getChatComponents().write(1, WrappedChatComponent.fromText(footer));
+		try {
+			ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
+		}catch (InvocationTargetException ex){
+			ex.printStackTrace();
+		}
+	}
 
-    private static void updatePlayer(Player player){
-        for (Player all : player.getWorld().getPlayers()){
-            all.hidePlayer(player);
-        }
+	private static void updatePlayer(Player player){
+		for (Player all : player.getWorld().getPlayers()){
+			all.hidePlayer(player);
+		}
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), () -> {
-            for (Player all : player.getWorld().getPlayers()){
-                all.showPlayer(player);
-            }
-        }, 1);
-    }
+		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), () -> {
+			for (Player all : player.getWorld().getPlayers()){
+				all.showPlayer(player);
+			}
+		}, 1);
+	}
 
 }

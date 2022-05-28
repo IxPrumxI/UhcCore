@@ -20,7 +20,7 @@ public class KillDisconnectedPlayerThread implements Runnable{
 	private final PlayerDeathHandler playerDeathHandler;
 	private final UUID uuid;
 	private int timeLeft;
-	
+
 	public KillDisconnectedPlayerThread(PlayerDeathHandler playerDeathHandler, UUID playerUuid, int maxDisconnectPlayersTime){
 		this.playerDeathHandler = playerDeathHandler;
 		uuid = playerUuid;

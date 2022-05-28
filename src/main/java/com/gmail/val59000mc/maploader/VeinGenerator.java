@@ -17,11 +17,11 @@ import java.util.Map.Entry;
 public class VeinGenerator {
 
 	private final Map<Material, VeinConfiguration> generateVeins;
-	
+
 	public VeinGenerator(Map<Material, VeinConfiguration> generateVeins){
 		this.generateVeins = generateVeins;
 	}
-	
+
 	/**
 	 * Generate random veins in the given chunk based on the configuration
 	 * @param chunk : the chunk to generate the veins into
@@ -30,11 +30,11 @@ public class VeinGenerator {
 		for(Entry<Material, VeinConfiguration> entry : generateVeins.entrySet()){
 			VeinConfiguration veinCfg = entry.getValue();
 			Material material = entry.getKey();
-			
+
 			int randNbrVeins = RandomUtils.randomInteger(veinCfg.getMinVeinsPerChunk(), veinCfg.getMaxVeinsPerChunk());
-			
+
 			for(int i=0 ; i<randNbrVeins ; i++){
-				int randNbrBlocks =  RandomUtils.randomInteger(veinCfg.getMinBlocksPerVein(), veinCfg.getMaxBlocksPerVein());
+				int randNbrBlocks = RandomUtils.randomInteger(veinCfg.getMinBlocksPerVein(), veinCfg.getMaxBlocksPerVein());
 				if(randNbrBlocks > 0){
 					int randX = RandomUtils.randomInteger(0, 15);
 					int randY = RandomUtils.randomInteger(veinCfg.getMinY(),veinCfg.getMaxY());
@@ -47,7 +47,7 @@ public class VeinGenerator {
 			}
 		}
 	}
-	
+
 	/**
 	 * Look in a 5 blocks radius to find a non AIR or WATER block
 	 * @param randBlock
@@ -57,7 +57,7 @@ public class VeinGenerator {
 		if(randBlock.getType().equals(Material.STONE)){
 			return randBlock;
 		}
-		
+
 		// Descend to go beneath the water in the sea
 		if(randBlock.getType().equals(UniversalMaterial.STATIONARY_WATER.getType())){
 			while(randBlock.getType().equals(UniversalMaterial.STATIONARY_WATER.getType()) && randBlock.getY() > 10){
@@ -67,7 +67,7 @@ public class VeinGenerator {
 				return randBlock;
 			}
 		}
-		
+
 		// Find proper block nearby
 		for(int i = -5; i<=5 ; i++){
 			for(int j = -5; j<=5 ; j++){
@@ -94,7 +94,7 @@ public class VeinGenerator {
 			block.setType(material);
 		}
 	}
-	
+
 	/**
 	 * Get a set of adjacent blocks starting from a block
 	 * @param startBlock : the block where to start the search
@@ -108,7 +108,7 @@ public class VeinGenerator {
 		while(adjacentBlocks.size() < nbrBlocks && failedAttempts < 25){
 			// Get random block in the growing list of chosen blocks
 			Block block = adjacentBlocks.get(RandomUtils.randomInteger(0, adjacentBlocks.size()-1));
-			
+
 			// RandomFace
 			BlockFace face = RandomUtils.randomAdjacentFace();
 			Location blockLocation = block.getLocation();
@@ -124,8 +124,8 @@ public class VeinGenerator {
 					adjacentBlocks.add(adjacent);
 				}
 			}
-			
-			
+
+
 		}
 		return adjacentBlocks;
 	}

@@ -15,7 +15,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftListener implements Listener{
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onCrafting(CraftItemEvent event){
 		ItemStack item = event.getRecipe().getResult();

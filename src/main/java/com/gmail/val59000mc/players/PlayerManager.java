@@ -155,15 +155,15 @@ public class PlayerManager {
 		}
 	}
 
-    public synchronized UhcPlayer newUhcPlayer(Player bukkitPlayer){
-        return newUhcPlayer(bukkitPlayer.getUniqueId(), bukkitPlayer.getName());
-    }
+	public synchronized UhcPlayer newUhcPlayer(Player bukkitPlayer){
+		return newUhcPlayer(bukkitPlayer.getUniqueId(), bukkitPlayer.getName());
+	}
 
-    public synchronized UhcPlayer newUhcPlayer(UUID uuid, String name){
-        UhcPlayer newPlayer = new UhcPlayer(uuid, name);
-        getPlayersList().add(newPlayer);
-        return newPlayer;
-    }
+	public synchronized UhcPlayer newUhcPlayer(UUID uuid, String name){
+		UhcPlayer newPlayer = new UhcPlayer(uuid, name);
+		getPlayersList().add(newPlayer);
+		return newPlayer;
+	}
 
 	public synchronized List<UhcPlayer> getPlayersList(){
 		return players;
@@ -213,7 +213,7 @@ public class PlayerManager {
 					// Only player in team so create random spawn location.
 					if(onlinePlayingMembers.size() <= 1){
 						World world = gm.getMapLoader().getUhcWorld(World.Environment.NORMAL);
-						double maxDistance = 0.9 *  gm.getMapLoader().getBorderSize();
+						double maxDistance = 0.9 * gm.getMapLoader().getBorderSize();
 						uhcPlayer.getTeam().setStartingLocation(LocationUtils.findRandomSafeLocation(world, maxDistance));
 					}
 					// Set spawn location at team mate.

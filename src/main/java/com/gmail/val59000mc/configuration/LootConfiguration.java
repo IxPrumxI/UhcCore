@@ -26,7 +26,7 @@ public class LootConfiguration<T extends Enum<T>> {
 		this.loot = new ArrayList<>();
 		this.addXp = 0;
 	}
-	
+
 	public boolean parseConfiguration(ConfigurationSection section){
 		if (section == null){
 			return false;
@@ -60,19 +60,19 @@ public class LootConfiguration<T extends Enum<T>> {
 				return false;
 			}
 		}
-		
+
 		addXp = section.getInt("add-xp",0);
 		return true;
 	}
-	
+
 	public T getType() {
 		return type;
 	}
-	
+
 	public List<ItemStack> getLoot() {
 		return loot;
 	}
-	
+
 	public int getAddXp() {
 		return addXp;
 	}

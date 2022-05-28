@@ -15,7 +15,7 @@ public class TimeBeforeSendBungeeThread implements Runnable{
 	private final PlayerManager playerManager;
 	private final UhcPlayer uhcPlayer;
 	private int remainingTime;
-	
+
 	public TimeBeforeSendBungeeThread(PlayerManager playerManager, UhcPlayer uhcPlayer, int remainingTime){
 		this.playerManager = playerManager;
 		this.uhcPlayer = uhcPlayer;

@@ -13,54 +13,54 @@ import java.util.*;
 
 public class RandomizedCraftsListener extends ScenarioListener{
 
-    @Override
-    public void onEnable(){
-        Iterator<Recipe> iterator = Bukkit.recipeIterator();
-        List<ItemStack> results = new ArrayList<>();
-        Set<ShapedRecipe> removeRecipes = new HashSet<>();
+	@Override
+	public void onEnable(){
+		Iterator<Recipe> iterator = Bukkit.recipeIterator();
+		List<ItemStack> results = new ArrayList<>();
+		Set<ShapedRecipe> removeRecipes = new HashSet<>();
 
-        Recipe recipe;
-        while (iterator.hasNext()){
-            recipe = iterator.next();
-            if (!(recipe instanceof ShapedRecipe)){
-                continue;
-            }
+		Recipe recipe;
+		while (iterator.hasNext()){
+			recipe = iterator.next();
+			if (!(recipe instanceof ShapedRecipe)){
+				continue;
+			}
 
-            results.add(recipe.getResult());
-            removeRecipes.add((ShapedRecipe) recipe);
-        }
+			results.add(recipe.getResult());
+			removeRecipes.add((ShapedRecipe) recipe);
+		}
 
-        Collections.shuffle(results);
-        Iterator<ItemStack> resultIterator = results.iterator();
-        Set<ShapedRecipe> randomizedRecipes = new HashSet<>();
+		Collections.shuffle(results);
+		Iterator<ItemStack> resultIterator = results.iterator();
+		Set<ShapedRecipe> randomizedRecipes = new HashSet<>();
 
-        for (ShapedRecipe oldRecipe : removeRecipes){
-            ShapedRecipe newRecipe = cloneRecipeWithResult(oldRecipe, resultIterator.next());
-            randomizedRecipes.add(newRecipe);
+		for (ShapedRecipe oldRecipe : removeRecipes){
+			ShapedRecipe newRecipe = cloneRecipeWithResult(oldRecipe, resultIterator.next());
+			randomizedRecipes.add(newRecipe);
 
-            VersionUtils.getVersionUtils().removeRecipe(newRecipe.getResult(), oldRecipe);
-        }
+			VersionUtils.getVersionUtils().removeRecipe(newRecipe.getResult(), oldRecipe);
+		}
 
-        randomizedRecipes.forEach(r -> Bukkit.getServer().addRecipe(r));
-    }
+		randomizedRecipes.forEach(r -> Bukkit.getServer().addRecipe(r));
+	}
 
-    @Override
-    public void onDisable(){
-        Bukkit.resetRecipes();
-        CraftsManager.loadBannedCrafts();
-        CraftsManager.loadCrafts();
-    }
+	@Override
+	public void onDisable(){
+		Bukkit.resetRecipes();
+		CraftsManager.loadBannedCrafts();
+		CraftsManager.loadCrafts();
+	}
 
-    private ShapedRecipe cloneRecipeWithResult(ShapedRecipe recipe, ItemStack result){
-        ShapedRecipe clone = VersionUtils.getVersionUtils().createShapedRecipe(result, UUID.randomUUID().toString());
-        clone.shape(recipe.getShape());
+	private ShapedRecipe cloneRecipeWithResult(ShapedRecipe recipe, ItemStack result){
+		ShapedRecipe clone = VersionUtils.getVersionUtils().createShapedRecipe(result, UUID.randomUUID().toString());
+		clone.shape(recipe.getShape());
 
-        Map<Character, RecipeChoice> recipeChoiceMap = recipe.getChoiceMap();
-        for (char c : recipeChoiceMap.keySet()){
-            clone.setIngredient(c, recipeChoiceMap.get(c));
-        }
+		Map<Character, RecipeChoice> recipeChoiceMap = recipe.getChoiceMap();
+		for (char c : recipeChoiceMap.keySet()){
+			clone.setIngredient(c, recipeChoiceMap.get(c));
+		}
 
-        return clone;
-    }
+		return clone;
+	}
 
 }

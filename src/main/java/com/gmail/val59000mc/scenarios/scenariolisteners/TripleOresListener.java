@@ -15,42 +15,42 @@ import java.util.Optional;
 
 public class TripleOresListener extends ScenarioListener {
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent e) {
 
-        if (isEnabled(Scenario.VEIN_MINER)) {
-            return;
-        }
+		if (isEnabled(Scenario.VEIN_MINER)) {
+			return;
+		}
 
-        Block block = e.getBlock();
-        Location loc = e.getBlock().getLocation().add(0.5, 0, 0.5);
-        Material type = block.getType();
-        ItemStack drop = null;
+		Block block = e.getBlock();
+		Location loc = e.getBlock().getLocation().add(0.5, 0, 0.5);
+		Material type = block.getType();
+		ItemStack drop = null;
 
-        Optional<OreType> oreType = OreType.valueOf(type);
+		Optional<OreType> oreType = OreType.valueOf(type);
 
-        if (oreType.isPresent()) {
-            int xp = oreType.get().getXpPerBlock() * 3;
-            int count = 3;
+		if (oreType.isPresent()) {
+			int xp = oreType.get().getXpPerBlock() * 3;
+			int count = 3;
 
-            if (oreType.get() == OreType.GOLD && isEnabled(Scenario.DOUBLE_GOLD)) {
-                count *= 2;
-            }
+			if (oreType.get() == OreType.GOLD && isEnabled(Scenario.DOUBLE_GOLD)) {
+				count *= 2;
+			}
 
-            drop = new ItemStack(oreType.get().getDrop(), count);
-            UhcItems.spawnExtraXp(loc,xp);
-        }
+			drop = new ItemStack(oreType.get().getDrop(), count);
+			UhcItems.spawnExtraXp(loc,xp);
+		}
 
-        if (type == Material.SAND) {
-            drop = new ItemStack(Material.GLASS);
-        } else if (type == Material.GRAVEL) {
-            drop = new ItemStack(Material.FLINT);
-        }
+		if (type == Material.SAND) {
+			drop = new ItemStack(Material.GLASS);
+		} else if (type == Material.GRAVEL) {
+			drop = new ItemStack(Material.FLINT);
+		}
 
-        if (drop != null) {
-            block.setType(Material.AIR);
-            loc.getWorld().dropItem(loc, drop);
-        }
-    }
+		if (drop != null) {
+			block.setType(Material.AIR);
+			loc.getWorld().dropItem(loc, drop);
+		}
+	}
 
 }

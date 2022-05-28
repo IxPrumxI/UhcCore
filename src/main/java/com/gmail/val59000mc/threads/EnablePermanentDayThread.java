@@ -6,17 +6,17 @@ import org.bukkit.World;
 
 public class EnablePermanentDayThread implements Runnable {
 
-    private final MapLoader mapLoader;
+	private final MapLoader mapLoader;
 
-    public EnablePermanentDayThread(MapLoader mapLoader) {
-        this.mapLoader = mapLoader;
-    }
+	public EnablePermanentDayThread(MapLoader mapLoader) {
+		this.mapLoader = mapLoader;
+	}
 
-    @Override
-    public void run() {
-        World overWorld = mapLoader.getUhcWorld(World.Environment.NORMAL);
-        VersionUtils.getVersionUtils().setGameRuleValue(overWorld, MapLoader.DO_DAYLIGHT_CYCLE, false);
-        overWorld.setTime(6000);
-    }
+	@Override
+	public void run() {
+		World overWorld = mapLoader.getUhcWorld(World.Environment.NORMAL);
+		VersionUtils.getVersionUtils().setGameRuleValue(overWorld, MapLoader.DO_DAYLIGHT_CYCLE, false);
+		overWorld.setTime(6000);
+	}
 
 }

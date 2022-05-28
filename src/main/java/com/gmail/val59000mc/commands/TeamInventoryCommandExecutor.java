@@ -15,51 +15,51 @@ import org.bukkit.entity.Player;
 
 public class TeamInventoryCommandExecutor implements CommandExecutor{
 
-    private final PlayerManager playerManager;
-    private final ScenarioManager scenarioManager;
+	private final PlayerManager playerManager;
+	private final ScenarioManager scenarioManager;
 
-    public TeamInventoryCommandExecutor(PlayerManager playerManager, ScenarioManager scenarioManager){
-        this.playerManager = playerManager;
-        this.scenarioManager = scenarioManager;
-    }
+	public TeamInventoryCommandExecutor(PlayerManager playerManager, ScenarioManager scenarioManager){
+		this.playerManager = playerManager;
+		this.scenarioManager = scenarioManager;
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (!(sender instanceof Player)){
-            sender.sendMessage("Only players can use this command!");
-            return true;
-        }
-        Player player = (Player) sender;
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+		if (!(sender instanceof Player)){
+			sender.sendMessage("Only players can use this command!");
+			return true;
+		}
+		Player player = (Player) sender;
 
-        if (!scenarioManager.isEnabled(Scenario.TEAM_INVENTORY)){
-            player.sendMessage(Lang.SCENARIO_TEAMINVENTORY_DISABLED);
-            return true;
-        }
+		if (!scenarioManager.isEnabled(Scenario.TEAM_INVENTORY)){
+			player.sendMessage(Lang.SCENARIO_TEAMINVENTORY_DISABLED);
+			return true;
+		}
 
-        UhcPlayer uhcPlayer = playerManager.getUhcPlayer(player);
+		UhcPlayer uhcPlayer = playerManager.getUhcPlayer(player);
 
-        if (args.length == 1 && player.hasPermission("scenarios.teaminventory.other")){
-            try {
-                uhcPlayer = playerManager.getUhcPlayer(args[0]);
-            }catch (UhcPlayerDoesNotExistException ex){
-                player.sendMessage(ChatColor.RED + "That player cannot be found!");
-                return true;
-            }
+		if (args.length == 1 && player.hasPermission("scenarios.teaminventory.other")){
+			try {
+				uhcPlayer = playerManager.getUhcPlayer(args[0]);
+			}catch (UhcPlayerDoesNotExistException ex){
+				player.sendMessage(ChatColor.RED + "That player cannot be found!");
+				return true;
+			}
 
-            if (uhcPlayer.getState() != PlayerState.PLAYING){
-                player.sendMessage(ChatColor.RED + "That player is currently not playing!");
-                return true;
-            }
-        }
+			if (uhcPlayer.getState() != PlayerState.PLAYING){
+				player.sendMessage(ChatColor.RED + "That player is currently not playing!");
+				return true;
+			}
+		}
 
-        if (uhcPlayer.getState() != PlayerState.PLAYING){
-            player.sendMessage(Lang.SCENARIO_TEAMINVENTORY_ERROR);
-            return true;
-        }
+		if (uhcPlayer.getState() != PlayerState.PLAYING){
+			player.sendMessage(Lang.SCENARIO_TEAMINVENTORY_ERROR);
+			return true;
+		}
 
-        player.sendMessage(Lang.SCENARIO_TEAMINVENTORY_OPEN);
-        player.openInventory(uhcPlayer.getTeam().getTeamInventory());
-        return true;
-    }
+		player.sendMessage(Lang.SCENARIO_TEAMINVENTORY_OPEN);
+		player.openInventory(uhcPlayer.getTeam().getTeamInventory());
+		return true;
+	}
 
 }

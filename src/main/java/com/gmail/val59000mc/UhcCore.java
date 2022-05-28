@@ -65,7 +65,7 @@ public class UhcCore extends JavaPlugin{
 	public static int getVersion() {
 		return version;
 	}
-	
+
 	public static UhcCore getPlugin(){
 		return pl;
 	}
@@ -77,7 +77,7 @@ public class UhcCore extends JavaPlugin{
 	@Override
 	public void onDisable(){
 		gameManager.getScenarioManager().disableAllScenarios();
-		
+
 		updater.runAutoUpdate();
 		Bukkit.getLogger().info("[UhcCore] Plugin disabled");
 	}

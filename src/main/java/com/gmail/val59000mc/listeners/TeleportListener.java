@@ -34,7 +34,7 @@ public class TeleportListener implements Listener{
 			event.setCancelled(true);
 			return;
 		}
-		
+
 		if (event.getCause() == TeleportCause.NETHER_PORTAL) {
 
 			if (!gm.getConfig().get(MainConfig.ENABLE_NETHER)){
@@ -67,7 +67,7 @@ public class TeleportListener implements Listener{
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onPlayerChangedWorld(PlayerChangedWorldEvent e){
 		GameManager gm = GameManager.getGameManager();
@@ -82,7 +82,7 @@ public class TeleportListener implements Listener{
 			player.teleport(loc);
 		}
 	}
-		
+
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent e){
 		if (e.getCause() == TeleportCause.SPECTATE && !GameManager.getGameManager().getConfig().get(MainConfig.SPECTATING_TELEPORT)){

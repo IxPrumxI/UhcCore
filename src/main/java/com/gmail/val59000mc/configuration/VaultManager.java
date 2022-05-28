@@ -10,29 +10,29 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class VaultManager {
-	
-    private static Economy economy;
 
-    static{
-    	economy = null;
+	private static Economy economy;
+
+	static{
+		economy = null;
 	}
-    
-    public static void setupEconomy(){
-    	if(!Dependencies.getVaultLoaded()){
-    		return;
+
+	public static void setupEconomy(){
+		if(!Dependencies.getVaultLoaded()){
+			return;
 		}
 
-    	RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-	    if (economyProvider != null) {
-	        economy = economyProvider.getProvider();
-	    }else{
-	    	Bukkit.getLogger().severe("[UhcCore] Error trying to load economy provider. Check that you have a economy plugin installed");
-	    }
-    }
+		RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+		if (economyProvider != null) {
+			economy = economyProvider.getProvider();
+		}else{
+			Bukkit.getLogger().severe("[UhcCore] Error trying to load economy provider. Check that you have a economy plugin installed");
+		}
+	}
 
-    public static double getPlayerMoney(Player player){
+	public static double getPlayerMoney(Player player){
 		Validate.notNull(player);
-    	return economy == null ? 0 : economy.getBalance(player);
+		return economy == null ? 0 : economy.getBalance(player);
 	}
 
 	public static void addMoney(final Player player, final double amount){

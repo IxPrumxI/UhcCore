@@ -8,22 +8,22 @@ import org.bukkit.command.CommandSender;
 
 public class SeedCommandExecutor implements CommandExecutor{
 
-    private final MapLoader mapLoader;
+	private final MapLoader mapLoader;
 
-    public SeedCommandExecutor(MapLoader mapLoader){
-        this.mapLoader = mapLoader;
-    }
+	public SeedCommandExecutor(MapLoader mapLoader){
+		this.mapLoader = mapLoader;
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        World world = mapLoader.getUhcWorld(World.Environment.NORMAL);
-        if (world == null){
-            sender.sendMessage("Please wait for the game to fully load.");
-            return true;
-        }
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+		World world = mapLoader.getUhcWorld(World.Environment.NORMAL);
+		if (world == null){
+			sender.sendMessage("Please wait for the game to fully load.");
+			return true;
+		}
 
-        sender.sendMessage("["+world.getSeed()+"]");
-        return true;
-    }
+		sender.sendMessage("["+world.getSeed()+"]");
+		return true;
+	}
 
 }

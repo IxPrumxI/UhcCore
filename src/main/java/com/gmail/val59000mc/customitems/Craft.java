@@ -43,11 +43,11 @@ public class Craft {
 
 		register();
 	}
-	
+
 	public boolean isLimited(){
 		return limit != -1;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -91,9 +91,9 @@ public class Craft {
 	@SuppressWarnings("deprecation")
 	private void register(){
 		ShapedRecipe craftRecipe = VersionUtils.getVersionUtils().createShapedRecipe(craft, UUID.randomUUID().toString());
-		
+
 		craftRecipe.shape("abc","def","ghi");
-		
+
 		List<Character> symbols = Arrays.asList('a','b','c','d','e','f','g','h','i');
 		for(int i=0 ; i<9 ; i++){
 			if(!recipe.get(i).getType().equals(Material.AIR)){
@@ -106,7 +106,7 @@ public class Craft {
 				}
 			}
 		}
-		
+
 		Bukkit.getLogger().info("[UhcCore] "+name+" custom craft registered");
 		Bukkit.getServer().addRecipe(craftRecipe);
 	}

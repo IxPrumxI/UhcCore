@@ -138,7 +138,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> ENABLE_FINAL_HEAL = new BasicOption<>("fast-mode.final-heal.enable", false);
 	public static final BasicOption<Integer> FINAL_HEAL_DELAY = new BasicOption<>("fast-mode.final-heal.delay", 1200);
 	public static final BasicOption<Boolean> ENABLE_UNDERGROUND_NETHER = new BasicOption<>("fast-mode.underground-nether.enable",false);
-	public static final BasicOption<Integer> NETHER_PASTE_AT_Y =  new BasicOption<>("fast-mode.underground-nether.paste-nether-at-y",20);
+	public static final BasicOption<Integer> NETHER_PASTE_AT_Y = new BasicOption<>("fast-mode.underground-nether.paste-nether-at-y",20);
 	public static final BasicOption<Integer> MIN_OCCURRENCES_UNDERGROUND_NETHER = new BasicOption<>("fast-mode.underground-nether.min-ocurrences",5);
 	public static final BasicOption<Integer> MAX_OCCURRENCES_UNDERGROUND_NETHER = new BasicOption<>("fast-mode.underground-nether.min-ocurrences",10);
 	public static final BasicOption<Boolean> ENABLE_GENERATE_SUGARCANE = new BasicOption<>("fast-mode.generate-sugar-cane.enable",false);

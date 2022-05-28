@@ -10,25 +10,25 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class PlayerHungerGainListener implements Listener {
 
-    private final PlayerManager playerManager;
+	private final PlayerManager playerManager;
 
-    public PlayerHungerGainListener(PlayerManager playerManager){
-        this.playerManager = playerManager;
-    }
+	public PlayerHungerGainListener(PlayerManager playerManager){
+		this.playerManager = playerManager;
+	}
 
-    @EventHandler
-    public void onPlayerHunger(FoodLevelChangeEvent e){
+	@EventHandler
+	public void onPlayerHunger(FoodLevelChangeEvent e){
 
-        if (!(e.getEntity() instanceof Player)){
-            return;
-        }
+		if (!(e.getEntity() instanceof Player)){
+			return;
+		}
 
-        UhcPlayer player = playerManager.getUhcPlayer((Player) e.getEntity());
+		UhcPlayer player = playerManager.getUhcPlayer((Player) e.getEntity());
 
-        // Cancel hunger when the game is not in playing state.
-        if (player.getState() != PlayerState.PLAYING){
-            e.setCancelled(true);
-        }
-    }
+		// Cancel hunger when the game is not in playing state.
+		if (player.getState() != PlayerState.PLAYING){
+			e.setCancelled(true);
+		}
+	}
 
 }

@@ -9,11 +9,11 @@ import org.bukkit.Bukkit;
 public class StopRestartThread implements Runnable{
 
 	private long timeBeforeStop;
-	
+
 	public StopRestartThread(){
 		this.timeBeforeStop = GameManager.getGameManager().getConfig().get(MainConfig.TIME_BEFORE_RESTART_AFTER_END);
 	}
-	
+
 	@Override
 	public void run() {
 		if (timeBeforeStop < 0){
@@ -21,7 +21,7 @@ public class StopRestartThread implements Runnable{
 		}
 
 		GameManager gm = GameManager.getGameManager();
-			
+
 		if(timeBeforeStop == 0){
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stop");

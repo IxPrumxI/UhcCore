@@ -9,7 +9,7 @@ import org.bukkit.World;
 public class UndergroundNether extends Schematic {
 
 	private static final String SCHEMATIC_NAME = "nether";
-	
+
 	public UndergroundNether(){
 		super(SCHEMATIC_NAME);
 	}
@@ -39,5 +39,5 @@ public class UndergroundNether extends Schematic {
 			}
 		}
 	}
-	
+
 }

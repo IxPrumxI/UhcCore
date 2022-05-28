@@ -7,10 +7,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class PermaKillListener extends ScenarioListener{
 
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e){
-        World world = getGameManager().getMapLoader().getUhcWorld(World.Environment.NORMAL);
-        world.setTime(world.getTime() + 12000);
-    }
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent e){
+		World world = getGameManager().getMapLoader().getUhcWorld(World.Environment.NORMAL);
+		world.setTime(world.getTime() + 12000);
+	}
 
 }

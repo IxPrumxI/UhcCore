@@ -9,27 +9,27 @@ import org.bukkit.event.player.PlayerPortalEvent;
 
 public class VersionUtils_1_14 extends VersionUtils_1_13{
 
-    @Override
-    public void handleNetherPortalEvent(PlayerPortalEvent event){
-        Location loc = event.getFrom();
-        MapLoader mapLoader = GameManager.getGameManager().getMapLoader();
+	@Override
+	public void handleNetherPortalEvent(PlayerPortalEvent event){
+		Location loc = event.getFrom();
+		MapLoader mapLoader = GameManager.getGameManager().getMapLoader();
 
-        if (event.getFrom().getWorld().getEnvironment() == World.Environment.NETHER){
-            loc.setWorld(mapLoader.getUhcWorld(World.Environment.NORMAL));
-            loc.setX(loc.getX() * 2d);
-            loc.setZ(loc.getZ() * 2d);
-            event.setTo(loc);
-        }else{
-            loc.setWorld(mapLoader.getUhcWorld(World.Environment.NETHER));
-            loc.setX(loc.getX() / 2d);
-            loc.setZ(loc.getZ() / 2d);
-            event.setTo(loc);
-        }
-    }
+		if (event.getFrom().getWorld().getEnvironment() == World.Environment.NETHER){
+			loc.setWorld(mapLoader.getUhcWorld(World.Environment.NORMAL));
+			loc.setX(loc.getX() * 2d);
+			loc.setZ(loc.getZ() * 2d);
+			event.setTo(loc);
+		}else{
+			loc.setWorld(mapLoader.getUhcWorld(World.Environment.NETHER));
+			loc.setX(loc.getX() / 2d);
+			loc.setZ(loc.getZ() / 2d);
+			event.setTo(loc);
+		}
+	}
 
-    @Override
-    public void killPlayer(Player player) {
-        player.damage(player.getHealth());
-    }
+	@Override
+	public void killPlayer(Player player) {
+		player.damage(player.getHealth());
+	}
 
 }

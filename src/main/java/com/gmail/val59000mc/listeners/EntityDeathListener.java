@@ -25,17 +25,17 @@ public class EntityDeathListener implements Listener {
 	private final PlayerManager playerManager;
 	private final MainConfig config;
 	private final PlayerDeathHandler playerDeathHandler;
-	
+
 	// Fast mode mob loots
 	private final Map<EntityType, LootConfiguration<EntityType>> mobLoots;
-	
+
 	public EntityDeathListener(PlayerManager playerManager, MainConfig config, PlayerDeathHandler playerDeathHandler) {
 		this.playerManager = playerManager;
 		this.config = config;
 		mobLoots = config.get(MainConfig.ENABLE_MOB_LOOT) ? config.get(MainConfig.MOB_LOOT) : new HashMap<>();
 		this.playerDeathHandler = playerDeathHandler;
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event) {
 		handleMobLoot(event);
@@ -43,7 +43,7 @@ public class EntityDeathListener implements Listener {
 		handleGhastTearDrop(event);
 		handleOfflineZombieDeath(event);
 	}
-	
+
 	private void handleMobLoot(EntityDeathEvent event){
 		EntityType entity = event.getEntityType();
 		if(mobLoots.containsKey(entity)){
@@ -56,7 +56,7 @@ public class EntityDeathListener implements Listener {
 			UhcItems.spawnExtraXp(event.getEntity().getLocation(),lootConfig.getAddXp());
 		}
 	}
-	
+
 	private void handleGoldDrop(EntityDeathEvent event) {
 		if (!config.get(MainConfig.ENABLE_GOLD_DROPS)) {
 			return;
@@ -79,7 +79,7 @@ public class EntityDeathListener implements Listener {
 			}
 		}
 	}
-	
+
 	private void handleGhastTearDrop(EntityDeathEvent event){
 		if (event.getEntityType() != EntityType.GHAST) {
 			return;

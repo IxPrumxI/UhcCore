@@ -15,16 +15,16 @@ public class ElapsedTimeThread implements Runnable{
 	private final GameManager gameManager;
 	private final CustomEventHandler customEventHandler;
 	private final ElapsedTimeThread task;
-	
+
 	public ElapsedTimeThread(GameManager gameManager, CustomEventHandler customEventHandler) {
 		this.gameManager = gameManager;
 		this.customEventHandler = customEventHandler;
 		this.task = this;
 	}
-	
+
 	@Override
 	public void run() {
-		
+
 		long time = gameManager.getElapsedTime() + 1;
 		gameManager.setElapsedTime(time);
 

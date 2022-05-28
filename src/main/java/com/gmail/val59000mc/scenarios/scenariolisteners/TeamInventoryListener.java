@@ -9,22 +9,22 @@ import org.bukkit.inventory.ItemStack;
 
 public class TeamInventoryListener extends ScenarioListener{
 
-    @Option(key = "drop-on-team-elimination")
-    private boolean dropOnLastDeath = false;
+	@Option(key = "drop-on-team-elimination")
+	private boolean dropOnLastDeath = false;
 
-    public void dropTeamInventory(UhcTeam team, Location location)
-    {
-        if (dropOnLastDeath)
-        {
-            World world = location.getWorld();
-            for (ItemStack stack : team.getTeamInventory().getContents())
-            {
-                if (stack != null)
-                {
-                    world.dropItemNaturally(location, stack);
-                }
-            }
-            team.getTeamInventory().clear();
-        }
-    }
+	public void dropTeamInventory(UhcTeam team, Location location)
+	{
+		if (dropOnLastDeath)
+		{
+			World world = location.getWorld();
+			for (ItemStack stack : team.getTeamInventory().getContents())
+			{
+				if (stack != null)
+				{
+					world.dropItemNaturally(location, stack);
+				}
+			}
+			team.getTeamInventory().clear();
+		}
+	}
 }

@@ -113,7 +113,7 @@ public class MapLoader {
 			}
 		}
 	}
-	
+
 	public void createNewWorld(Environment env){
 		String worldName = UUID.randomUUID().toString();
 		if (UhcCore.getPlugin().getConfig().getBoolean("permanent-world-names", false)){
@@ -121,7 +121,7 @@ public class MapLoader {
 		}
 
 		Bukkit.getLogger().info("[UhcCore] Creating new world : "+worldName);
-		
+
 		GameManager gm = GameManager.getGameManager();
 
 		WorldCreator wc = new WorldCreator(worldName);
@@ -168,11 +168,11 @@ public class MapLoader {
 		}catch (IOException ex){
 			ex.printStackTrace();
 		}
-		
+
 		wc.type(WorldType.NORMAL);
 		Bukkit.getServer().createWorld(wc);
 	}
-	
+
 	public void loadOldWorld(Environment env){
 		String uuid = worldUuids.get(env);
 
@@ -317,7 +317,7 @@ public class MapLoader {
 		worldborder.setCenter(x, z);
 		worldborder.setSize(size);
 	}
-	
+
 	private void copyWorld(String randomWorldName, String worldName) {
 		Bukkit.getLogger().info("[UhcCore] Copying " + randomWorldName + " to " + worldName);
 		File worldDir = new File(randomWorldName);
@@ -355,56 +355,56 @@ public class MapLoader {
 			}
 		}
 	}
-	
+
 	private void recursiveCopy(File fSource, File fDest) {
-	     try {
-	          if (fSource.isDirectory()) {
-	          // A simple validation, if the destination is not exist then create it
-	               if (!fDest.exists()) {
-	                    fDest.mkdirs();
-	               }
-	 
-	               // Create list of files and directories on the current source
-	               // Note: with the recursion 'fSource' changed accordingly
-	               String[] fList = fSource.list();
+		try {
+			if (fSource.isDirectory()) {
+				// A simple validation, if the destination is not exist then create it
+				if (!fDest.exists()) {
+					fDest.mkdirs();
+				}
 
-				  for (String s : fList) {
-					  File dest = new File(fDest, s);
-					  File source = new File(fSource, s);
+				// Create list of files and directories on the current source
+				// Note: with the recursion 'fSource' changed accordingly
+				String[] fList = fSource.list();
 
-					  // Recursion call take place here
-					  recursiveCopy(source, dest);
-				  }
-	          }
-	          else {
-	               // Found a file. Copy it into the destination, which is already created in 'if' condition above
-	 
-	               // Open a file for read and write (copy)
-	               FileInputStream fInStream = new FileInputStream(fSource);
-	               FileOutputStream fOutStream = new FileOutputStream(fDest);
-	 
-	               // Read 2K at a time from the file
-	               byte[] buffer = new byte[2048];
-	               int iBytesReads;
-	 
-	               // In each successful read, write back to the source
-	               while ((iBytesReads = fInStream.read(buffer)) >= 0) {
-	                    fOutStream.write(buffer, 0, iBytesReads);
-	               }
-	 
-	               // Safe exit
-	               if (fInStream != null) {
-	                    fInStream.close();
-	               }
-	 
-	               if (fOutStream != null) {
-	                    fOutStream.close();
-	               }
-	          }
-	     }
-	     catch (Exception ex) {
-	          // Please handle all the relevant exceptions here
-	     }
+				for (String s : fList) {
+					File dest = new File(fDest, s);
+					File source = new File(fSource, s);
+
+					// Recursion call take place here
+					recursiveCopy(source, dest);
+				}
+			}
+			else {
+				// Found a file. Copy it into the destination, which is already created in 'if' condition above
+
+				// Open a file for read and write (copy)
+				FileInputStream fInStream = new FileInputStream(fSource);
+				FileOutputStream fOutStream = new FileOutputStream(fDest);
+
+				// Read 2K at a time from the file
+				byte[] buffer = new byte[2048];
+				int iBytesReads;
+
+				// In each successful read, write back to the source
+				while ((iBytesReads = fInStream.read(buffer)) >= 0) {
+					fOutStream.write(buffer, 0, iBytesReads);
+				}
+
+				// Safe exit
+				if (fInStream != null) {
+					fInStream.close();
+				}
+
+				if (fOutStream != null) {
+					fOutStream.close();
+				}
+			}
+		}
+		catch (Exception ex) {
+			// Please handle all the relevant exceptions here
+		}
 	}
 
 	public void generateChunks(Environment env){
@@ -415,10 +415,10 @@ public class MapLoader {
 			size = size/2;
 		}
 
-    	int restEveryNumOfChunks = config.get(MainConfig.REST_EVERY_NUM_OF_CHUNKS);
-    	int restDuration = config.get(MainConfig.REST_DURATION);
+		int restEveryNumOfChunks = config.get(MainConfig.REST_EVERY_NUM_OF_CHUNKS);
+		int restDuration = config.get(MainConfig.REST_DURATION);
 
-    	boolean generateVeins = config.get(MainConfig.ENABLE_GENERATE_VEINS);
+		boolean generateVeins = config.get(MainConfig.ENABLE_GENERATE_VEINS);
 		VeinGenerator veinGenerator = new VeinGenerator(config.get(MainConfig.GENERATE_VEINS));
 
 		ChunkLoaderThread chunkLoaderThread = new ChunkLoaderThread(world, size, restEveryNumOfChunks, restDuration) {

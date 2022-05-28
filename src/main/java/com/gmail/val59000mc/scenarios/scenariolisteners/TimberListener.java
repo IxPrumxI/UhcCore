@@ -12,52 +12,52 @@ import org.bukkit.inventory.ItemStack;
 
 public class TimberListener extends ScenarioListener {
 
-    @Option(key = "calculate-axe-damage")
-    private boolean calculateAxeDamage = true;
-    
-    @Option(key = "drop-planks")
-    private boolean dropPlanks = false;
+	@Option(key = "calculate-axe-damage")
+	private boolean calculateAxeDamage = true;
+
+	@Option(key = "drop-planks")
+	private boolean dropPlanks = false;
 
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
-        Block block = e.getBlock();
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent e) {
+		Block block = e.getBlock();
 
-        if (UniversalMaterial.isLog(block.getType())) {
-            int brokenLogs = breakTree(block, 2);
-            if (calculateAxeDamage) {
-                ItemStack tool = e.getPlayer().getItemInHand();
-                if (UniversalMaterial.isAxe(tool.getType())) {
-                    tool.setDurability((short) (tool.getDurability() + brokenLogs));
-                }
-            }
-        }
-    }
+		if (UniversalMaterial.isLog(block.getType())) {
+			int brokenLogs = breakTree(block, 2);
+			if (calculateAxeDamage) {
+				ItemStack tool = e.getPlayer().getItemInHand();
+				if (UniversalMaterial.isAxe(tool.getType())) {
+					tool.setDurability((short) (tool.getDurability() + brokenLogs));
+				}
+			}
+		}
+	}
 
-    private int breakTree(Block block, int i) {
-        int broken = 0;
-        if (UniversalMaterial.isLog(block.getType())){
-            if (dropPlanks){
-                block.setType(Material.AIR);
-                block.getWorld().dropItem(block.getLocation(), new ItemStack(UniversalMaterial.OAK_PLANKS.getType(), 4));
-            }else {
-                block.breakNaturally();
-            }
-            broken++;
-            i = 2;
-        }else {
-            i--;
-        }
-        if (i > 0){
-            for (BlockFace face : BlockFace.values()) {
-                if (face.equals(BlockFace.DOWN) || face.equals(BlockFace.UP) || face.equals(BlockFace.NORTH) ||
-                        face.equals(BlockFace.EAST) || face.equals(BlockFace.SOUTH) || face.equals(BlockFace.WEST)) {
-                    broken += breakTree(block.getRelative(face), i);
-                }
-            }
-        }
+	private int breakTree(Block block, int i) {
+		int broken = 0;
+		if (UniversalMaterial.isLog(block.getType())){
+			if (dropPlanks){
+				block.setType(Material.AIR);
+				block.getWorld().dropItem(block.getLocation(), new ItemStack(UniversalMaterial.OAK_PLANKS.getType(), 4));
+			}else {
+				block.breakNaturally();
+			}
+			broken++;
+			i = 2;
+		}else {
+			i--;
+		}
+		if (i > 0){
+			for (BlockFace face : BlockFace.values()) {
+				if (face.equals(BlockFace.DOWN) || face.equals(BlockFace.UP) || face.equals(BlockFace.NORTH) ||
+						face.equals(BlockFace.EAST) || face.equals(BlockFace.SOUTH) || face.equals(BlockFace.WEST)) {
+					broken += breakTree(block.getRelative(face), i);
+				}
+			}
+		}
 
-        return broken;
-    }
+		return broken;
+	}
 
 }

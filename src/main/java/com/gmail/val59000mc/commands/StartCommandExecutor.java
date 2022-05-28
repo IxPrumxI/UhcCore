@@ -8,11 +8,11 @@ import org.bukkit.command.CommandSender;
 
 public class StartCommandExecutor implements CommandExecutor{
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        sender.sendMessage(ChatColor.GREEN + "[UhcCore] Force starting has toggled!");
-        PreStartThread.toggleForce();
-        return true;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+		sender.sendMessage(ChatColor.GREEN + "[UhcCore] Force starting has toggled!");
+		PreStartThread.toggleForce();
+		return true;
+	}
 
 }

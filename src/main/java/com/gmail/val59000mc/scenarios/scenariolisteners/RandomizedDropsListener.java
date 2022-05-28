@@ -20,7 +20,7 @@ public class RandomizedDropsListener extends ScenarioListener{
 
 	private List<Material> items;
 	private final Map<Material, ItemStack> dropList;
-	
+
 	public RandomizedDropsListener() {
 		dropList = new HashMap<>();
 	}
@@ -34,13 +34,13 @@ public class RandomizedDropsListener extends ScenarioListener{
 	public void onBlockBreak(BlockBreakEvent event) {
 		//Create new HashMap so each each type of broken block drops the same random item every time it is broken (configurable
 		Block block = event.getBlock();
-		
+
 		ItemStack blockDrop;
 		if(dropList.containsKey(block.getType())) {
 			 blockDrop = dropList.get(block.getType());
 		}
 		else {
-			int itemindex  = RandomUtils.randomInteger(1, items.size())-1;
+			int itemindex = RandomUtils.randomInteger(1, items.size())-1;
 			Material material = items.get(itemindex);
 
 			 blockDrop = new ItemStack(material);

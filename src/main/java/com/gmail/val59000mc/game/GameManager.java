@@ -53,7 +53,6 @@ public class GameManager{
 	private final ScoreboardHandler scoreboardHandler;
 	private final DeathmatchHandler deathmatchHandler;
 	private final PlayerDeathHandler playerDeathHandler;
-	private final StatsHandler statsHandler;
 
 	private GameState gameState;
 	private boolean pvp;
@@ -80,7 +79,6 @@ public class GameManager{
 
 		deathmatchHandler = new DeathmatchHandler(this, config, playerManager, mapLoader);
 		playerDeathHandler = new PlayerDeathHandler(this, scenarioManager, playerManager, config, customEventHandler);
-		statsHandler = new StatsHandler(UhcCore.getPlugin(), config, mapLoader, scenarioManager);
 
 		episodeNumber = 0;
 		elapsedTime = 0;
@@ -177,8 +175,6 @@ public class GameManager{
 	}
 
 	public void loadNewGame() {
-		statsHandler.startRegisteringStats();
-
 		loadConfig();
 		setGameState(GameState.LOADING);
 
@@ -254,7 +250,6 @@ public class GameManager{
 		}
 
 		Bukkit.getPluginManager().callEvent(new UhcStartedEvent());
-		statsHandler.addGameToStatistics();
 	}
 
 	public void broadcastMessage(String message){

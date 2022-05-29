@@ -28,7 +28,6 @@ public class StatsHandler {
 	private final static String CHART_THE_END = "the_end";
 	private final static String CHART_TEAM_COLORS = "team_colors";
 	private final static String CHART_DEATHMATCH = "deathmatch";
-	private final static String CHART_AUTO_UPDATE = "auto_update";
 	private final static String CHART_REPLACE_OCEANS = "replace_oceans";
 	private final static String CHART_GOLDEN_HEADS = "golden_heads";
 	private final static String CHART_ALWAYS_READY = "always_ready";
@@ -120,13 +119,6 @@ public class StatsHandler {
 
 			return "Center deatchmatch";
 		}));
-
-		bStats.addCustomChart(
-				new Metrics.SimplePie(
-						CHART_AUTO_UPDATE,
-						() -> (config.get(MainConfig.AUTO_UPDATE) ? VALUE_ENABLED : VALUE_DISABLED)
-				)
-		);
 
 		bStats.addCustomChart(
 				new Metrics.SimplePie(

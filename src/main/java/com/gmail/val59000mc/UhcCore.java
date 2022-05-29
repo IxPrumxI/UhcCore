@@ -18,7 +18,6 @@ public class UhcCore extends JavaPlugin{
 	private static VersionAdapter versionAdapter;
 	private static int version;
 	private GameManager gameManager;
-	private Updater updater;
 
 	@Override
 	public void onEnable(){
@@ -36,8 +35,6 @@ public class UhcCore extends JavaPlugin{
 
 		gameManager = new GameManager();
 		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
-
-		updater = new Updater(this);
 
 		// Delete files that are scheduled for deletion
 		FileUtils.removeScheduledDeletionFiles();
@@ -78,7 +75,6 @@ public class UhcCore extends JavaPlugin{
 	public void onDisable(){
 		gameManager.getScenarioManager().disableAllScenarios();
 
-		updater.runAutoUpdate();
 		Bukkit.getLogger().info("[UhcCore] Plugin disabled");
 	}
 

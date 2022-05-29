@@ -1,18 +1,27 @@
 package com.gmail.val59000mc.configuration;
 
-import com.gmail.val59000mc.configuration.options.*;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import com.gmail.val59000mc.configuration.options.BasicOption;
+import com.gmail.val59000mc.configuration.options.EnumListOption;
+import com.gmail.val59000mc.configuration.options.EnumOption;
+import com.gmail.val59000mc.configuration.options.ListOption;
+import com.gmail.val59000mc.configuration.options.LootConfigOption;
+import com.gmail.val59000mc.configuration.options.Option;
+import com.gmail.val59000mc.configuration.options.PotionEffectListOption;
+import com.gmail.val59000mc.configuration.options.VeinConfigOption;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
-import com.gmail.val59000mc.utils.CompareUtils;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.*;
 
 public class MainConfig extends YamlFile {
 	public static final BasicOption<Integer> MINIMAL_READY_TEAMS_PERCENTAGE_TO_START = new BasicOption<>("minimal-ready-teams-percentage-to-start",50);
@@ -121,7 +130,6 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT = new BasicOption<>("countdown-ending-game-when-all-players-have-left",true);
 	public static final BasicOption<Boolean> DEBUG = new BasicOption<>("debug",false);
 	public static final BasicOption<Boolean> ONE_PLAYER_MODE = new BasicOption<>("one-player-mode",false);
-	public static final BasicOption<Boolean> AUTO_UPDATE = new BasicOption<>("auto-update",true);
 
 	// Pre-generate world
 	public static final BasicOption<Boolean> ENABLE_PRE_GENERATE_WORLD = new BasicOption<>("pre-generate-world.enable",true);

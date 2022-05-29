@@ -1,5 +1,22 @@
-dependencies {
-	compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
-	compileOnly 'com.sk89q.worldedit:worldedit-bukkit:6.1.5'
-	compileOnly 'com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT'
+plugins {
+	id "java-library"
 }
+
+repositories {
+	maven { // For Spigot API
+		name "SpigotMC"
+		url "https://hub.spigotmc.org/nexus/content/groups/public/"
+	}
+	maven { // For WorldEdit
+		name "EngineHub"
+		url "https://maven.enginehub.org/repo/"
+	}
+}
+
+dependencies {
+	compileOnly "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
+	compileOnly "com.sk89q.worldedit:worldedit-bukkit:6.1.5"
+	compileOnly "com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT"
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)

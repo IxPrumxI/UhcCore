@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to this plugin!
 If you have any questions, don't hestitate to ask in the `#dev` channel
-on [the Discord server](discord-invite).
+on [the Discord server][discord-invite].
 
 [discord-invite]: https://discord.gg/fDCaKMX
 

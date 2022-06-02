@@ -99,7 +99,7 @@ Stay tuned for a proper API (but there is no ETA yet)!
 This plugin is fully free and open source software, and you may fork it as
 long as you comply with the license terms. Contributions are highly appreciated
 and can be sent as merge requests to [the GitLab repository][gitlab-repo]!
-See [CONTRIBUTING.md](contributing-md) for more details.
+See [CONTRIBUTING.md][contributing-md] for more details.
 
 [gitlab-repo]: https://gitlab.com/uhccore/uhccore
 [contributing-md]: https://gitlab.com/uhccore/uhccore/-/blob/main/CONTRIBUTING.md

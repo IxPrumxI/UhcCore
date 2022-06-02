@@ -1,18 +1,4 @@
-pluginManagement {
-	repositories {
-		gradlePluginPortal()
-		maven { // For paperweight-userdev
-			name "PaperMC"
-			url "https://papermc.io/repo/repository/maven-public/"
-		}
-	}
-}
-
 rootProject.name = "uhccore"
 
 include "Support-WorldEdit-6"
 include "Support-WorldEdit-7"
-
-include ":adapters"
-include ":adapters:1_18_R1"
-include ":adapters:1_18_R2"

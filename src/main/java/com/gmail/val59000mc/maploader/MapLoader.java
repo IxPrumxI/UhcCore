@@ -1,7 +1,33 @@
 package com.gmail.val59000mc.maploader;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+import java.util.logging.Level;
+
+import javax.annotation.Nullable;
+
+import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Difficulty;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
+import org.bukkit.WorldBorder;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
+import org.bukkit.configuration.InvalidConfigurationException;
+
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
+import com.gmail.val59000mc.configuration.YamlFile;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.schematics.DeathmatchArena;
 import com.gmail.val59000mc.schematics.Lobby;
@@ -9,20 +35,11 @@ import com.gmail.val59000mc.schematics.UndergroundNether;
 import com.gmail.val59000mc.threads.ChunkLoaderThread;
 import com.gmail.val59000mc.threads.WorldBorderThread;
 import com.gmail.val59000mc.utils.FileUtils;
-import com.gmail.val59000mc.configuration.YamlFile;
 import com.gmail.val59000mc.utils.VersionUtils;
-import io.papermc.lib.PaperLib;
-import org.apache.commons.lang.Validate;
-import org.bukkit.*;
-import org.bukkit.World.Environment;
-import org.bukkit.configuration.InvalidConfigurationException;
+import com.pieterdebot.biomemapping.Biome;
+import com.pieterdebot.biomemapping.BiomeMappingAPI;
 
-import javax.annotation.Nullable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
+import io.papermc.lib.PaperLib;
 
 public class MapLoader {
 
@@ -63,14 +80,38 @@ public class MapLoader {
 		return overworld.getWorldBorder().getSize()/2;
 	}
 
-	public void loadWorlds(boolean debug) {
-		if (config.get(MainConfig.REPLACE_OCEAN_BIOMES)){
-			try {
-				UhcCore.getVersionAdapter().removeOceans();
-			} catch (UnsupportedOperationException ignored) {
+	private void removeOceansUsingBiomeMapping() throws Exception {
+		final BiomeMappingAPI biomeMapping = new BiomeMappingAPI();
+		Biome replacementBiome = Biome.PLAINS;
+
+		for (Biome biome : Biome.values()) {
+			if (biome.isOcean() && biomeMapping.biomeSupported(biome)) {
+				biomeMapping.replaceBiomes(biome, replacementBiome);
+
+				replacementBiome = replacementBiome == Biome.PLAINS ? Biome.FOREST : Biome.PLAINS;
+			}
+		}
+	}
+
+	private void removeOceans() {
+		try {
+			if (UhcCore.getNmsAdapter().isPresent()) {
+				UhcCore.getNmsAdapter().get().removeOceans();
+			} else if (PaperLib.getMinecraftVersion() < 18) {
+				removeOceansUsingBiomeMapping();
+			} else {
 				UhcCore.getPlugin().getLogger().warning(
 					"The 'replace-ocean-biomes' setting is not supported on this Minecraft version");
 			}
+		} catch (Exception e) {
+			UhcCore.getPlugin().getLogger().log(
+				Level.WARNING, "Unable to remove ocean biomes", e);
+		}
+	}
+
+	public void loadWorlds(boolean debug) {
+		if (config.get(MainConfig.REPLACE_OCEAN_BIOMES)) {
+			removeOceans();
 		}
 
 		deleteOldPlayersFiles();

@@ -1,13 +1,16 @@
 package com.gmail.val59000mc;
 
-import java.util.logging.Level;
+import java.util.Optional;
 
-import com.gmail.val59000mc.adapters.VersionAdapter;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.utils.FileUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import net.zerodind.uhccore.nms.CreateNmsAdapterException;
+import net.zerodind.uhccore.nms.NmsAdapter;
+import net.zerodind.uhccore.nms.NmsAdapterFactory;
 
 public class UhcCore extends JavaPlugin{
 
@@ -15,7 +18,7 @@ public class UhcCore extends JavaPlugin{
 	private static final int MAX_VERSION = 19;
 
 	private static UhcCore pl;
-	private static VersionAdapter versionAdapter;
+	private static Optional<NmsAdapter> nmsAdapter;
 	private static int version;
 	private GameManager gameManager;
 
@@ -24,20 +27,23 @@ public class UhcCore extends JavaPlugin{
 		pl = this;
 
 		loadServerVersion();
-
-		try {
-			versionAdapter = VersionAdapter.instantiate();
-			getLogger().info("Successfully loaded version adapter: " + versionAdapter.getClass().getName());
-		} catch (VersionAdapter.InstantiationException e) {
-			getLogger().log(Level.SEVERE, "Unable to start plugin", e);
-			return;
-		}
-
+		loadNmsAdapter();
 		gameManager = new GameManager();
 		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
 
 		// Delete files that are scheduled for deletion
 		FileUtils.removeScheduledDeletionFiles();
+	}
+
+	private void loadNmsAdapter() {
+		try {
+			final NmsAdapter adapter = NmsAdapterFactory.create();
+			getLogger().info("Loaded NMS adapter: " + adapter.getClass().getName());
+			nmsAdapter = Optional.of(adapter);
+		} catch (CreateNmsAdapterException e) {
+			getLogger().info(e.getMessage());
+			nmsAdapter = Optional.empty();
+		}
 	}
 
 	// Load the Minecraft version.
@@ -67,8 +73,8 @@ public class UhcCore extends JavaPlugin{
 		return pl;
 	}
 
-	public static VersionAdapter getVersionAdapter() {
-		return versionAdapter;
+	public static Optional<NmsAdapter> getNmsAdapter() {
+		return nmsAdapter;
 	}
 
 	@Override

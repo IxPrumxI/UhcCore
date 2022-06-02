@@ -134,6 +134,7 @@ is located in the `build/libs/` directory.
 
 Special thanks to Mezy and val59000mc, the original plugin authors,
 who maintained the plugin prior to version `1.20.0`.
+This project was forked from <https://github.com/Mezy/UhcCore/>.
 
 ## License
 

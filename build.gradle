@@ -1,5 +1,6 @@
 plugins {
 	id "java-library"
+	id "maven-publish"
 	id "com.github.johnrengelman.shadow" version "7.1.2"
 	id "xyz.jpenilla.run-paper" version "1.0.6"
 }
@@ -89,5 +90,34 @@ tasks.named("runServer") {
 	minecraftVersion "1.18.2"
 	javaLauncher = javaToolchains.launcherFor {
 		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+// Only publish the shadowed JAR
+components.java {
+	[configurations.runtimeElements, configurations.apiElements].each {
+		withVariantsFromConfiguration(it) { skip() }
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+
+	repositories {
+		maven {
+			name "GitLab"
+			url "https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/packages/maven"
+			credentials(HttpHeaderCredentials) {
+				name = "Job-Token"
+				value = System.getenv("CI_JOB_TOKEN")
+			}
+			authentication {
+				header(HttpHeaderAuthentication)
+			}
+		}
 	}
 }

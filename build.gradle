@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "net.zerodind"
-version = "1.20.0"
+version = "1.20.1-SNAPSHOT"
 
 repositories {
 	mavenCentral()
@@ -91,6 +91,7 @@ tasks.named("runServer") {
 	javaLauncher = javaToolchains.launcherFor {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
+	jvmArgs += [ "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" ]
 }
 
 // Only publish the shadowed JAR

@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 /**
  * Used as event listener for a scenario (automatically registered).
  * In here you should handle anything related to the scenario.
- * See {@link #onEnable()} & {@link #onDisable()}
+ * See {@link #onEnable()} &amp; {@link #onDisable()}
  */
 public abstract class ScenarioListener implements Listener {
 

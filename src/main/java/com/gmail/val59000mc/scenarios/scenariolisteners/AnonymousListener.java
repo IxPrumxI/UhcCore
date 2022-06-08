@@ -50,15 +50,13 @@ public class AnonymousListener extends ScenarioListener{
 		getScoreboardManager().updatePlayerOnTab(uhcPlayer);
 	}
 
-	/**
-	 * Make names visible after the game ends.
-	 */
 	@EventHandler
 	public void onGameStateChanged(UhcGameStateChangedEvent e) {
 		if (e.getNewGameState() != GameState.ENDED) {
 			return;
 		}
 
+		// Make names visible after the game ends
 		for (UhcPlayer uhcPlayer : getPlayerManager().getPlayersList()){
 			if (uhcPlayer.hasNickName()) {
 				ProtocolUtils.setPlayerNickName(uhcPlayer, null);

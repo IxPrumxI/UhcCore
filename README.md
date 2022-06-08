@@ -92,7 +92,7 @@ net.zerodind:uhccore:1.20.0
 
 Keep in mind that there is neither any complete documentation nor any
 guarantee that the plugin classes won't change in future releases.
-Stay tuned for a proper API (but there is no ETA yet)!
+Stay tuned for a stable API (but there is no ETA yet)!
 
 ## Contributing
 
@@ -132,15 +132,20 @@ is located in the `build/libs/` directory.
 
 ## Acknowledgments
 
-Special thanks to Mezy and val59000mc, the original plugin authors,
-who maintained the plugin prior to version `1.20.0`.
-This project was forked from <https://github.com/Mezy/UhcCore/>.
+Special thanks to Mezy and val59000mc, the original authors, who maintained
+the plugin prior to version `1.20.0`. See below for historical reference:
+
+- [Mezy's plugin page](https://www.spigotmc.org/resources/uhccore-automated-uhc-for-minecraft-1-8-8-1-16.47572/)
+  - [GitHub repository](https://github.com/Mezy/UhcCore/)
+- [val59000mc's plugin page](https://www.spigotmc.org/resources/playuhc.3956/)
+  - [Archived Bitbucket repository](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://bitbucket.org/val59000/playuhc.git)
 
 ## License
 
 ```
-Copyright (C) 2017-2021 Pieter de Bot
-Copyright (C) 2022 Odin Dahlström
+Copyright (C) 2015 Valentin Baert
+Copyright (C) 2017-2021 Pieter de Bot and others
+Copyright (C) 2022 Odin Dahlström and others
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

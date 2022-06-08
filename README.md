@@ -27,6 +27,12 @@ over 10 years ago, but this plugin adds many new features:
 
 [uhc-origins]: https://www.reddit.com/r/mindcrack/comments/syqitq/the_origins_of_the_uhc_mod_10_years_ago/
 
+## Downloads
+
+You can download the plugin from either of these sources:
+- [Spigot plugin page](https://www.spigotmc.org/resources/uhccore.102507/history)
+- [Releases on GitLab](https://gitlab.com/uhccore/uhccore/-/releases)
+
 ## Setup guide
 
 UhcCore can be run on a Spigot-compatible Minecraft server such as

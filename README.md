@@ -32,6 +32,7 @@ over 10 years ago, but this plugin adds many new features:
 You can download the plugin from either of these sources:
 - [Spigot plugin page](https://www.spigotmc.org/resources/uhccore.102507/history)
 - [Releases on GitLab](https://gitlab.com/uhccore/uhccore/-/releases)
+- [Permalink to latest release](https://gitlab.com/uhccore/uhccore/-/releases/permalink/latest/downloads/plugin-jar)
 
 ## Setup guide
 

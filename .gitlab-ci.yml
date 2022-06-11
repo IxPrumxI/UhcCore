@@ -3,7 +3,11 @@ image: eclipse-temurin:8-jdk
 before_script:
   - export GRADLE_USER_HOME="$(pwd)/.gradle/"
 
-publish:
+stages:
+- deploy
+- release
+
+maven_publish:
   stage: deploy
   rules:
     - if: $CI_COMMIT_TAG
@@ -12,3 +16,21 @@ publish:
   cache:
     paths:
       - .gradle/
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - echo "Running release job for tag $CI_COMMIT_TAG"
+  release:
+    tag_name: $CI_COMMIT_TAG
+    name: UhcCore $CI_COMMIT_TAG
+    description: ./CHANGELOG.md
+    assets:
+      links:
+        - name: uhccore-$CI_COMMIT_TAG.jar
+          url: https://gitlab.com/api/v4/groups/uhccore/-/packages/maven/net/zerodind/uhccore/$CI_COMMIT_TAG/uhccore-$CI_COMMIT_TAG.jar
+          filepath: /plugin-jar
+          link_type: package

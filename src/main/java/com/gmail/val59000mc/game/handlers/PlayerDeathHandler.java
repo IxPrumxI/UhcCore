@@ -1,10 +1,23 @@
 package com.gmail.val59000mc.game.handlers;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+
+import javax.annotation.Nullable;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Skull;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
+
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.customitems.UhcItems;
 import com.gmail.val59000mc.events.UhcPlayerKillEvent;
-import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerManager;
@@ -17,19 +30,9 @@ import com.gmail.val59000mc.scenarios.scenariolisteners.SilentNightListener;
 import com.gmail.val59000mc.scenarios.scenariolisteners.TeamInventoryListener;
 import com.gmail.val59000mc.threads.TimeBeforeSendBungeeThread;
 import com.gmail.val59000mc.utils.UniversalMaterial;
+import com.gmail.val59000mc.utils.UniversalSound;
+import com.gmail.val59000mc.utils.UniversalSound.SoundParseException;
 import com.gmail.val59000mc.utils.VersionUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Skull;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
-
-import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Set;
 
 public class PlayerDeathHandler {
 
@@ -150,14 +153,11 @@ public class PlayerDeathHandler {
 			playerManager.strikeLightning(uhcPlayer);
 		}
 
-		for (UhcPlayer p: playerManager.getPlayersList()) {
-			if(p.isOnline()) {
-				try {
-					p.getPlayer().playSound(p.getPlayer().getLocation(), Sound.valueOf(config.get(MainConfig.DEATH_SOUND)), 1, 1);
-				} catch (UhcPlayerNotOnlineException e) {
-					e.printStackTrace();
-				}
-			}
+		try {
+			UniversalSound.parse(config.get(MainConfig.PLAYER_DEATH_SOUND), UniversalSound.WITHER_SPAWN)
+				.ifPresent(playerManager::playSoundToAll);
+		} catch (SoundParseException e) {
+			UhcCore.getPlugin().getLogger().log(Level.WARNING, "Unable to parse player death sound", e);
 		}
 
 		playerManager.checkIfRemainingPlayers();

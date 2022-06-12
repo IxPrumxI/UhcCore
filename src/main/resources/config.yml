@@ -202,8 +202,15 @@ customize-game-behavior:
   # When enabled a lightning strike will happen on the place of the player death
   stike-lightning-on-death: true
 
-  # Defines sound played when a player dies.
-  death-sound: "ENTITY_WITHER_SPAWN"
+  # Defines the sound played when a player dies.
+  # You can use "org.bukkit.Sound#SOUND_NAME" to specify a custom sound.
+  # Just replace SOUND_NAME with any of the values listed here:
+  # https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/src/main/java/org/bukkit/Sound.java
+  # NOTE that the org.bukkit.Sound names may change between Minecraft versions,
+  # so it is your responsibility to update this configuration accordingly.
+  # For older Minecraft versions, use the "History" drop-down menu on the page linked above.
+  # The special values "default" (currently the wither spawn sound) and "none" work across Minecraft versions.
+  player-death-sound: default
 
 # This section references optional features to allow to run in fast uhc mode ( = uhc run)
 fast-mode:

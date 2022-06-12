@@ -4,6 +4,7 @@ import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.customitems.UhcItems;
 import com.gmail.val59000mc.events.UhcPlayerKillEvent;
+import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerManager;
@@ -16,10 +17,10 @@ import com.gmail.val59000mc.scenarios.scenariolisteners.SilentNightListener;
 import com.gmail.val59000mc.scenarios.scenariolisteners.TeamInventoryListener;
 import com.gmail.val59000mc.threads.TimeBeforeSendBungeeThread;
 import com.gmail.val59000mc.utils.UniversalMaterial;
-import com.gmail.val59000mc.utils.UniversalSound;
 import com.gmail.val59000mc.utils.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
@@ -148,7 +149,16 @@ public class PlayerDeathHandler {
 		if (config.get(MainConfig.STRIKE_LIGHTNING_ON_DEATH)) {
 			playerManager.strikeLightning(uhcPlayer);
 		}
-		playerManager.playSoundToAll(UniversalSound.WITHER_SPAWN);
+
+		for (UhcPlayer p: playerManager.getPlayersList()) {
+			if(p.isOnline()) {
+				try {
+					p.getPlayer().playSound(p.getPlayer().getLocation(), Sound.valueOf(config.get(MainConfig.DEATH_SOUND)), 1, 1);
+				} catch (UhcPlayerNotOnlineException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
 		playerManager.checkIfRemainingPlayers();
 

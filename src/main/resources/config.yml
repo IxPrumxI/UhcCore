@@ -202,6 +202,9 @@ customize-game-behavior:
   # When enabled a lightning strike will happen on the place of the player death
   stike-lightning-on-death: true
 
+  # Defines sound played when a player dies.
+  death-sound: "ENTITY_WITHER_SPAWN"
+
 # This section references optional features to allow to run in fast uhc mode ( = uhc run)
 fast-mode:
 

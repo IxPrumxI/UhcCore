@@ -59,6 +59,7 @@ dependencies {
 	implementation "net.zerodind:uhccore-nms:1.0.0"
 	runtimeOnly "net.zerodind:uhccore-nms-1_18_R1:1.0.0"
 	runtimeOnly "net.zerodind:uhccore-nms-1_18_R2:1.0.0"
+	runtimeOnly "net.zerodind:uhccore-nms-1_19_R1:1.0.0"
 }
 
 java {
@@ -87,7 +88,7 @@ tasks.named("processResources") {
 }
 
 tasks.named("runServer") {
-	minecraftVersion "1.18.2"
+	minecraftVersion "1.19"
 	javaLauncher = javaToolchains.launcherFor {
 		languageVersion = JavaLanguageVersion.of(17)
 	}

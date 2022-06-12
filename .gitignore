@@ -2,8 +2,12 @@
 .gradle/
 build/
 
+# VS Code
+.vscode/
+
 # Eclipse
 bin/
+.settings/
 .project
 .classpath
 

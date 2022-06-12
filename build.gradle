@@ -92,6 +92,8 @@ tasks.named("runServer") {
 	javaLauncher = javaToolchains.launcherFor {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
+	// These options enable remote debugging via JDWP on localhost:5005
+	// See "Testing your changes" in CONTRIBUTING.md for more details
 	jvmArgs += [ "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" ]
 }
 

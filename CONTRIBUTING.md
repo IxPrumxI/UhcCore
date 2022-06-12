@@ -26,7 +26,7 @@ structure your code, which increases the likelihood of your contribution being
 accepted. For simple contributions, like fixing a typo or editing a few lines,
 you can skip this step.
 
-**Required software**
+### Required software
 
 - Git, to clone the repository and to submit your contribution.
 - A Java Development Kit (JDK), to run the Gradle build tool.
@@ -36,15 +36,12 @@ you can skip this step.
   This will ensure that your code is formatted consistently with the rest
   of the code in the project.
 
-**Recommended steps**
+### Recommended steps
 
 1. [Fork this repository][forking] and clone the fork to your local machine.
 2. Open the root directory as a Gradle project in your code editor.
 3. Wait for the projects to be imported, and then start coding!
 4. When you think you are done, make sure to test your changes.
-    - Tip: you can execute the `runServer` Gradle task to automatically
-    build the plugin and run it on a Paper server (this task comes
-    from the [run-paper][run-paper] Gradle plugin).
 5. Commit and push your changes on a new Git branch in your forked repository.
 6. [Create a merge request][merging] for your contribution.
 
@@ -52,4 +49,22 @@ you can skip this step.
 
 [forking]: https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html
 [merging]: https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html#merging-upstream
+
+### Testing your changes
+
+You can execute the `runServer` Gradle task to automatically build the plugin
+and run it on a Paper server, for quick and easy testing. This task comes from
+the [run-paper][run-paper] Gradle plugin.
+
+After starting the server using `runServer`, you can also attach a debugger
+via JDWP, which allows you to set breakpoints, inspect variables and more
+while the plugin is running. Consult the documentation of your code editor
+for more information. Below are documentation links for a few popular editors:
+
+- [IntelliJ IDEA](https://www.jetbrains.com/help/idea/attaching-to-local-process.html#attach-to-local)
+- [Eclipse](https://help.eclipse.org/latest/topic/org.eclipse.jdt.doc.user/tasks/task-remotejava_launch_config.htm)
+- [VS Code](https://github.com/microsoft/vscode-java-debug/blob/main/Configuration.md)
+
+You should attach the debugger to the `localhost` address, at port `5005`.
+
 [run-paper]: https://github.com/jpenilla/run-paper

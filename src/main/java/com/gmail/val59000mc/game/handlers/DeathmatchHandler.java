@@ -46,7 +46,7 @@ public class DeathmatchHandler {
 		gameManager.setGameState(GameState.DEATHMATCH);
 		gameManager.setPvp(false);
 		gameManager.broadcastInfoMessage(Lang.GAME_START_DEATHMATCH);
-		playerManager.playSoundToAll(UniversalSound.ENDERDRAGON_GROWL);
+		playerManager.playSoundToAll(UniversalSound.ENDERDRAGON_GROWL.getSound());
 
 		DeathmatchArena arena = mapLoader.getArena();
 		if (arena.isUsed()) {

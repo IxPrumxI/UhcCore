@@ -23,7 +23,7 @@ public class EpisodeMarkersThread implements Runnable{
 	public void run() {
 		if (episodeNr > 0) {
 			gameManager.broadcastInfoMessage(Lang.DISPLAY_EPISODE_MARK.replace("%episode%", episodeNr + ""));
-			gameManager.getPlayerManager().playSoundToAll(UniversalSound.FIREWORK_LAUNCH,1,1);
+			gameManager.getPlayerManager().playSoundToAll(UniversalSound.FIREWORK_LAUNCH.getSound());
 		}
 		episodeNr ++;
 		gameManager.setEpisodeNumber(episodeNr);

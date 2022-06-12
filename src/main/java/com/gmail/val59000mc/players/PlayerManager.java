@@ -509,27 +509,25 @@ public class PlayerManager {
 		}
 	}
 
-	public void playSoundToAll(UniversalSound sound) {
-		for(UhcPlayer player : getPlayersList()){
-			playsoundTo(player, sound);
+	public void playSoundToAll(Sound sound) {
+		playSoundToAll(sound, 1, 1);
+	}
+
+	public void playSoundToAll(Sound sound, float volume, float pitch) {
+		for (UhcPlayer player : getPlayersList()) {
+			playSoundTo(player, sound, volume, pitch);
 		}
 	}
 
-	public void playSoundToAll(UniversalSound sound, float v, float v1){
-		for(UhcPlayer player : getPlayersList()){
-			playsoundTo(player, sound,v,v1);
-		}
+	public void playSoundTo(UhcPlayer player, Sound sound) {
+		playSoundTo(player, sound, 1, 1);
 	}
 
-	public void playsoundTo(UhcPlayer player, UniversalSound sound) {
-		playsoundTo(player,sound,1,1);
-	}
-
-	public void playsoundTo(UhcPlayer player, UniversalSound sound, float v, float v1) {
+	public void playSoundTo(UhcPlayer player, Sound sound, float volume, float pitch) {
 		try {
-			Player p = player.getPlayer();
-			p.playSound(p.getLocation(), sound.getSound(), v, v1);
-		} catch (UhcPlayerNotOnlineException e) {
+			final Player p = player.getPlayer();
+			p.playSound(p.getLocation(), sound, volume, pitch);
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// No sound played
 		}
 	}

@@ -359,7 +359,7 @@ public class GameManager{
 			pvp = false;
 			gameIsEnding = true;
 			broadcastInfoMessage(Lang.GAME_FINISHED);
-			playerManager.playSoundToAll(UniversalSound.ENDERDRAGON_GROWL, 1, 2);
+			playerManager.playSoundToAll(UniversalSound.ENDERDRAGON_GROWL.getSound(), 1, 2);
 			playerManager.setAllPlayersEndGame();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new StopRestartThread(),20);
 		}

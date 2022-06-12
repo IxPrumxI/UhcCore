@@ -32,7 +32,7 @@ public class TimeBeforeSendBungeeThread implements Runnable{
 
 			if(remainingTime <=10 || remainingTime%10 == 0){
 				player.sendMessage(Lang.PLAYERS_SEND_BUNGEE.replace("%time%",TimeUtils.getFormattedTime(remainingTime)));
-				playerManager.playsoundTo(uhcPlayer, UniversalSound.CLICK);
+				playerManager.playSoundTo(uhcPlayer, UniversalSound.CLICK.getSound());
 			}
 
 			if(remainingTime <= 0){

@@ -21,6 +21,7 @@ import com.gmail.val59000mc.scenarios.ScenarioManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 
 public class MainConfig extends YamlFile {
@@ -75,6 +76,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> ENABLE_GOLDEN_HEADS = new BasicOption<>("customize-game-behavior.enable-golden-heads",false);
 	public static final BasicOption<Boolean> PLACE_HEAD_ON_FENCE = new BasicOption<>("customize-game-behavior.place-head-on-fence",false);
 	public static final BasicOption<Boolean> STRIKE_LIGHTNING_ON_DEATH = new BasicOption<>("customize-game-behavior.stike-lightning-on-death",true);
+	public static final BasicOption<String> DEATH_SOUND = new BasicOption<>("customize-game-behavior.death-sound", "ENTITY_WITHER_SPAWN");
 	public static final BasicOption<Boolean> ALLOW_GHAST_TEARS_DROPS = new BasicOption<>("customize-game-behavior.allow-ghast-tears-drops",true);
 	public static final BasicOption<Integer> MAX_BUILDING_HEIGHT = new BasicOption<>("customize-game-behavior.max-building-height", -1);
 	public static final BasicOption<Boolean> ENABLE_NETHER = new BasicOption<>("customize-game-behavior.enable-nether",false);

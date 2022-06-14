@@ -1,50 +1,46 @@
 package com.gmail.val59000mc.commands;
 
-import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
-import com.gmail.val59000mc.game.GameManager;
-import com.gmail.val59000mc.languages.Lang;
-import com.gmail.val59000mc.players.PlayerManager;
-import com.gmail.val59000mc.players.UhcPlayer;
-import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+
+import com.gmail.val59000mc.exceptions.UhcPlayerDoesNotExistException;
+import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
+import com.gmail.val59000mc.players.PlayerManager;
+import com.gmail.val59000mc.players.UhcPlayer;
 
 public class HealCommandExecutor implements CommandExecutor {
-	private final PlayerManager playerManager;
-	private final GameManager gameManager;
 
-	public HealCommandExecutor(PlayerManager playerManager, GameManager gameManager) {
+	private final PlayerManager playerManager;
+
+	public HealCommandExecutor(PlayerManager playerManager) {
 		this.playerManager = playerManager;
-		this.gameManager = gameManager;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (sender.hasPermission("uhc-core.commands.heal")) {
-			if (args.length == 0) { // heal all players
-				for (UhcPlayer uhcPlayer : this.playerManager.getOnlinePlayingPlayers()) {
+			if (args.length == 0) { // Heal all players
+				for (UhcPlayer player : this.playerManager.getOnlinePlayingPlayers()) {
 					try {
-						Player bukkitPlayer = uhcPlayer.getPlayer();
-						bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth());
-					} catch (UhcPlayerNotOnlineException ex) {
-						// no heal for offline players
+						player.healFully();
+					} catch (UhcPlayerNotOnlineException ignored) {
+						// Should not happen
 					}
 				}
-				this.gameManager.broadcastInfoMessage(Lang.GAME_FINAL_HEAL);
-			} else if (args.length == 1) { // heal 1 player
-				Player player = Bukkit.getPlayer(args[0]);
-				if (player != null) { // player found
-					player.setHealth(player.getMaxHealth());
-					sender.sendMessage(args[0] + " has been healed.");
-				} else { // player not found
-					sender.sendMessage(args[0] + " not found.");
+			} else if (args.length == 1) { // Heal 1 player
+				final String playerName = args[0];
+				try {
+					playerManager.getUhcPlayer(playerName).healFully();
+				} catch (UhcPlayerDoesNotExistException | UhcPlayerNotOnlineException ignored) {
+					sender.sendMessage(ChatColor.RED + "Player '" + playerName + "' not found");
 				}
-			} else {
-				sender.sendMessage("Please specify one player to heal");
+			} else { // Invalid usage
+				sender.sendMessage("Usage: " + command.getUsage().replace("<command>", label));
 			}
 		}
 		return true;
 	}
+
 }

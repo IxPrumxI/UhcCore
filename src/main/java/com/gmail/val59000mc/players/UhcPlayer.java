@@ -397,4 +397,10 @@ public class UhcPlayer {
 		this.browsingPage = browsingPage;
 	}
 
+	@SuppressWarnings("deprecation") // Can't use attributes in 1.8
+	public void healFully() throws UhcPlayerNotOnlineException {
+		final Player player = getPlayer();
+		player.setHealth(player.getMaxHealth());
+	}
+
 }

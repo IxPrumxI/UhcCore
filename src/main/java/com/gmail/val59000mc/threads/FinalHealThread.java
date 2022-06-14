@@ -5,7 +5,6 @@ import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
-import org.bukkit.entity.Player;
 
 public class FinalHealThread implements Runnable{
 
@@ -19,13 +18,11 @@ public class FinalHealThread implements Runnable{
 
 	@Override
 	public void run() {
-
-		for (UhcPlayer uhcPlayer : playerManager.getOnlinePlayingPlayers()){
+		for (UhcPlayer player : playerManager.getOnlinePlayingPlayers()){
 			try {
-				Player bukkitPlayer = uhcPlayer.getPlayer();
-				bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth());
-			}catch (UhcPlayerNotOnlineException ex){
-				// no heal for offline players
+				player.healFully();
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Should not happen
 			}
 		}
 

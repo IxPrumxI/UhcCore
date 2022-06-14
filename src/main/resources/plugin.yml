@@ -68,3 +68,7 @@ commands:
   team:
     description: "Used to manage teams."
     usage: /<command> <sub-command>
+  heal:
+    description: "Heals a player. If no player is specified, heals all players."
+    usage: /<command> [player]
+    permission: "uhc-core.commands.heal"

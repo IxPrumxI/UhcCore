@@ -94,7 +94,7 @@ https://gitlab.com/api/v4/groups/uhccore/-/packages/maven
 The Maven coordinates of the plugin JAR are:
 
 ```
-net.zerodind:uhccore:1.20.0
+net.zerodind:uhccore:1.20.1
 ```
 
 Keep in mind that there is neither any complete documentation nor any

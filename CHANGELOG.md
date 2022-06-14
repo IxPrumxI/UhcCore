@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.20.1] - 2022-06-14
+
+### New features
+
+- Updated the plugin to support Minecraft 1.19
+- Added the `player-death-sound` option (see `config.yml` for more details)
+- Added the `/heal` command (see `/help heal` for more details)
+  - Permission name: `uhc-core.commands.heal`
+
+### Bug fixes
+
+- Fixed a missing error message for the `/teaminventory` command
+
 ## [1.20.0] - 2022-06-08
 
 For older releases and changelogs, see

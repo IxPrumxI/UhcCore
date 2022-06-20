@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- Fixed a scenario error message where "Silent Night" was incorrectly named "Anonymous"
+
 ## [1.20.1] - 2022-06-14
 
 ### New features

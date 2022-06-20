@@ -504,7 +504,10 @@ public class ItemsListener implements Listener {
 			player.openInventory(scenarioManager.getScenarioEditInventory(uhcPlayer.getBrowsingPage()));
 		}else if (voteInventory){
 			// Clicked scenario
-			Scenario scenario = scenarioManager.getScenarioByName(meta.getDisplayName()).orElse(null);
+			final Scenario scenario = scenarioManager.getScenarioByName(meta.getDisplayName()).orElse(null);
+			if (scenario == null) {
+				return; // Player clicked on a menu item in the hotbar, ignore
+			}
 
 			// toggle scenario
 			if (uhcPlayer.getScenarioVotes().contains(scenario)){

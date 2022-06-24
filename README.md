@@ -80,6 +80,11 @@ Until then, the wiki pages from the previous plugin maintainer can be found at
 <https://github.com/Mezy/UhcCore/wiki>, and you are welcome with your
 questions on [the Discord server][discord-invite].
 
+An extensive list of configuration options (with comments) can be found
+in the [default configuration files][config-files].
+
+[config-files]: https://gitlab.com/uhccore/uhccore/-/tree/main/src/main/resources
+
 ## UhcCore API
 
 There is currently no formal API for UhcCore, but several UhcCore plugins have

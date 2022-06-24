@@ -23,11 +23,13 @@ release:
   rules:
     - if: $CI_COMMIT_TAG
   script:
-    - echo "Running release job for tag $CI_COMMIT_TAG"
+    - echo "Extracting changelog entry for $CI_COMMIT_TAG"
+    - echo -e "# Changelog\n" > CHANGELOG_ENTRY.md
+    - awk -v tag="$CI_COMMIT_TAG" '/^## *\[.+\]/ { i=index($0,tag); l=length(tag); if (i>0 && substr($0,i+l,1)=="]") keep=1; else keep=0; } keep' CHANGELOG.md >> CHANGELOG_ENTRY.md
   release:
     tag_name: $CI_COMMIT_TAG
     name: UhcCore $CI_COMMIT_TAG
-    description: ./CHANGELOG.md
+    description: ./CHANGELOG_ENTRY.md
     assets:
       links:
         - name: uhccore-$CI_COMMIT_TAG.jar

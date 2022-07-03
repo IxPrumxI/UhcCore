@@ -8,6 +8,7 @@ import org.bukkit.Location;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Schematic {
@@ -96,9 +97,8 @@ public class Schematic {
 
 			build = true;
 		} catch (Exception e) {
+			LOGGER.log(Level.WARNING, "An error occurred while pasting the schematic " + schematicFile.getPath(), e);
 			build = false;
-			LOGGER.severe("An error occurred while pasting the schematic " + schematicFile.getPath());
-			e.printStackTrace();
 			return;
 		}
 

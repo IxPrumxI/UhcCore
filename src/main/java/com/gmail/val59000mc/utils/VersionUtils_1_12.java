@@ -32,6 +32,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings("deprecation")
@@ -117,7 +118,7 @@ public class VersionUtils_1_12 extends VersionUtils{
 			Method setData = NMSUtils.getMethod(Block.class, "setData",1);
 			setData.invoke(block, data);
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to set block data", ex);
 		}
 	}
 
@@ -239,9 +240,8 @@ public class VersionUtils_1_12 extends VersionUtils{
 			d.set(registryId, array);
 
 			LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
-		} catch (Exception ex){
-			LOGGER.warning("Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
-			ex.printStackTrace();
+		} catch (ReflectiveOperationException ex) {
+			LOGGER.log(Level.WARNING, "Failed to remove recipe for item "+JsonItemUtils.getItemJson(item), ex);
 		}
 	}
 
@@ -276,7 +276,7 @@ public class VersionUtils_1_12 extends VersionUtils{
 				event.setTo(to);
 			}
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to handle nether portal event", ex);
 		}
 	}
 

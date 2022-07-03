@@ -93,9 +93,6 @@ public class UhcCommandExecutor implements CommandExecutor{
 					}catch(IllegalArgumentException e){
 						sender.sendMessage(args[2]+" is not a valid player state");
 						return true;
-					}catch(Exception e){
-						sender.sendMessage(e.getMessage());
-						return true;
 					}
 				}else {
 					sender.sendMessage("Invalid playerstate command");

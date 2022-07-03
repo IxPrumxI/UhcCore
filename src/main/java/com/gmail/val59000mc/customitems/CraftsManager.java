@@ -25,6 +25,7 @@ import org.bukkit.material.MaterialData;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CraftsManager {
@@ -52,8 +53,8 @@ public class CraftsManager {
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "crafts.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load crafts.yml", ex);
 			return;
 		}
 
@@ -63,8 +64,7 @@ public class CraftsManager {
 			try {
 				bannedItems.add(JsonItemUtils.getItemFromJson(itemLine));
 			}catch (ParseException ex){
-				LOGGER.warning("Failed to register "+itemLine+" banned craft");
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Failed to register "+itemLine+" banned craft", ex);
 			}
 		}
 
@@ -79,8 +79,8 @@ public class CraftsManager {
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "crafts.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load crafts.yml", ex);
 			return;
 		}
 
@@ -96,7 +96,7 @@ public class CraftsManager {
 		for(String name : craftsKeys){
 			ConfigurationSection section = cfg.getConfigurationSection("custom-crafts."+name);
 			if (section == null){
-				LOGGER.severe("custom-crafts."+name + " section does not exist!");
+				LOGGER.warning("custom-crafts." + name + " section does not exist");
 				continue;
 			}
 
@@ -154,8 +154,7 @@ public class CraftsManager {
 				crafts.add(craft);
 			}catch(IllegalArgumentException | ParseException e){
 				//ignore craft if bad formatting
-				LOGGER.warning("Failed to register "+name+" custom craft : syntax error");
-				LOGGER.warning(e.getMessage());
+				LOGGER.log(Level.WARNING, "Failed to register "+name+" custom craft : syntax error", e);
 			}
 
 		}
@@ -166,8 +165,8 @@ public class CraftsManager {
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "crafts.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load crafts.yml", ex);
 			return;
 		}
 
@@ -213,7 +212,7 @@ public class CraftsManager {
 		try {
 			cfg.saveWithComments();
 		}catch (IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to save crafts.yml", ex);
 		}
 	}
 

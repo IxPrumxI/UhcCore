@@ -24,7 +24,7 @@ public class SuperHeroesListener extends ScenarioListener{
 
 		try {
 			player = uhcPlayer.getPlayer();
-		}catch (UhcPlayerNotOnlineException ex){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// No effect for offline player
 			return;
 		}

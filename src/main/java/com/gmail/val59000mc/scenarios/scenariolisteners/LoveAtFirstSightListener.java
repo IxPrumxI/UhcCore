@@ -91,8 +91,8 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 				try {
 					Player bukkitPlayer = player.getPlayer();
 					bukkitPlayer.getWorld().dropItem(bukkitPlayer.getLocation(), item);
-				}catch (UhcPlayerNotOnlineException ex){
-					ex.printStackTrace();
+				} catch (UhcPlayerNotOnlineException ignored) {
+					// Shouldn't happen
 				}
 			}
 		}

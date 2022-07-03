@@ -31,6 +31,7 @@ import org.bukkit.scoreboard.Team;
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings("deprecation")
@@ -114,8 +115,8 @@ public class VersionUtils_1_8 extends VersionUtils{
 		try {
 			Method setData = NMSUtils.getMethod(Block.class, "setData",1);
 			setData.invoke(block, data);
-		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+		} catch (ReflectiveOperationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to set block data", ex);
 		}
 	}
 
@@ -132,9 +133,9 @@ public class VersionUtils_1_8 extends VersionUtils{
 			Object tileChest = getTileEntity.invoke(chest);
 			Method a = NMSUtils.getMethod(tileChest.getClass(), "a", String.class);
 			a.invoke(tileChest, name);
-		}catch (Exception ex){ // todo find a way to change the chest name on other versions up to 1.11
-			LOGGER.severe("Failed to rename chest! Are you on 1.9-1.11?");
-			ex.printStackTrace();
+		} catch (ReflectiveOperationException e) {
+			// TODO: find a way to change the chest name on other versions up to 1.11
+			LOGGER.log(Level.WARNING, "Failed to rename chest", e);
 		}
 	}
 
@@ -168,16 +169,11 @@ public class VersionUtils_1_8 extends VersionUtils{
 	public void removeRecipe(ItemStack item, Recipe recipe){
 		Iterator<Recipe> iterator = Bukkit.recipeIterator();
 
-		try {
-			while (iterator.hasNext()){
-				if (iterator.next().getResult().isSimilar(item)){
-					iterator.remove();
-					LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
-				}
+		while (iterator.hasNext()){
+			if (iterator.next().getResult().isSimilar(item)){
+				iterator.remove();
+				LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
 			}
-		}catch (Exception ex){
-			LOGGER.warning("Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
-			ex.printStackTrace();
 		}
 	}
 
@@ -212,7 +208,7 @@ public class VersionUtils_1_8 extends VersionUtils{
 				event.setTo(to);
 			}
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to handle nether portal event", ex);
 		}
 	}
 
@@ -262,9 +258,9 @@ public class VersionUtils_1_8 extends VersionUtils{
 			c.invoke(mcEntity, tag);
 			setInt.invoke(tag, "NoAI", b?0:1);
 			f.invoke(mcEntity, tag);
-		}catch (Exception ex){
+		} catch (ReflectiveOperationException ex) {
 			// This will only work on 1.8 (Not 1.9-1.11, 0.5% of servers)
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to set entity AI", ex);
 		}
 	}
 
@@ -297,7 +293,7 @@ public class VersionUtils_1_8 extends VersionUtils{
 			Method setUnbreakable = NMSUtils.getMethod(spigotInstance.getClass(), "setUnbreakable", boolean.class);
 			setUnbreakable.invoke(spigotInstance, b);
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to make item unbreakable", ex);
 		}
 	}
 

@@ -7,6 +7,7 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class ChunkLoaderThread implements Runnable {
@@ -49,8 +50,11 @@ public abstract class ChunkLoaderThread implements Runnable {
 				}else {
 					Bukkit.getScheduler().runTask(UhcCore.getPlugin(), () -> onDoneLoadingChunk(chunk));
 				}
-			} catch (InterruptedException | ExecutionException e) {
-				e.printStackTrace();
+			} catch (InterruptedException e) {
+				LOGGER.log(Level.WARNING, "Chunk loader interrupted", e);
+				return;
+			} catch (ExecutionException e) {
+				LOGGER.log(Level.WARNING, "Unable to load chunk", e);
 			}
 
 			loaded++;

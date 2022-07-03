@@ -21,8 +21,12 @@ import org.bukkit.entity.Player;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProtocolUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(ProtocolUtils.class.getCanonicalName());
 
 	private static ProtocolUtils protocolUtils;
 
@@ -56,7 +60,7 @@ public class ProtocolUtils{
 
 					try {
 						uhcPlayer = pm.getUhcPlayer(profile.getUUID());
-					}catch (UhcPlayerDoesNotExistException ex){ // UhcPlayer does not exist
+					} catch (UhcPlayerDoesNotExistException ignored) {
 						newPlayerInfoDataList.add(playerInfoData);
 						continue;
 					}
@@ -98,7 +102,7 @@ public class ProtocolUtils{
 		try {
 			// Make the player disappear and appear to update their name.
 			updatePlayer(uhcPlayer.getPlayer());
-		}catch (UhcPlayerNotOnlineException ex){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// Don't update offline players
 		}
 	}
@@ -116,7 +120,7 @@ public class ProtocolUtils{
 		try {
 			ProtocolLibrary.getProtocolManager().sendServerPacket(player, packet);
 		}catch (InvocationTargetException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to set tab header/footer", ex);
 		}
 	}
 

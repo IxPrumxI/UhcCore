@@ -23,7 +23,7 @@ public class BlocksToTeamLeader extends Placeholder {
 		try {
 			int distance = ((Double) teamMember.getPlayer().getLocation().distance(player.getLocation())).intValue();
 			return String.valueOf(distance);
-		}catch (UhcPlayerNotOnlineException ex){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			return "?";
 		}
 	}

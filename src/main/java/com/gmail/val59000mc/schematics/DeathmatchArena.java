@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DeathmatchArena extends Schematic {
@@ -47,7 +48,7 @@ public class DeathmatchArena extends Schematic {
 			if(isBuild()){
 				calculateTeleportSpots();
 			}else{
-				LOGGER.severe("Deathmatch will be at 0 0 as the arena could not be pasted.");
+				LOGGER.warning("Deathmatch will be at 0 0 as the arena could not be pasted.");
 				enable = false;
 			}
 		}
@@ -67,8 +68,8 @@ public class DeathmatchArena extends Schematic {
 
 		try{
 			storage = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		} catch (IOException | InvalidConfigurationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
 			return;
 		}
 
@@ -115,7 +116,7 @@ public class DeathmatchArena extends Schematic {
 			try {
 				storage.save();
 			}catch (IOException ex){
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to save storage.yml", ex);
 			}
 		}
 

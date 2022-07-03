@@ -12,8 +12,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MojangUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(MojangUtils.class.getCanonicalName());
 
 	public static UUID getPlayerUuid(String name){
 		if (Bukkit.isPrimaryThread()){
@@ -37,7 +41,7 @@ public class MojangUtils{
 			String stringUuid = json.getAsJsonObject().get("id").getAsString();
 			return insertDashUUID(stringUuid);
 		}catch (IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to get player UUID", ex);
 			return null;
 		}
 	}
@@ -63,7 +67,7 @@ public class MojangUtils{
 
 			return json.getAsJsonObject().get("name").getAsString();
 		}catch (IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to get player name", ex);
 			return name;
 		}
 	}
@@ -86,7 +90,7 @@ public class MojangUtils{
 
 			return names.get(names.size()-1).getAsJsonObject().get("name").getAsString();
 		}catch (IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to get player name", ex);
 			return null;
 		}
 	}

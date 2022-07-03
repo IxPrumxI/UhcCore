@@ -6,6 +6,7 @@ import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
@@ -16,6 +17,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Lang{
@@ -212,8 +214,7 @@ public class Lang{
 			try {
 				langFile.createNewFile();
 			}catch (IOException ex){
-				LOGGER.severe("Failed to create " + langFile.toString());
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to create lang.yml", ex);
 				return;
 			}
 		}
@@ -223,8 +224,8 @@ public class Lang{
 
 		try{
 			lang = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "lang.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load lang.yml", ex);
 			return;
 		}
 
@@ -451,8 +452,7 @@ public class Lang{
 			try {
 				lang.save(langFile);
 			} catch (IOException ex) {
-				LOGGER.severe("Failed to edit " + langFile.toString());
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to save lang.yml", ex);
 			}
 		}
 	}
@@ -461,7 +461,7 @@ public class Lang{
 		String string = ChatColor.translateAlternateColorCodes('&', lang.getString(path, def));
 
 		if (maxLenth != -1 && string.length() > maxLenth){
-			LOGGER.severe("The message " + path + " is too long, max length is " + maxLenth + " characters!");
+			LOGGER.warning("The message " + path + " is too long, max length is " + maxLenth + " characters");
 			string = string.substring(0, maxLenth);
 		}
 
@@ -500,8 +500,8 @@ public class Lang{
 			JsonObject json = new JsonParser().parse(new InputStreamReader(in)).getAsJsonObject();
 			in.close();
 			return json;
-		}catch (Exception ex){
-			ex.printStackTrace();
+		}catch (IOException | JsonParseException ex){
+			LOGGER.log(Level.WARNING, "Unable to load scenario descriptions", ex);
 		}
 
 		return new JsonObject();

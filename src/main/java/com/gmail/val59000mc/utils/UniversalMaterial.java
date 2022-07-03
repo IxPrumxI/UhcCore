@@ -200,10 +200,10 @@ public enum UniversalMaterial{
 		if (material == null) {
 			try {
 				material = Material.valueOf(name13);
-			}catch (IllegalArgumentException ex) {
+			} catch (IllegalArgumentException ignored1) {
 				try {
 					material = Material.valueOf(name8);
-				}catch (IllegalArgumentException ex2) {
+				} catch (IllegalArgumentException ignored2) {
 					// 1.9+ item on 1.8 server.
 				}
 			}

@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Difficulty;
@@ -243,7 +244,7 @@ public class MainConfig extends YamlFile {
 			try {
 				saveWithComments();
 			} catch (IOException ex) {
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to save config file", ex);
 			}
 		}
 	}
@@ -284,7 +285,7 @@ public class MainConfig extends YamlFile {
 					options.add((Option<?>) obj);
 				}
 			}catch (ReflectiveOperationException ex){
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to get option fields", ex);
 			}
 		}
 

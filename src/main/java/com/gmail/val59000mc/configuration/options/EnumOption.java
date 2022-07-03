@@ -1,5 +1,6 @@
 package com.gmail.val59000mc.configuration.options;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.Validate;
@@ -36,8 +37,7 @@ public class EnumOption<T extends Enum<T>> implements Option<T> {
 			Validate.notNull(enumType, "No enum type specified!");
 			return Enum.valueOf(type, enumType);
 		}catch (IllegalArgumentException ex){
-			LOGGER.severe("Invalid enum type " + enumType);
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Invalid enum constant name", ex);
 			return def;
 		}
 	}

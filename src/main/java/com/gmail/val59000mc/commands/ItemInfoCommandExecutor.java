@@ -1,6 +1,5 @@
 package com.gmail.val59000mc.commands;
 
-import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.exceptions.ParseException;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.JsonItemStack;
@@ -18,8 +17,12 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ItemInfoCommandExecutor implements CommandExecutor{
+
+	private static final Logger LOGGER = Logger.getLogger(ItemInfoCommandExecutor.class.getCanonicalName());
 
 	private static final boolean DEBUG = false;
 
@@ -95,7 +98,7 @@ public class ItemInfoCommandExecutor implements CommandExecutor{
 				url = FileUtils.uploadTextFile(new StringBuilder(json));
 			}catch (IOException ex){
 				player.sendMessage(ChatColor.RED + "Failed to upload item json to paste bin, check console for more detail.");
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Failed to upload item JSON", ex);
 				return;
 			}
 

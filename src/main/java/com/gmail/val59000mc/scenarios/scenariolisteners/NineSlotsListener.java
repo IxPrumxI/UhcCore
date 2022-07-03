@@ -30,8 +30,8 @@ public class NineSlotsListener extends ScenarioListener{
 	public void onGameStarted(PlayerStartsPlayingEvent e){
 		try{
 			fillInventory(e.getUhcPlayer().getPlayer());
-		}catch (UhcPlayerNotOnlineException ex){
-			ex.printStackTrace();
+		} catch (UhcPlayerNotOnlineException ignored) {
+			// Player offline, ignoring
 		}
 	}
 

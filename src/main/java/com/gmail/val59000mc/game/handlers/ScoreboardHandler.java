@@ -285,8 +285,9 @@ public class ScoreboardHandler {
 
 		try {
 			player = uhcPlayer.getPlayer();
-		}catch (UhcPlayerNotOnlineException ex) {
-			throw new RuntimeException(ex);
+		}catch (UhcPlayerNotOnlineException ignored) {
+			// Player left while updating sidebar
+			return;
 		}
 
 		int i = 0;

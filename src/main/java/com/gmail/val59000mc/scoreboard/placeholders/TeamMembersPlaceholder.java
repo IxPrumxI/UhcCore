@@ -52,7 +52,7 @@ public class TeamMembersPlaceholder extends Placeholder {
 
 			try {
 				return String.valueOf((int) teamMembers.get(showPlayer).getPlayer().getHealth());
-			}catch (UhcPlayerNotOnlineException ex){
+			} catch (UhcPlayerNotOnlineException ignored) {
 				return "?";
 			}
 		}

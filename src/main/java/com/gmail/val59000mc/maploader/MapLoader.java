@@ -199,8 +199,8 @@ public class MapLoader {
 
 		try{
 			storage = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
 			return;
 		}
 
@@ -208,7 +208,7 @@ public class MapLoader {
 		try {
 			storage.save();
 		}catch (IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to save storage.yml", ex);
 		}
 
 		wc.type(WorldType.NORMAL);
@@ -237,8 +237,8 @@ public class MapLoader {
 
 		try{
 			storage = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
 			return;
 		}
 
@@ -445,7 +445,7 @@ public class MapLoader {
 			}
 		}
 		catch (Exception ex) {
-			// Please handle all the relevant exceptions here
+			LOGGER.log(Level.WARNING, "Unable to copy files", ex);
 		}
 	}
 

@@ -19,7 +19,7 @@ public class SpigotUtils{
 	public static void sendMessage(UhcPlayer uhcPlayer, String message, String hover, String event, Action action){
 		try{
 			sendMessage(uhcPlayer.getPlayer(), message, hover, event, action);
-		}catch (UhcPlayerNotOnlineException ex){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// No messages for offline players
 		}
 	}

@@ -39,7 +39,7 @@ public class TimeBeforeSendBungeeThread implements Runnable{
 				playerManager.sendPlayerToBungeeServer(player);
 			}
 
-		} catch (UhcPlayerNotOnlineException e) {
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// nothing to do for offline players
 		}
 

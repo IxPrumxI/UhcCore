@@ -18,9 +18,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class KitsManager{
@@ -53,8 +55,8 @@ public class KitsManager{
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "kits.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load kits.yml", ex);
 			return;
 		}
 
@@ -108,9 +110,7 @@ public class KitsManager{
 
 			// IllegalArgumentException, Thrown by builder.build() when kit has no items.
 			}catch(ParseException | IllegalArgumentException ex){
-				LOGGER.severe("Kit "+kitKey+" was disabled because of an error of syntax.");
-				System.out.println(ex.getMessage());
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to load kit "+kitKey+" because of a syntax error", ex);
 			}
 		}
 

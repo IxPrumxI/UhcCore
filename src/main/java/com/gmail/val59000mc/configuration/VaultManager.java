@@ -30,7 +30,7 @@ public class VaultManager {
 		if (economyProvider != null) {
 			economy = economyProvider.getProvider();
 		}else{
-			LOGGER.severe("Error trying to load economy provider. Check that you have a economy plugin installed");
+			LOGGER.warning("Error trying to load economy provider. Check that you have a economy plugin installed");
 		}
 	}
 

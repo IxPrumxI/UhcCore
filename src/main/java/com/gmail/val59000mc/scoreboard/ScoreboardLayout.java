@@ -7,8 +7,10 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ScoreboardLayout {
@@ -26,8 +28,8 @@ public class ScoreboardLayout {
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "scoreboard.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		} catch (IOException | InvalidConfigurationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to load scoreboard.yml", ex);
 
 			// Set default values.
 			waiting = new ArrayList<>();

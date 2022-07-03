@@ -38,6 +38,7 @@ import org.bukkit.scoreboard.Team;
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VersionUtils_1_13 extends VersionUtils{
@@ -165,16 +166,11 @@ public class VersionUtils_1_13 extends VersionUtils{
 	public void removeRecipe(ItemStack item, Recipe recipe){
 		Iterator<Recipe> iterator = Bukkit.recipeIterator();
 
-		try {
-			while (iterator.hasNext()){
-				if (iterator.next().getResult().isSimilar(item)){
-					iterator.remove();
-					LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
-				}
+		while (iterator.hasNext()){
+			if (iterator.next().getResult().isSimilar(item)){
+				iterator.remove();
+				LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
 			}
-		}catch (Exception ex){
-			LOGGER.warning("Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
-			ex.printStackTrace();
 		}
 	}
 
@@ -209,7 +205,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 				event.setTo(to);
 			}
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to handle nether portal event", ex);
 		}
 	}
 
@@ -295,7 +291,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 
 		try{
 			namespace = NamespacedKey.minecraft(key);
-		}catch (IllegalArgumentException ex){
+		} catch (IllegalArgumentException ignored) {
 			return null;
 		}
 

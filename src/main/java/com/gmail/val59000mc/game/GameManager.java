@@ -274,7 +274,7 @@ public class GameManager{
 			config.setConfigurationFile(configFile);
 			config.load();
 		}catch (InvalidConfigurationException | IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to load config.yml", ex);
 			return;
 		}
 

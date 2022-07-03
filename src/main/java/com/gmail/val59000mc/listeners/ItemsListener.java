@@ -298,8 +298,8 @@ public class ItemsListener implements Listener {
 
 					// Update player tab
 					scoreboardHandler.updatePlayerOnTab(uhcPlayer);
-				}catch (UhcTeamException ex){
-					uhcPlayer.sendMessage(ex.getMessage());
+				} catch (UhcTeamException ignored) {
+					uhcPlayer.sendMessage(Lang.TEAM_MESSAGE_CANT_LEAVE);
 				}
 				break;
 			case TEAM_LIST:

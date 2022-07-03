@@ -2,6 +2,7 @@ package com.gmail.val59000mc.scenarios.scenariolisteners;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.customitems.UhcItems;
+import com.gmail.val59000mc.exceptions.ParseException;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.*;
 import com.gmail.val59000mc.configuration.YamlFile;
@@ -15,8 +16,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FlowerPowerListener extends ScenarioListener{
@@ -53,8 +56,8 @@ public class FlowerPowerListener extends ScenarioListener{
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "flowerpower.yml", source);
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		} catch (IOException | InvalidConfigurationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to load flowerpower.yml", ex);
 			return;
 		}
 
@@ -64,9 +67,8 @@ public class FlowerPowerListener extends ScenarioListener{
 			try {
 				JsonItemStack flowerDrop = JsonItemUtils.getItemFromJson(drop);
 				flowerDrops.add(flowerDrop);
-			}catch (Exception ex){
-				LOGGER.severe("Failed to parse FlowerPower item: "+drop+"!");
-				LOGGER.severe(ex.getMessage());
+			} catch (ParseException ex) {
+				LOGGER.log(Level.WARNING, "Failed to parse FlowerPower item: " + drop, ex);
 			}
 		}
 	}

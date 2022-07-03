@@ -10,8 +10,12 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NMSUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(NMSUtils.class.getCanonicalName());
 
 	private final static String version = getVersion();
 
@@ -29,7 +33,7 @@ public class NMSUtils{
 		try{
 			return getMethod(craftObject.getClass(), "getHandle").invoke(craftObject);
 		}catch (ReflectiveOperationException | IllegalArgumentException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to get NMS handle", ex);
 			return null;
 		}
 	}
@@ -97,7 +101,7 @@ public class NMSUtils{
 	public static Class<?> getNMSClass(String name) throws ClassNotFoundException{
 		try{
 			return getClassWithException(name);
-		}catch (ClassNotFoundException ex1){
+		} catch (ClassNotFoundException ignored) {
 			// Continue and try craft class
 		}
 

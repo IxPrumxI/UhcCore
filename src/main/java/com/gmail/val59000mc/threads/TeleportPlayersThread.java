@@ -32,7 +32,7 @@ public class TeleportPlayersThread implements Runnable{
 			Player player;
 			try {
 				player = uhcPlayer.getPlayer();
-			}catch (UhcPlayerNotOnlineException ex){
+			} catch (UhcPlayerNotOnlineException ignored) {
 				continue;
 			}
 

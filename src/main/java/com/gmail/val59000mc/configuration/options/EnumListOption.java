@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EnumListOption<T extends Enum<T>> implements Option<List<T>> {
@@ -27,8 +28,7 @@ public class EnumListOption<T extends Enum<T>> implements Option<List<T>> {
 			try {
 				enumList.add(Enum.valueOf(type, s));
 			}catch (IllegalArgumentException ex){
-				LOGGER.severe("Invalid enum type " + s);
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Invalid enum constant name", ex);
 			}
 		}
 

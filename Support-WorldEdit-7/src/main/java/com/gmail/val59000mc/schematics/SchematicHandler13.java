@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SchematicHandler13{
@@ -65,6 +66,7 @@ public class SchematicHandler13{
 			setTickingWatchdog.invoke(session, true);
 		}catch (ReflectiveOperationException ex){
 			// Couldn't turn on watchdog, old WorldEdit version?
+			LOGGER.log(Level.FINE, "Unable to enable watchdog", ex);
 		}
 	}
 

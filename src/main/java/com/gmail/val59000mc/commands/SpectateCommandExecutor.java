@@ -8,12 +8,18 @@ import com.gmail.val59000mc.game.handlers.ScoreboardHandler;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerState;
 import com.gmail.val59000mc.players.UhcPlayer;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SpectateCommandExecutor implements CommandExecutor{
+
+	private static final Logger LOGGER = Logger.getLogger(SpectateCommandExecutor.class.getCanonicalName());
 
 	private final GameManager gameManager;
 	private final ScoreboardHandler scoreboardHandler;
@@ -60,7 +66,7 @@ public class SpectateCommandExecutor implements CommandExecutor{
 			try {
 				uhcPlayer.getTeam().leave(uhcPlayer);
 			}catch (UhcTeamException ex){
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to leave team", ex);
 			}
 		}
 

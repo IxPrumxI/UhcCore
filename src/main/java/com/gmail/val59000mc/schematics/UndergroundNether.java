@@ -3,6 +3,7 @@ package com.gmail.val59000mc.schematics;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.utils.RandomUtils;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
@@ -20,7 +21,7 @@ public class UndergroundNether extends Schematic {
 
 	public void build(MainConfig cfg, World world){
 		if (!canBePasted()){
-			LOGGER.severe("Worldedit not installed or nether schematic not found in 'plugins/UhcCore/nether.schematic'. There will be no underground nether");
+			LOGGER.warning("Worldedit not installed or nether schematic not found in 'plugins/UhcCore/nether.schematic'. There will be no underground nether");
 			return;
 		}
 
@@ -37,9 +38,8 @@ public class UndergroundNether extends Schematic {
 				// to do find loc
 				build(randLoc);
 			} catch (Exception e) {
-				LOGGER.severe("Couldn't paste nether schematic at "+
-						randLoc.getBlockX()+" "+randLoc.getBlockY()+" "+randLoc.getBlockZ());
-				e.printStackTrace();
+				LOGGER.log(Level.WARNING, "Couldn't paste nether schematic at "
+					+ randLoc.getBlockX() + " " + randLoc.getBlockY() + " " + randLoc.getBlockZ(), e);
 			}
 		}
 	}

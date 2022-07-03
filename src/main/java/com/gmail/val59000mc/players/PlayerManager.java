@@ -127,7 +127,7 @@ public class PlayerManager {
 		try {
 			getUhcPlayer(player.getUniqueId());
 			return true;
-		}catch (UhcPlayerDoesNotExistException ex){
+		} catch (UhcPlayerDoesNotExistException ingored) {
 			return false;
 		}
 	}
@@ -228,8 +228,8 @@ public class PlayerManager {
 
 						try{
 							uhcPlayer.getTeam().setStartingLocation(teamMate.getPlayer().getLocation());
-						}catch (UhcPlayerNotOnlineException ex){
-							ex.printStackTrace();
+						} catch (UhcPlayerNotOnlineException ingored) {
+							// Should not happen
 						}
 					}
 
@@ -285,6 +285,7 @@ public class PlayerManager {
 					// Update player tab
 					scoreboardHandler.updatePlayerOnTab(uhcPlayer);
 				} catch (UhcTeamException ignored) {
+					// Should not happen
 				}
 				break;
 			}
@@ -307,7 +308,7 @@ public class PlayerManager {
 			player.setExp(0);
 
 			UhcItems.giveLobbyItemsTo(player);
-		} catch (UhcPlayerNotOnlineException e) {
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// Do nothing because WAITING is a safe state
 		}
 
@@ -345,7 +346,7 @@ public class PlayerManager {
 					uhcPlayer.getStoredItems().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
 					uhcPlayer.getStoredItems().clear();
 				}
-			} catch (UhcPlayerNotOnlineException e) {
+			} catch (UhcPlayerNotOnlineException ignored) {
 				// Nothing done
 			}
 		}
@@ -388,7 +389,7 @@ public class PlayerManager {
 				Location loc = gm.getMapLoader().getUhcWorld(World.Environment.NORMAL).getBlockAt(0, 100, 0).getLocation();
 				player.teleport(loc);
 			}
-		} catch (UhcPlayerNotOnlineException e) {
+		} catch (UhcPlayerNotOnlineException ingored) {
 			// Do nothing because DEAD is a safe state
 		}
 	}
@@ -431,8 +432,8 @@ public class PlayerManager {
 				Player connected = player.getPlayer();
 				if(connected.isOnline() && player.getState().equals(PlayerState.PLAYING))
 					winners.add(player);
-			}catch(UhcPlayerNotOnlineException e){
-				// not adding the player to winner list
+			} catch (UhcPlayerNotOnlineException ingored) {
+				// Player is offline, not adding to winner list
 			}
 		}
 		return winners;
@@ -500,7 +501,7 @@ public class PlayerManager {
 		Location loc;
 		try{
 			loc = uhcPlayer.getPlayer().getLocation();
-		}catch(UhcPlayerNotOnlineException e){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			loc = new Location(GameManager.getGameManager().getMapLoader().getUhcWorld(World.Environment.NORMAL),0, 200,0);
 		}
 
@@ -554,7 +555,7 @@ public class PlayerManager {
 						player.getPlayer();
 						playingPlayersOnline++;
 						teamIsOnline = 1;
-					}catch(UhcPlayerNotOnlineException e){
+					} catch (UhcPlayerNotOnlineException ignored) {
 						// Player isn't online
 					}
 				}
@@ -653,7 +654,7 @@ public class PlayerManager {
 
 		try{
 			uhcPlayer = getUhcPlayer(uuid);
-		}catch (UhcPlayerDoesNotExistException ex){
+		} catch (UhcPlayerDoesNotExistException ignored) {
 			uhcPlayer = newUhcPlayer(uuid, name);
 		}
 
@@ -672,7 +673,7 @@ public class PlayerManager {
 
 		try{
 			playerJoinsTheGame(uhcPlayer.getPlayer());
-		}catch (UhcPlayerNotOnlineException ex){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// Player gets revived next time they attempt to join.
 		}
 	}

@@ -2,6 +2,7 @@ package com.gmail.val59000mc.configuration;
 
 import com.gmail.val59000mc.utils.ProtocolUtils;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -44,20 +45,18 @@ public class Dependencies {
 	public static void loadProtocolLib(){
 		Plugin protocolLib = Bukkit.getPluginManager().getPlugin("ProtocolLib");
 		if(protocolLib == null || !protocolLib.getClass().getName().equals("com.comphenix.protocol.ProtocolLib")) {
-			LOGGER.warning("ProtocolLib plugin not found.");
+			LOGGER.warning("ProtocolLib plugin not found");
 			protocolLibLoaded = false;
 			return;
 		}
 
-		LOGGER.info("Hooked with ProtocolLib plugin.");
-		protocolLibLoaded = true;
-
 		try {
 			ProtocolUtils.register();
+			protocolLibLoaded = true;
+			LOGGER.info("Hooked with ProtocolLib plugin");
 		}catch (Exception ex){
 			protocolLibLoaded = false;
-			LOGGER.severe("Failed to load ProtocolLib, are you using the right version?");
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Failed to load ProtocolLib, are you using the right version?", ex);
 		}
 	}
 

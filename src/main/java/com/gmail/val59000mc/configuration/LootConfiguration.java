@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LootConfiguration<T extends Enum<T>> {
@@ -55,8 +56,7 @@ public class LootConfiguration<T extends Enum<T>> {
 			try {
 				loot.add(JsonItemUtils.getItemFromJson(itemStr));
 			} catch (ParseException ex) {
-				LOGGER.warning("Couldn't parse loot '" + type.name() + "' in custom loot.");
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Couldn't parse loot '" + type.name() + "' in custom loot", ex);
 				return false;
 			}
 		}

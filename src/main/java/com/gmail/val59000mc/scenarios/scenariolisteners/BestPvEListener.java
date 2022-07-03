@@ -124,8 +124,8 @@ public class BestPvEListener extends ScenarioListener implements Runnable{
 
 			try{
 				player = uhcPlayer.getPlayer();
-			}catch (UhcPlayerNotOnlineException ex){
-				continue; // No hp for offline players
+			} catch (UhcPlayerNotOnlineException ignored) {
+				continue; // Shouldn't happen
 			}
 
 			if (!pveList.containsKey(uhcPlayer)){

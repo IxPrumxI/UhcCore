@@ -197,7 +197,7 @@ public class UhcTeam {
 			try{
 				Player p = uhcPlayer.getPlayer();
 				p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,100,doubleRegen?2:1));
-			}catch(UhcPlayerNotOnlineException e){
+			} catch (UhcPlayerNotOnlineException ignored) {
 				// No regen for offline players
 			}
 		}

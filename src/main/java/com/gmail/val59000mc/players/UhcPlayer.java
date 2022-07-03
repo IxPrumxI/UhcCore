@@ -185,7 +185,7 @@ public class UhcPlayer {
 		if (freezeLocation != null){
 			try {
 				getPlayer().teleport(freezeLocation);
-			}catch (UhcPlayerNotOnlineException ex){
+			} catch (UhcPlayerNotOnlineException ignored) {
 				// Only teleport when online.
 			}
 		}
@@ -264,8 +264,8 @@ public class UhcPlayer {
 	public void sendMessage(String message){
 		try {
 			getPlayer().sendMessage(message);
-		} catch (UhcPlayerNotOnlineException e) {
-			// No message to send
+		} catch (UhcPlayerNotOnlineException ignored) {
+			// Can't send message
 		}
 	}
 
@@ -352,7 +352,7 @@ public class UhcPlayer {
 				}
 
 				sendMessage(message);
-			} catch (UhcPlayerNotOnlineException e) {
+			} catch (UhcPlayerNotOnlineException ignored) {
 				sendMessage(Lang.TEAM_MESSAGE_PLAYER_NOT_ONLINE.replace("%player%", compassPlayingCurrentPlayer.getName()));
 			}
 		}

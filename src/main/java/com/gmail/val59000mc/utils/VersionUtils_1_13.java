@@ -38,8 +38,11 @@ import org.bukkit.scoreboard.Team;
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class VersionUtils_1_13 extends VersionUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(VersionUtils_1_13.class.getCanonicalName());
 
 	@Override
 	public ShapedRecipe createShapedRecipe(ItemStack craft, String craftKey) {
@@ -166,11 +169,11 @@ public class VersionUtils_1_13 extends VersionUtils{
 			while (iterator.hasNext()){
 				if (iterator.next().getResult().isSimilar(item)){
 					iterator.remove();
-					Bukkit.getLogger().info("[UhcCore] Removed recipe for item "+JsonItemUtils.getItemJson(item));
+					LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
 				}
 			}
 		}catch (Exception ex){
-			Bukkit.getLogger().warning("[UhcCore] Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
+			LOGGER.warning("Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
 			ex.printStackTrace();
 		}
 	}
@@ -284,7 +287,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 		Enchantment enchantment = Enchantment.getByName(key);
 
 		if (enchantment != null){
-			Bukkit.getLogger().warning("[UhcCore] Using old deprecated enchantment names, replace: " + key + " with " + enchantment.getKey().getKey());
+			LOGGER.warning("Using old deprecated enchantment names, replace: " + key + " with " + enchantment.getKey().getKey());
 			return enchantment;
 		}
 

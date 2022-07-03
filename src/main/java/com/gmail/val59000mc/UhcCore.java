@@ -16,6 +16,8 @@ import net.zerodind.uhccore.nms.NmsAdapterFactory;
 
 public class UhcCore extends JavaPlugin{
 
+	private static final Logger LOGGER = Logger.getLogger(UhcCore.class.getCanonicalName());
+
 	private static final int MIN_VERSION = 8;
 	private static final int MAX_VERSION = 19;
 
@@ -42,10 +44,10 @@ public class UhcCore extends JavaPlugin{
 	private void loadNmsAdapter() {
 		try {
 			final NmsAdapter adapter = NmsAdapterFactory.create();
-			getLogger().info("Loaded NMS adapter: " + adapter.getClass().getName());
+			LOGGER.info("Loaded NMS adapter: " + adapter.getClass().getName());
 			nmsAdapter = Optional.of(adapter);
 		} catch (CreateNmsAdapterException e) {
-			getLogger().info(e.getMessage());
+			LOGGER.info(e.getMessage());
 			nmsAdapter = Optional.empty();
 		}
 	}
@@ -63,9 +65,9 @@ public class UhcCore extends JavaPlugin{
 
 		if (version == 0) {
 			version = MIN_VERSION;
-			Bukkit.getLogger().warning("[UhcCore] Failed to detect server version! " + versionString + "?");
+			LOGGER.warning("Failed to detect server version! " + versionString + "?");
 		}else {
-			Bukkit.getLogger().info("[UhcCore] 1." + version + " Server detected!");
+			LOGGER.info("1." + version + " Server detected!");
 		}
 	}
 
@@ -89,7 +91,7 @@ public class UhcCore extends JavaPlugin{
 	public void onDisable(){
 		gameManager.getScenarioManager().disableAllScenarios();
 
-		Bukkit.getLogger().info("[UhcCore] Plugin disabled");
+		LOGGER.info("Plugin disabled");
 	}
 
 }

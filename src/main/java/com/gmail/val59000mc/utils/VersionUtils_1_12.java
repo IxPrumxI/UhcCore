@@ -32,9 +32,12 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Logger;
 
 @SuppressWarnings("deprecation")
 public class VersionUtils_1_12 extends VersionUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(VersionUtils_1_12.class.getCanonicalName());
 
 	@Override
 	public ShapedRecipe createShapedRecipe(ItemStack craft, String craftKey) {
@@ -173,7 +176,7 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 	@Override
 	public void removeRecipe(ItemStack item, Recipe r){
-		Bukkit.getLogger().info("[UhcCore] Removing craft for item "+JsonItemUtils.getItemJson(item));
+		LOGGER.info("Removing craft for item "+JsonItemUtils.getItemJson(item));
 
 		try{
 			// Minecraft classes
@@ -235,9 +238,9 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 			d.set(registryId, array);
 
-			Bukkit.getLogger().info("[UhcCore] Removed recipe for item "+JsonItemUtils.getItemJson(item));
+			LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
 		} catch (Exception ex){
-			Bukkit.getLogger().warning("[UhcCore] Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
+			LOGGER.warning("Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
 			ex.printStackTrace();
 		}
 	}

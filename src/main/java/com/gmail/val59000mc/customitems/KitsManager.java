@@ -21,8 +21,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class KitsManager{
+
+	private static final Logger LOGGER = Logger.getLogger(KitsManager.class.getCanonicalName());
 
 	private final static List<Kit> kits;
 
@@ -44,7 +47,7 @@ public class KitsManager{
 	}
 
 	public static void loadKits(){
-		Bukkit.getLogger().info("[UhcCore] Start loading kits");
+		LOGGER.info("Start loading kits");
 
 		YamlFile cfg;
 
@@ -60,7 +63,7 @@ public class KitsManager{
 		kits.clear();
 
 		if (kitsSection == null){
-			Bukkit.getLogger().info("[UhcCore] Loaded 0 kits");
+			LOGGER.info("Loaded 0 kits");
 			return;
 		}
 
@@ -68,7 +71,7 @@ public class KitsManager{
 		for(String kitKey : kitsKeys){
 
 			try{
-				Bukkit.getLogger().info("[UhcCore] Loading kit " + kitKey);
+				LOGGER.info("Loading kit " + kitKey);
 				Kit.Builder builder = new Kit.Builder(kitKey);
 
 				String name = cfg.getString("kits." + kitKey + ".symbol.name");
@@ -101,17 +104,17 @@ public class KitsManager{
 
 				kits.add(builder.build());
 
-				Bukkit.getLogger().info("[UhcCore] Added kit " + kitKey);
+				LOGGER.info("Added kit " + kitKey);
 
 			// IllegalArgumentException, Thrown by builder.build() when kit has no items.
 			}catch(ParseException | IllegalArgumentException ex){
-				Bukkit.getLogger().severe("[UhcCore] Kit "+kitKey+" was disabled because of an error of syntax.");
+				LOGGER.severe("Kit "+kitKey+" was disabled because of an error of syntax.");
 				System.out.println(ex.getMessage());
 				ex.printStackTrace();
 			}
 		}
 
-		Bukkit.getLogger().info("[UhcCore] Loaded " + kits.size() + " kits");
+		LOGGER.info("Loaded " + kits.size() + " kits");
 	}
 
 	public static void openKitSelectionInventory(Player player){

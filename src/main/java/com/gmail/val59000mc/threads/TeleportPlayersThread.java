@@ -5,13 +5,17 @@ import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
-import org.bukkit.Bukkit;
+
+import java.util.logging.Logger;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class TeleportPlayersThread implements Runnable{
+
+	private static final Logger LOGGER = Logger.getLogger(TeleportPlayersThread.class.getCanonicalName());
 
 	private final GameManager gameManager;
 	private final UhcTeam team;
@@ -32,7 +36,7 @@ public class TeleportPlayersThread implements Runnable{
 				continue;
 			}
 
-			Bukkit.getLogger().info("[UhcCore] Teleporting "+player.getName());
+			LOGGER.info("Teleporting "+player.getName());
 
 			for(PotionEffect effect : gameManager.getConfig().get(MainConfig.POTION_EFFECT_ON_START)){
 				player.addPotionEffect(effect);

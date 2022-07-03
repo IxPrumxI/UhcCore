@@ -7,8 +7,11 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 public abstract class ChunkLoaderThread implements Runnable {
+
+	private static final Logger LOGGER = Logger.getLogger(ChunkLoaderThread.class.getCanonicalName());
 
 	private final World world;
 	private final int restEveryNumOfChunks, restDuration;
@@ -63,13 +66,13 @@ public abstract class ChunkLoaderThread implements Runnable {
 
 		// Cancel world generation if the plugin has been disabled.
 		if (!UhcCore.getPlugin().isEnabled()) {
-			Bukkit.getLogger().info("[UhcCore] Plugin is disabled, stopping world generation!");
+			LOGGER.info("Plugin is disabled, stopping world generation!");
 			return;
 		}
 
 		// Not yet done loading all chunks
 		if(x <= maxChunk){
-			Bukkit.getLogger().info("[UhcCore] Loading map "+getLoadingState()+"% - "+chunksLoaded+"/"+totalChunksToLoad+" chunks loaded");
+			LOGGER.info("Loading map "+getLoadingState()+"% - "+chunksLoaded+"/"+totalChunksToLoad+" chunks loaded");
 
 			if (PaperLib.isPaper() && PaperLib.getMinecraftVersion() >= 13){
 				Bukkit.getScheduler().scheduleAsyncDelayedTask(UhcCore.getPlugin(), this, restDuration);
@@ -84,10 +87,10 @@ public abstract class ChunkLoaderThread implements Runnable {
 	}
 
 	public void printSettings(){
-		Bukkit.getLogger().info("[UhcCore] Generating environment "+world.getEnvironment().toString());
-		Bukkit.getLogger().info("[UhcCore] Loading a total "+Math.floor(totalChunksToLoad)+" chunks, up to chunk ( "+maxChunk+" , "+maxChunk+" )");
-		Bukkit.getLogger().info("[UhcCore] Resting "+restDuration+" ticks every "+restEveryNumOfChunks+" chunks");
-		Bukkit.getLogger().info("[UhcCore] Loading map "+getLoadingState()+"%");
+		LOGGER.info("Generating environment "+world.getEnvironment().toString());
+		LOGGER.info("Loading a total "+Math.floor(totalChunksToLoad)+" chunks, up to chunk ( "+maxChunk+" , "+maxChunk+" )");
+		LOGGER.info("Resting "+restDuration+" ticks every "+restEveryNumOfChunks+" chunks");
+		LOGGER.info("Loading map "+getLoadingState()+"%");
 	}
 
 	private String getLoadingState(){

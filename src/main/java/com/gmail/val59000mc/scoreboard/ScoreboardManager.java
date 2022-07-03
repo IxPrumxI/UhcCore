@@ -19,8 +19,11 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ScoreboardManager {
+
+	private static final Logger LOGGER = Logger.getLogger(ScoreboardManager.class.getCanonicalName());
 
 	private final ScoreboardHandler scoreboardHandler;
 	private final ScoreboardLayout scoreboardLayout;
@@ -178,7 +181,7 @@ public class ScoreboardManager {
 		}
 
 		if (returnString.length() > 32){
-			Bukkit.getLogger().warning("[UhcCore] Scoreboard line is too long: '" + returnString + "'!");
+			LOGGER.warning("Scoreboard line is too long: '" + returnString + "'!");
 			returnString = "";
 		}
 

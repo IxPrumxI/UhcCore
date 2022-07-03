@@ -8,7 +8,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -17,8 +16,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Lang{
+
+	private static final Logger LOGGER = Logger.getLogger(Lang.class.getCanonicalName());
 
 	public static String GAME_ENOUGH_TEAMS_READY;
 	public static String GAME_STARTING;
@@ -210,7 +212,7 @@ public class Lang{
 			try {
 				langFile.createNewFile();
 			}catch (IOException ex){
-				Bukkit.getLogger().severe("[UhcCore] Failed to create " + langFile.toString());
+				LOGGER.severe("Failed to create " + langFile.toString());
 				ex.printStackTrace();
 				return;
 			}
@@ -449,7 +451,7 @@ public class Lang{
 			try {
 				lang.save(langFile);
 			} catch (IOException ex) {
-				Bukkit.getLogger().severe("[UhcCore] Failed to edit " + langFile.toString());
+				LOGGER.severe("Failed to edit " + langFile.toString());
 				ex.printStackTrace();
 			}
 		}
@@ -459,7 +461,7 @@ public class Lang{
 		String string = ChatColor.translateAlternateColorCodes('&', lang.getString(path, def));
 
 		if (maxLenth != -1 && string.length() > maxLenth){
-			Bukkit.getLogger().severe("[UhcCore] The message " + path + " is too long, max length is " + maxLenth + " characters!");
+			LOGGER.severe("The message " + path + " is too long, max length is " + maxLenth + " characters!");
 			string = string.substring(0, maxLenth);
 		}
 

@@ -30,9 +30,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class PlayerManager {
+
+	private static final Logger LOGGER = Logger.getLogger(PlayerManager.class.getCanonicalName());
 
 	private final CustomEventHandler customEventHandler;
 	private final ScoreboardHandler scoreboardHandler;
@@ -189,7 +192,7 @@ public class PlayerManager {
 			uhcPlayer = getUhcPlayer(player);
 		}else{
 			uhcPlayer = newUhcPlayer(player);
-			Bukkit.getLogger().warning("[UhcCore] None existent player joined!");
+			LOGGER.warning("None existent player joined!");
 		}
 
 		GameManager gm = GameManager.getGameManager();
@@ -485,7 +488,7 @@ public class PlayerManager {
 			}
 
 			Bukkit.getScheduler().runTaskLater(UhcCore.getPlugin(), new TeleportPlayersThread(GameManager.getGameManager(), team), delayTeleportByTeam);
-			Bukkit.getLogger().info("[UhcCore] Teleporting a team in "+delayTeleportByTeam+" ticks");
+			LOGGER.info("Teleporting a team in "+delayTeleportByTeam+" ticks");
 			delayTeleportByTeam += 10; // ticks
 		}
 

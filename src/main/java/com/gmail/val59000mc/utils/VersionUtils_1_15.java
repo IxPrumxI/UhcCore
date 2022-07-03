@@ -14,9 +14,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SuspiciousStewMeta;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.logging.Logger;
+
 import javax.annotation.Nullable;
 
 public class VersionUtils_1_15 extends VersionUtils_1_14{
+
+	private static final Logger LOGGER = Logger.getLogger(VersionUtils_1_15.class.getCanonicalName());
 
 	@Override
 	public void removeRecipe(ItemStack item, Recipe recipe){
@@ -31,9 +35,9 @@ public class VersionUtils_1_15 extends VersionUtils_1_14{
 		boolean removed = Bukkit.removeRecipe(key);
 
 		if (removed){
-			Bukkit.getLogger().info("[UhcCore] Removed recipe for "+key.toString());
+			LOGGER.info("Removed recipe for "+key.toString());
 		}else {
-			Bukkit.getLogger().info("[UhcCore] Failed to remove recipe for " + key.toString() + "!");
+			LOGGER.info("Failed to remove recipe for " + key.toString() + "!");
 		}
 	}
 

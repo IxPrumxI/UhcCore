@@ -5,7 +5,6 @@ import com.gmail.val59000mc.customitems.UhcItems;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.*;
 import com.gmail.val59000mc.configuration.YamlFile;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,8 +17,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class FlowerPowerListener extends ScenarioListener{
+
+	private static final Logger LOGGER = Logger.getLogger(FlowerPowerListener.class.getCanonicalName());
 
 	private static final UniversalMaterial[] FLOWERS = new UniversalMaterial[]{
 			UniversalMaterial.POPPY,
@@ -63,8 +65,8 @@ public class FlowerPowerListener extends ScenarioListener{
 				JsonItemStack flowerDrop = JsonItemUtils.getItemFromJson(drop);
 				flowerDrops.add(flowerDrop);
 			}catch (Exception ex){
-				Bukkit.getLogger().severe("[UhcCore] Failed to parse FlowerPower item: "+drop+"!");
-				Bukkit.getLogger().severe(ex.getMessage());
+				LOGGER.severe("Failed to parse FlowerPower item: "+drop+"!");
+				LOGGER.severe(ex.getMessage());
 			}
 		}
 	}

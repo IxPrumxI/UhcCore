@@ -11,12 +11,17 @@ import com.gmail.val59000mc.scoreboard.ScoreboardManager;
 import com.gmail.val59000mc.scoreboard.ScoreboardType;
 import com.gmail.val59000mc.threads.UpdateScoreboardThread;
 import com.gmail.val59000mc.utils.VersionUtils;
+
+import java.util.logging.Logger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
 public class ScoreboardHandler {
+
+	private static final Logger LOGGER = Logger.getLogger(ScoreboardHandler.class.getCanonicalName());
 
 	private static final String COLOR_CHAR = String.valueOf(ChatColor.COLOR_CHAR);
 	public static final String[] SCOREBOARD_LINES = new String[] {
@@ -321,7 +326,7 @@ public class ScoreboardHandler {
 					second += translatedLine.substring(split);
 
 					if (second.length() > 16){
-						Bukkit.getLogger().warning("[UhcCore] Scoreboard line is too long: '" + translatedLine + "'!");
+						LOGGER.warning("Scoreboard line is too long: '" + translatedLine + "'!");
 						second = "";
 					}
 				}

@@ -2,16 +2,17 @@ package com.gmail.val59000mc.schematics;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.Dependencies;
-import com.gmail.val59000mc.game.GameManager;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class Schematic {
+
+	private static final Logger LOGGER = Logger.getLogger(Schematic.class.getCanonicalName());
 
 	private final String schematicName;
 	private final Location location;
@@ -96,7 +97,7 @@ public class Schematic {
 			build = true;
 		} catch (Exception e) {
 			build = false;
-			Bukkit.getLogger().severe("[UhcCore] An error occurred while pasting the schematic " + schematicFile.getPath());
+			LOGGER.severe("An error occurred while pasting the schematic " + schematicFile.getPath());
 			e.printStackTrace();
 			return;
 		}

@@ -4,7 +4,6 @@ import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.YamlFile;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,10 +15,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class FileUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(FileUtils.class.getCanonicalName());
 
 	private static final String API_URL = "https://paste.md-5.net/documents";
 	private static final String PASTE_URL_DOMAIN = "https://paste.md-5.net/";
@@ -35,7 +37,7 @@ public class FileUtils{
 		try {
 			yamlFile.load();
 		}catch (IOException | InvalidConfigurationException ex){
-			Bukkit.getLogger().severe("Failed to load " + fileName + ", there might be an error in the yaml syntax.");
+			LOGGER.severe("Failed to load " + fileName + ", there might be an error in the yaml syntax.");
 			if (ex instanceof InvalidConfigurationException){
 				throw (InvalidConfigurationException) ex;
 			}
@@ -65,7 +67,7 @@ public class FileUtils{
 		}
 
 		if (!file.exists()){
-			Bukkit.getLogger().severe("Failed to save file: " + fileName);
+			LOGGER.severe("Failed to save file: " + fileName);
 		}
 
 		return file;
@@ -94,10 +96,10 @@ public class FileUtils{
 				continue;
 			}
 
-			Bukkit.getLogger().info("[UhcCore] Deleting file: " + path);
+			LOGGER.info("Deleting file: " + path);
 
 			if (!file.delete()){
-				Bukkit.getLogger().warning("[UhcCore] Failed to delete file: " + path);
+				LOGGER.warning("Failed to delete file: " + path);
 				notDeleted.add(path);
 			}
 		}

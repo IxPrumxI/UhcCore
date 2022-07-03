@@ -3,9 +3,14 @@ package com.gmail.val59000mc.threads;
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
+
+import java.util.logging.Logger;
+
 import org.bukkit.Bukkit;
 
 public class EndThread implements Runnable{
+
+	private static final Logger LOGGER = Logger.getLogger(EndThread.class.getCanonicalName());
 
 	private static final EndThread instance;
 
@@ -33,7 +38,7 @@ public class EndThread implements Runnable{
 			gm.endGame();
 		}else{
 			if(timeBeforeEnd%10 == 0 || timeBeforeEnd <= 5){
-				Bukkit.getLogger().info(Lang.DISPLAY_MESSAGE_PREFIX+" "+Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
+				LOGGER.info(Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
 				gm.broadcastInfoMessage(Lang.PLAYERS_ALL_HAVE_LEFT+" "+timeBeforeEnd);
 			}
 			timeBeforeEnd--;
@@ -55,7 +60,7 @@ public class EndThread implements Runnable{
 		if(instance.run){
 			instance.run = false;
 			GameManager.getGameManager().broadcastInfoMessage(Lang.GAME_END_STOPPED);
-			Bukkit.getLogger().info(Lang.DISPLAY_MESSAGE_PREFIX+" "+Lang.GAME_END_STOPPED);
+			LOGGER.info(Lang.GAME_END_STOPPED);
 		}
 	}
 

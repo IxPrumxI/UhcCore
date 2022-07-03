@@ -1,10 +1,13 @@
 package com.gmail.val59000mc.configuration.options;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class EnumOption<T extends Enum<T>> implements Option<T> {
+
+	private static final Logger LOGGER = Logger.getLogger(EnumOption.class.getCanonicalName());
 
 	private final String path;
 	private final Class<T> type;
@@ -33,7 +36,7 @@ public class EnumOption<T extends Enum<T>> implements Option<T> {
 			Validate.notNull(enumType, "No enum type specified!");
 			return Enum.valueOf(type, enumType);
 		}catch (IllegalArgumentException ex){
-			Bukkit.getLogger().severe("[UhcCore] Invalid enum type " + enumType);
+			LOGGER.severe("Invalid enum type " + enumType);
 			ex.printStackTrace();
 			return def;
 		}

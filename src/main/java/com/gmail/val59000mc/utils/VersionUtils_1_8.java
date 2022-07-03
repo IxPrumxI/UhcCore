@@ -31,9 +31,12 @@ import org.bukkit.scoreboard.Team;
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Logger;
 
 @SuppressWarnings("deprecation")
 public class VersionUtils_1_8 extends VersionUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(VersionUtils_1_8.class.getCanonicalName());
 
 	@Override
 	public ShapedRecipe createShapedRecipe(ItemStack craft, String craftKey) {
@@ -130,7 +133,7 @@ public class VersionUtils_1_8 extends VersionUtils{
 			Method a = NMSUtils.getMethod(tileChest.getClass(), "a", String.class);
 			a.invoke(tileChest, name);
 		}catch (Exception ex){ // todo find a way to change the chest name on other versions up to 1.11
-			Bukkit.getLogger().severe("[UhcCore] Failed to rename chest! Are you on 1.9-1.11?");
+			LOGGER.severe("Failed to rename chest! Are you on 1.9-1.11?");
 			ex.printStackTrace();
 		}
 	}
@@ -169,11 +172,11 @@ public class VersionUtils_1_8 extends VersionUtils{
 			while (iterator.hasNext()){
 				if (iterator.next().getResult().isSimilar(item)){
 					iterator.remove();
-					Bukkit.getLogger().info("[UhcCore] Removed recipe for item "+JsonItemUtils.getItemJson(item));
+					LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
 				}
 			}
 		}catch (Exception ex){
-			Bukkit.getLogger().warning("[UhcCore] Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
+			LOGGER.warning("Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
 			ex.printStackTrace();
 		}
 	}

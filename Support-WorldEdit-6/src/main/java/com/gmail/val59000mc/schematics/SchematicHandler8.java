@@ -11,17 +11,19 @@ import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class SchematicHandler8{
-	
+
+	private static final Logger LOGGER = Logger.getLogger(SchematicHandler8.class.getCanonicalName());
+
 	public static ArrayList<Integer> pasteSchematic(Location loc, String path) throws Exception{
-		Bukkit.getLogger().info("[UhcCore] Pasting "+path);
+		LOGGER.info("Pasting "+path);
 		File schematic = new File(path);
 		World world = new BukkitWorld(loc.getWorld());
 
@@ -43,8 +45,8 @@ public class SchematicHandler8{
 		dimensions.add(clipboard.getDimensions().getBlockY());
 		dimensions.add(clipboard.getDimensions().getBlockX());
 		dimensions.add(clipboard.getDimensions().getBlockZ());
-		
-		Bukkit.getLogger().info("[UhcCore] Successfully pasted '"+path+"' at "+loc.getBlockX()+" "+loc.getBlockY()+" "+loc.getBlockZ());
+
+		LOGGER.info("Successfully pasted '"+path+"' at "+loc.getBlockX()+" "+loc.getBlockY()+" "+loc.getBlockZ());
 		return dimensions;
 	}
 

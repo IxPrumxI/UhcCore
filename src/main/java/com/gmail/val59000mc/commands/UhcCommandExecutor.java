@@ -8,6 +8,9 @@ import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.threads.PreStartThread;
+
+import java.util.logging.Logger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,6 +19,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class UhcCommandExecutor implements CommandExecutor{
+
+	private static final Logger LOGGER = Logger.getLogger(UhcCommandExecutor.class.getCanonicalName());
 
 	private final GameManager gameManager;
 
@@ -151,7 +156,7 @@ public class UhcCommandExecutor implements CommandExecutor{
 
 	private void listUhcTeams(CommandSender sender) {
 		StringBuilder str;
-		Bukkit.getLogger().info("Current UhcTeams : ");
+		LOGGER.info("Current UhcTeams : ");
 
 		for(UhcTeam team : gameManager.getPlayerManager().listUhcTeams()){
 			str = new StringBuilder();

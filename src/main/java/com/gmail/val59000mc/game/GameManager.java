@@ -208,7 +208,7 @@ public class GameManager{
 		// Enable default scenarios
 		scenarioManager.loadDefaultScenarios(config);
 
-		Bukkit.getLogger().info(Lang.DISPLAY_MESSAGE_PREFIX+" Players are now allowed to join");
+		LOGGER.info("Players are now allowed to join");
 		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new PreStartThread(this),0);
 	}
 
@@ -359,7 +359,7 @@ public class GameManager{
 	private void registerCommand(String commandName, CommandExecutor executor){
 		PluginCommand command = UhcCore.getPlugin().getCommand(commandName);
 		if (command == null){
-			Bukkit.getLogger().warning("[UhcCore] Failed to register " + commandName + " command!");
+			LOGGER.warning("Failed to register " + commandName + " command!");
 			return;
 		}
 

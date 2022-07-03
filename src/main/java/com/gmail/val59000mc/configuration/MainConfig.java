@@ -5,8 +5,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -25,6 +25,9 @@ import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.utils.UniversalSound;
 
 public class MainConfig extends YamlFile {
+
+	private static final Logger LOGGER = Logger.getLogger(MainConfig.class.getCanonicalName());
+
 	public static final BasicOption<Integer> MINIMAL_READY_TEAMS_PERCENTAGE_TO_START = new BasicOption<>("minimal-ready-teams-percentage-to-start",50);
 	public static final BasicOption<Integer> MINIMAL_READY_TEAMS_TO_START = new BasicOption<>("minimal-ready-teams-to-start",2);
 	public static final BasicOption<Integer> MIN_PLAYERS_TO_START = new BasicOption<>("min-players-to-start",20);
@@ -259,7 +262,7 @@ public class MainConfig extends YamlFile {
 					updatedList = true;
 					newKeys.add(scenario.get().getKey());
 				}else {
-					Bukkit.getLogger().warning("[UhcCore] Invalid scenario key, " + key + " removing ...");
+					LOGGER.warning("Invalid scenario key, " + key + " removing ...");
 				}
 			}
 		}

@@ -12,7 +12,6 @@ import com.gmail.val59000mc.utils.UniversalMaterial;
 import com.gmail.val59000mc.utils.VersionUtils;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -26,8 +25,11 @@ import org.bukkit.material.MaterialData;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class CraftsManager {
+
+	private static final Logger LOGGER = Logger.getLogger(CraftsManager.class.getCanonicalName());
 
 	private final static List<Craft> crafts;
 
@@ -44,7 +46,7 @@ public class CraftsManager {
 	}
 
 	public static void loadBannedCrafts(){
-		Bukkit.getLogger().info("[UhcCore] Loading banned crafts list");
+		LOGGER.info("Loading banned crafts list");
 
 		YamlFile cfg;
 
@@ -61,7 +63,7 @@ public class CraftsManager {
 			try {
 				bannedItems.add(JsonItemUtils.getItemFromJson(itemLine));
 			}catch (ParseException ex){
-				Bukkit.getLogger().warning("[UhcCore] Failed to register "+itemLine+" banned craft");
+				LOGGER.warning("Failed to register "+itemLine+" banned craft");
 				ex.printStackTrace();
 			}
 		}
@@ -72,7 +74,7 @@ public class CraftsManager {
 	}
 
 	public static void loadCrafts(){
-		Bukkit.getLogger().info("[UhcCore] Loading custom crafts");
+		LOGGER.info("Loading custom crafts");
 		YamlFile cfg;
 
 		try{
@@ -86,7 +88,7 @@ public class CraftsManager {
 
 		ConfigurationSection customCraftSection = cfg.getConfigurationSection("custom-crafts");
 		if (customCraftSection == null){
-			Bukkit.getLogger().info("[UhcCore] Done loading custom crafts");
+			LOGGER.info("Done loading custom crafts");
 			return;
 		}
 
@@ -94,7 +96,7 @@ public class CraftsManager {
 		for(String name : craftsKeys){
 			ConfigurationSection section = cfg.getConfigurationSection("custom-crafts."+name);
 			if (section == null){
-				Bukkit.getLogger().severe("[UhcCore] custom-crafts."+name + " section does not exist!");
+				LOGGER.severe("custom-crafts."+name + " section does not exist!");
 				continue;
 			}
 
@@ -104,7 +106,7 @@ public class CraftsManager {
 			boolean defaultName, reviveItem, reviveWithInventory;
 
 			try{
-				Bukkit.getLogger().info("[UhcCore] Loading custom craft "+name);
+				LOGGER.info("Loading custom craft "+name);
 
 				// Recipe
 				String[] lines = new String[3];
@@ -152,8 +154,8 @@ public class CraftsManager {
 				crafts.add(craft);
 			}catch(IllegalArgumentException | ParseException e){
 				//ignore craft if bad formatting
-				Bukkit.getLogger().warning("[UhcCore] Failed to register "+name+" custom craft : syntax error");
-				Bukkit.getLogger().warning(e.getMessage());
+				LOGGER.warning("Failed to register "+name+" custom craft : syntax error");
+				LOGGER.warning(e.getMessage());
 			}
 
 		}
@@ -328,7 +330,7 @@ public class CraftsManager {
 
 	@SuppressWarnings("deprecation")
 	public static void registerGoldenHeadCraft(){
-		Bukkit.getLogger().info("[UhcCore] Loading custom craft for golden heads");
+		LOGGER.info("Loading custom craft for golden heads");
 
 		ItemStack goldenHead = UhcItems.createGoldenHead();
 		ShapedRecipe headRecipe = VersionUtils.getVersionUtils().createShapedRecipe(goldenHead, "golden_head");

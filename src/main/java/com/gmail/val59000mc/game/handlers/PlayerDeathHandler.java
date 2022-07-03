@@ -3,6 +3,7 @@ package com.gmail.val59000mc.game.handlers;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
@@ -35,6 +36,8 @@ import com.gmail.val59000mc.utils.UniversalSound.SoundParseException;
 import com.gmail.val59000mc.utils.VersionUtils;
 
 public class PlayerDeathHandler {
+
+	private static final Logger LOGGER = Logger.getLogger(PlayerDeathHandler.class.getCanonicalName());
 
 	private final GameManager gameManager;
 	private final ScenarioManager scenarioManager;
@@ -84,7 +87,7 @@ public class PlayerDeathHandler {
 
 	private Set<ItemStack> handlePlayerDeath(UhcPlayer uhcPlayer, @Nullable Location location, Set<ItemStack> playerDrops, @Nullable Player killer) {
 		if (uhcPlayer.getState() != PlayerState.PLAYING){
-			Bukkit.getLogger().warning("[UhcCore] " + uhcPlayer.getName() + " died while already in 'DEAD' mode!");
+			LOGGER.warning(uhcPlayer.getName() + " died while already in 'DEAD' mode!");
 			return playerDrops;
 		}
 
@@ -157,7 +160,7 @@ public class PlayerDeathHandler {
 			UniversalSound.parse(config.get(MainConfig.PLAYER_DEATH_SOUND), UniversalSound.WITHER_SPAWN)
 				.ifPresent(playerManager::playSoundToAll);
 		} catch (SoundParseException e) {
-			UhcCore.getPlugin().getLogger().log(Level.WARNING, "Unable to parse player death sound", e);
+			LOGGER.log(Level.WARNING, "Unable to parse player death sound", e);
 		}
 
 		playerManager.checkIfRemainingPlayers();

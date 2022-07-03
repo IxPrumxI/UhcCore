@@ -20,8 +20,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class BestPvEListener extends ScenarioListener implements Runnable{
+
+	private static final Logger LOGGER = Logger.getLogger(BestPvEListener.class.getCanonicalName());
 
 	private int taskId;
 	private final Map<UhcPlayer,Boolean> pveList;
@@ -127,7 +130,7 @@ public class BestPvEListener extends ScenarioListener implements Runnable{
 
 			if (!pveList.containsKey(uhcPlayer)){
 				pveList.put(uhcPlayer,true); // Should never occur, playing players are always on list.
-				Bukkit.getLogger().warning("[UhcCore] " + player.getName() + " was not on best PvE list yet! Please contact a server administrator.");
+				LOGGER.warning(player.getName() + " was not on best PvE list yet! Please contact a server administrator.");
 			}
 
 			if (player.getGameMode().equals(GameMode.SURVIVAL) && pveList.get(uhcPlayer)){

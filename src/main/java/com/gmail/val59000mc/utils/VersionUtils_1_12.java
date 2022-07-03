@@ -177,8 +177,6 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 	@Override
 	public void removeRecipe(ItemStack item, Recipe r){
-		LOGGER.info("Removing craft for item "+JsonItemUtils.getItemJson(item));
-
 		try{
 			// Minecraft classes
 			Class craftingManager = NMSUtils.getNMSClass("CraftingManager");
@@ -205,7 +203,6 @@ public class VersionUtils_1_12 extends VersionUtils{
 				Recipe recipe = (Recipe) toBukkitRecipe.invoke(value);
 
 				if (recipe.getResult().isSimilar(item)){
-					System.out.println("Found recipe in map! Removing ...");
 					map.remove(value);
 					break;
 				}
@@ -231,7 +228,6 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 				Recipe recipe = (Recipe) toBukkitRecipe.invoke(mcRecipe);
 				if (recipe.getResult().isSimilar(item)){
-					System.out.println("Found recipe in array! Removing ...");
 					array[i] = null;
 					break;
 				}
@@ -239,9 +235,9 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 			d.set(registryId, array);
 
-			LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
+			LOGGER.fine(() -> "Removed recipe for item " + JsonItemUtils.getItemJson(item));
 		} catch (ReflectiveOperationException ex) {
-			LOGGER.log(Level.WARNING, "Failed to remove recipe for item "+JsonItemUtils.getItemJson(item), ex);
+			LOGGER.log(Level.WARNING, "Failed to remove recipe for item " + JsonItemUtils.getItemJson(item), ex);
 		}
 	}
 

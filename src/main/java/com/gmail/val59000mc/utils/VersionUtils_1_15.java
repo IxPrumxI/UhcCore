@@ -35,9 +35,9 @@ public class VersionUtils_1_15 extends VersionUtils_1_14{
 		boolean removed = Bukkit.removeRecipe(key);
 
 		if (removed){
-			LOGGER.info("Removed recipe for "+key.toString());
+			LOGGER.fine(() -> "Removed recipe for " + key.toString());
 		}else {
-			LOGGER.info("Failed to remove recipe for " + key.toString() + "!");
+			LOGGER.warning("Failed to remove recipe for " + key.toString());
 		}
 	}
 

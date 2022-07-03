@@ -169,7 +169,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 		while (iterator.hasNext()){
 			if (iterator.next().getResult().isSimilar(item)){
 				iterator.remove();
-				LOGGER.info("Removed recipe for item "+JsonItemUtils.getItemJson(item));
+				LOGGER.fine(() -> "Removed recipe for item " + JsonItemUtils.getItemJson(item));
 			}
 		}
 	}

@@ -1,9 +1,11 @@
 package com.gmail.val59000mc;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.utils.FileUtils;
+import com.gmail.val59000mc.utils.PluginForwardingHandler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,12 +22,14 @@ public class UhcCore extends JavaPlugin{
 	private static UhcCore pl;
 	private static Optional<NmsAdapter> nmsAdapter;
 	private static int version;
+	private Logger forwardingLogger;
 	private GameManager gameManager;
 
 	@Override
 	public void onEnable(){
 		pl = this;
 
+		forwardingLogger = PluginForwardingHandler.createForwardingLogger(this);
 		loadServerVersion();
 		loadNmsAdapter();
 		gameManager = new GameManager();
@@ -71,6 +75,10 @@ public class UhcCore extends JavaPlugin{
 
 	public static UhcCore getPlugin(){
 		return pl;
+	}
+
+	public Logger getForwardingLogger() {
+		return forwardingLogger;
 	}
 
 	public static Optional<NmsAdapter> getNmsAdapter() {

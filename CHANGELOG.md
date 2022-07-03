@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### New features
+
+- Added the `logging-level` option (see `config.yml` for more details)
+
 ### Bug fixes
 
 - Fixed a bug with scenario voting where players could lose a vote by clicking an item in their hotbar

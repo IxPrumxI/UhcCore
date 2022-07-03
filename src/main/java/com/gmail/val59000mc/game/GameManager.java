@@ -33,8 +33,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameManager{
+
+	private static final Logger LOGGER = Logger.getLogger(GameManager.class.getCanonicalName());
 
 	// GameManager Instance
 	private static GameManager gameManager;
@@ -272,6 +276,14 @@ public class GameManager{
 		}catch (InvalidConfigurationException | IOException ex){
 			ex.printStackTrace();
 			return;
+		}
+
+		// Configure logging level
+		try {
+			final Level level = Level.parse(config.get(MainConfig.LOGGING_LEVEL));
+			UhcCore.getPlugin().getForwardingLogger().setLevel(level);
+		} catch (IllegalArgumentException e) {
+			LOGGER.log(Level.WARNING, "Failed to parse logging level", e);
 		}
 
 		// Dependencies

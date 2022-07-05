@@ -23,8 +23,8 @@ public class InfiniteEnchantsListener extends ScenarioListener{
 				Player player = uhcPlayer.getPlayer();
 				player.getInventory().addItem(enchantingTables, anvils, lapisBlocks);
 				player.setLevel(Integer.MAX_VALUE);
-			}catch (UhcPlayerNotOnlineException ex){
-				// No rod for offline players
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Shouldn't happen
 			}
 		}
 	}

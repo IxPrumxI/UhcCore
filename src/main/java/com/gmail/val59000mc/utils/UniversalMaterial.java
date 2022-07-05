@@ -1,6 +1,7 @@
 package com.gmail.val59000mc.utils;
 
-import com.gmail.val59000mc.UhcCore;
+import io.papermc.lib.PaperLib;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -200,10 +201,10 @@ public enum UniversalMaterial{
 		if (material == null) {
 			try {
 				material = Material.valueOf(name13);
-			}catch (IllegalArgumentException ex) {
+			} catch (IllegalArgumentException ignored1) {
 				try {
 					material = Material.valueOf(name8);
-				}catch (IllegalArgumentException ex2) {
+				} catch (IllegalArgumentException ignored2) {
 					// 1.9+ item on 1.8 server.
 				}
 			}
@@ -213,7 +214,7 @@ public enum UniversalMaterial{
 	}
 
 	public short getData(){
-		return UhcCore.getVersion() < 13 ? id8 : 0;
+		return PaperLib.getMinecraftVersion() < 13 ? id8 : 0;
 	}
 
 	@SuppressWarnings("deprecation")

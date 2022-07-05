@@ -33,8 +33,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameManager{
+
+	private static final Logger LOGGER = Logger.getLogger(GameManager.class.getCanonicalName());
 
 	// GameManager Instance
 	private static GameManager gameManager;
@@ -175,7 +179,6 @@ public class GameManager{
 	}
 
 	public void loadNewGame() {
-		loadConfig();
 		setGameState(GameState.LOADING);
 
 		registerListeners();
@@ -204,7 +207,7 @@ public class GameManager{
 		// Enable default scenarios
 		scenarioManager.loadDefaultScenarios(config);
 
-		Bukkit.getLogger().info(Lang.DISPLAY_MESSAGE_PREFIX+" Players are now allowed to join");
+		LOGGER.info("Players are now allowed to join");
 		Bukkit.getScheduler().scheduleSyncDelayedTask(UhcCore.getPlugin(), new PreStartThread(this),0);
 	}
 
@@ -270,8 +273,16 @@ public class GameManager{
 			config.setConfigurationFile(configFile);
 			config.load();
 		}catch (InvalidConfigurationException | IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to load config.yml", ex);
 			return;
+		}
+
+		// Configure logging level
+		try {
+			final Level level = Level.parse(config.get(MainConfig.LOGGING_LEVEL));
+			UhcCore.getPlugin().getForwardingLogger().setLevel(level);
+		} catch (IllegalArgumentException e) {
+			LOGGER.log(Level.WARNING, "Failed to parse logging level", e);
 		}
 
 		// Dependencies
@@ -347,7 +358,7 @@ public class GameManager{
 	private void registerCommand(String commandName, CommandExecutor executor){
 		PluginCommand command = UhcCore.getPlugin().getCommand(commandName);
 		if (command == null){
-			Bukkit.getLogger().warning("[UhcCore] Failed to register " + commandName + " command!");
+			LOGGER.warning("Failed to register " + commandName + " command!");
 			return;
 		}
 

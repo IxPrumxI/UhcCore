@@ -2,15 +2,18 @@ package com.gmail.val59000mc.commands;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.utils.FileUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UploadCommandExecutor implements CommandExecutor{
+
+	private static final Logger LOGGER = Logger.getLogger(UploadCommandExecutor.class.getCanonicalName());
 
 	private enum FileType{
 		LOG("logs/latest.log", false),
@@ -66,7 +69,7 @@ public class UploadCommandExecutor implements CommandExecutor{
 			url = uploadFile(fileType);
 		}catch (IOException ex){
 			sender.sendMessage(ChatColor.RED + "Failed to upload file, check console for more details!");
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to upload file", ex);
 			return true;
 		}
 
@@ -77,7 +80,7 @@ public class UploadCommandExecutor implements CommandExecutor{
 	private String uploadFile(FileType fileType) throws IOException{
 		File file = fileType.getFile();
 
-		Bukkit.getLogger().info("[UhcCore] Uploading file: " + file);
+		LOGGER.info("Uploading file: " + file);
 
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 
@@ -96,7 +99,7 @@ public class UploadCommandExecutor implements CommandExecutor{
 		reader.close();
 
 		String url = FileUtils.uploadTextFile(sb);
-		Bukkit.getLogger().info("[UhcCore] Successfully uploaded file: " + file);
+		LOGGER.info("Successfully uploaded file: " + file);
 		return url;
 	}
 

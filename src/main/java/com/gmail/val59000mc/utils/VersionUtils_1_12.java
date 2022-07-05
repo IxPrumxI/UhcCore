@@ -32,9 +32,13 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("deprecation")
 public class VersionUtils_1_12 extends VersionUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(VersionUtils_1_12.class.getCanonicalName());
 
 	@Override
 	public ShapedRecipe createShapedRecipe(ItemStack craft, String craftKey) {
@@ -114,7 +118,7 @@ public class VersionUtils_1_12 extends VersionUtils{
 			Method setData = NMSUtils.getMethod(Block.class, "setData",1);
 			setData.invoke(block, data);
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to set block data", ex);
 		}
 	}
 
@@ -173,8 +177,6 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 	@Override
 	public void removeRecipe(ItemStack item, Recipe r){
-		Bukkit.getLogger().info("[UhcCore] Removing craft for item "+JsonItemUtils.getItemJson(item));
-
 		try{
 			// Minecraft classes
 			Class craftingManager = NMSUtils.getNMSClass("CraftingManager");
@@ -201,7 +203,6 @@ public class VersionUtils_1_12 extends VersionUtils{
 				Recipe recipe = (Recipe) toBukkitRecipe.invoke(value);
 
 				if (recipe.getResult().isSimilar(item)){
-					System.out.println("Found recipe in map! Removing ...");
 					map.remove(value);
 					break;
 				}
@@ -227,7 +228,6 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 				Recipe recipe = (Recipe) toBukkitRecipe.invoke(mcRecipe);
 				if (recipe.getResult().isSimilar(item)){
-					System.out.println("Found recipe in array! Removing ...");
 					array[i] = null;
 					break;
 				}
@@ -235,10 +235,9 @@ public class VersionUtils_1_12 extends VersionUtils{
 
 			d.set(registryId, array);
 
-			Bukkit.getLogger().info("[UhcCore] Removed recipe for item "+JsonItemUtils.getItemJson(item));
-		} catch (Exception ex){
-			Bukkit.getLogger().warning("[UhcCore] Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
-			ex.printStackTrace();
+			LOGGER.fine(() -> "Removed recipe for item " + JsonItemUtils.getItemJson(item));
+		} catch (ReflectiveOperationException ex) {
+			LOGGER.log(Level.WARNING, "Failed to remove recipe for item " + JsonItemUtils.getItemJson(item), ex);
 		}
 	}
 
@@ -273,7 +272,7 @@ public class VersionUtils_1_12 extends VersionUtils{
 				event.setTo(to);
 			}
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to handle nether portal event", ex);
 		}
 	}
 

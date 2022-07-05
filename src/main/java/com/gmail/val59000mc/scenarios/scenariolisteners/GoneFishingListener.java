@@ -44,8 +44,8 @@ public class GoneFishingListener extends ScenarioListener{
 					// Give player 64 anvils
 					uhcPlayer.getPlayer().getInventory().addItem(anvils);
 				}
-			}catch (UhcPlayerNotOnlineException ex){
-				// No rod for offline players
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Shouldn't happen
 			}
 		}
 	}

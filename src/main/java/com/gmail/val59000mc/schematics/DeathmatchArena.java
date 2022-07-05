@@ -16,8 +16,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DeathmatchArena extends Schematic {
+
+	private static final Logger LOGGER = Logger.getLogger(DeathmatchArena.class.getCanonicalName());
 
 	private final static String SCHEMATIC_NAME = "arena";
 
@@ -32,7 +36,7 @@ public class DeathmatchArena extends Schematic {
 
 		enable = canBePasted();
 		if (!enable){
-			Bukkit.getLogger().info("[UhcCore] No WorldEdit/schematic installed so ending with deathmatch at 0 0");
+			LOGGER.info("No WorldEdit/schematic installed so ending with deathmatch at 0 0");
 		}
 	}
 
@@ -44,7 +48,7 @@ public class DeathmatchArena extends Schematic {
 			if(isBuild()){
 				calculateTeleportSpots();
 			}else{
-				Bukkit.getLogger().severe("[UhcCore] Deathmatch will be at 0 0 as the arena could not be pasted.");
+				LOGGER.warning("Deathmatch will be at 0 0 as the arena could not be pasted.");
 				enable = false;
 			}
 		}
@@ -64,8 +68,8 @@ public class DeathmatchArena extends Schematic {
 
 		try{
 			storage = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		} catch (IOException | InvalidConfigurationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
 			return;
 		}
 
@@ -77,7 +81,7 @@ public class DeathmatchArena extends Schematic {
 		File schematicFile = getSchematicFile();
 
 		if (spotsDate == schematicFile.lastModified() && spotMaterial.toString().equals(type)){
-			Bukkit.getLogger().info("[UhcCore] Loading stored arena teleport spots.");
+			LOGGER.info("Loading stored arena teleport spots.");
 
 			vectorSpots = (ArrayList<Vector>) storage.get("arena.locations");
 
@@ -91,7 +95,7 @@ public class DeathmatchArena extends Schematic {
 					y = getLocation().getBlockY(),
 					z = getLocation().getBlockZ();
 
-			Bukkit.getLogger().info("[UhcCore] Scanning schematic for arena teleport spots.");
+			LOGGER.info("Scanning schematic for arena teleport spots.");
 
 			for (int i = x - getWidth(); i < x + getWidth(); i++) {
 				for (int j = y - getHeight(); j < y + getHeight(); j++) {
@@ -100,7 +104,7 @@ public class DeathmatchArena extends Schematic {
 						if (block.getType().equals(spotMaterial) && hasAirOnTop(block)) {
 							spots.add(block.getLocation().clone().add(0.5, 1, 0.5));
 							vectorSpots.add(block.getLocation().clone().add(0.5, 1, 0.5).toVector());
-							Bukkit.getLogger().info("[UhcCore] Arena teleport spot found at " + i + " " + (j + 1) + " " + k);
+							LOGGER.info("Arena teleport spot found at " + i + " " + (j + 1) + " " + k);
 						}
 					}
 				}
@@ -112,12 +116,12 @@ public class DeathmatchArena extends Schematic {
 			try {
 				storage.save();
 			}catch (IOException ex){
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to save storage.yml", ex);
 			}
 		}
 
 		if(spots.isEmpty()){
-			Bukkit.getLogger().info("[UhcCore] No Arena teleport spot found, defaulting to schematic origin");
+			LOGGER.info("No Arena teleport spot found, defaulting to schematic origin");
 		}else{
 			Collections.shuffle(spots);
 			teleportSpots = spots;

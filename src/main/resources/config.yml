@@ -562,3 +562,9 @@ custom-events:
 debug: false
 # When set to true, the game won't end when only one player is left. This can be used to play alone in order to test games.
 one-player-mode: false
+
+# Specifies the logging level to use for the UhcCore plugin.
+# There is usually no need to change this setting, unless you need
+# verbose logs for debugging purposes. For available values, see:
+# https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html
+logging-level: INFO

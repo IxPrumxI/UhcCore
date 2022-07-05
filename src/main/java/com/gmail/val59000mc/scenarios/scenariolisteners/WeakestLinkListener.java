@@ -33,8 +33,8 @@ public class WeakestLinkListener extends ScenarioListener{
 		try {
 			Player player = lowest.getPlayer();
 			VersionUtils.getVersionUtils().killPlayer(player);
-		}catch (UhcPlayerNotOnlineException ex){
-			ex.printStackTrace();
+		} catch (UhcPlayerNotOnlineException ignored) {
+			// Shouldn't happen
 		}
 
 		getGameManager().broadcastMessage(Lang.SCENARIO_WEAKESTLINK_KILL.replace("%player%", lowest.getName()));
@@ -57,8 +57,8 @@ public class WeakestLinkListener extends ScenarioListener{
 						lowestHealth = playerHealth;
 					}
 				}
-			}catch (UhcPlayerNotOnlineException ex){
-				ex.printStackTrace();
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Shouldn't happen
 			}
 		}
 
@@ -74,8 +74,8 @@ public class WeakestLinkListener extends ScenarioListener{
 				if (lowestHealth == uhcPlayer.getPlayer().getHealth()){
 					return null;
 				}
-			}catch (UhcPlayerNotOnlineException ex){
-				ex.printStackTrace();
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Shouldn't happen
 			}
 		}
 

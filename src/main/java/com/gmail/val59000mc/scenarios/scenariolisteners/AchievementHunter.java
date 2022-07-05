@@ -10,6 +10,12 @@ import com.gmail.val59000mc.scenarios.Option;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.VersionUtils;
+
+import io.papermc.lib.PaperLib;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -18,6 +24,8 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.plugin.EventExecutor;
 
 public class AchievementHunter extends ScenarioListener implements EventExecutor{
+
+	private static final Logger LOGGER = Logger.getLogger(AchievementHunter.class.getCanonicalName());
 
 	private enum Type{
 		ACHIEVEMENTS("org.bukkit.event.player.PlayerAchievementAwardedEvent"),
@@ -40,7 +48,7 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 
 	@Override
 	public void onEnable() {
-		if (UhcCore.getVersion() < 12){
+		if (PaperLib.getMinecraftVersion() < 12){
 			type = Type.ACHIEVEMENTS;
 		}else{
 			type = Type.ADVANCEMENTS;
@@ -49,7 +57,7 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 		try {
 			event = (Class<? extends PlayerEvent>) Class.forName(type.event);
 		}catch (ClassNotFoundException | ClassCastException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to enable Achievement Hunter", ex);
 			getScenarioManager().disableScenario(Scenario.ACHIEVEMENT_HUNTER);
 		}
 
@@ -61,8 +69,6 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 		if (getGameManager().getGameState() == GameState.WAITING){
 			return;
 		}
-
-		System.out.println("event!");
 
 		if (type == Type.ACHIEVEMENTS){
 			addHeart(((PlayerEvent) event).getPlayer());
@@ -82,7 +88,7 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 				Player player = uhcPlayer.getPlayer();
 				player.setHealth(healthAtStart);
 				VersionUtils.getVersionUtils().setPlayerMaxHealth(player, healthAtStart);
-			}catch (UhcPlayerNotOnlineException ex){
+			} catch (UhcPlayerNotOnlineException ignored) {
 				// Don't set max health for offline players.
 			}
 		}
@@ -94,7 +100,7 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 			Player player = e.getUhcPlayer().getPlayer();
 			player.setHealth(healthAtStart);
 			VersionUtils.getVersionUtils().setPlayerMaxHealth(player, healthAtStart);
-		}catch (UhcPlayerNotOnlineException ex){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// Don't set max health for offline players.
 		}
 	}
@@ -113,7 +119,6 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 	private static boolean isValidAdvancement(PlayerEvent event){
 		org.bukkit.event.player.PlayerAdvancementDoneEvent advancementEvent = (org.bukkit.event.player.PlayerAdvancementDoneEvent) event;
 		NamespacedKey key = advancementEvent.getAdvancement().getKey();
-		System.out.println(key.getKey());
 		return key.getKey().startsWith("story/");
 	}
 

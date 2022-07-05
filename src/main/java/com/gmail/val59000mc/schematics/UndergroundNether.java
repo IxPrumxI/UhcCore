@@ -2,11 +2,16 @@ package com.gmail.val59000mc.schematics;
 
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.utils.RandomUtils;
-import org.bukkit.Bukkit;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 
 public class UndergroundNether extends Schematic {
+
+	private static final Logger LOGGER = Logger.getLogger(UndergroundNether.class.getCanonicalName());
 
 	private static final String SCHEMATIC_NAME = "nether";
 
@@ -16,7 +21,7 @@ public class UndergroundNether extends Schematic {
 
 	public void build(MainConfig cfg, World world){
 		if (!canBePasted()){
-			Bukkit.getLogger().severe("[UhcCore] Worldedit not installed or nether schematic not found in 'plugins/UhcCore/nether.schematic'. There will be no underground nether");
+			LOGGER.warning("Worldedit not installed or nether schematic not found in 'plugins/UhcCore/nether.schematic'. There will be no underground nether");
 			return;
 		}
 
@@ -33,9 +38,8 @@ public class UndergroundNether extends Schematic {
 				// to do find loc
 				build(randLoc);
 			} catch (Exception e) {
-				Bukkit.getLogger().severe("[UhcCore] Couldn't paste nether schematic at "+
-						randLoc.getBlockX()+" "+randLoc.getBlockY()+" "+randLoc.getBlockZ());
-				e.printStackTrace();
+				LOGGER.log(Level.WARNING, "Couldn't paste nether schematic at "
+					+ randLoc.getBlockX() + " " + randLoc.getBlockY() + " " + randLoc.getBlockZ(), e);
 			}
 		}
 	}

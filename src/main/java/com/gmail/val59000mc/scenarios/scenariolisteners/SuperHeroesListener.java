@@ -6,12 +6,17 @@ import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.RandomUtils;
 import com.gmail.val59000mc.utils.VersionUtils;
+
+import java.util.logging.Logger;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class SuperHeroesListener extends ScenarioListener{
+
+	private static final Logger LOGGER = Logger.getLogger(SuperHeroesListener.class.getCanonicalName());
 
 	@EventHandler
 	public void onGameStart(PlayerStartsPlayingEvent e){
@@ -24,7 +29,7 @@ public class SuperHeroesListener extends ScenarioListener{
 
 		try {
 			player = uhcPlayer.getPlayer();
-		}catch (UhcPlayerNotOnlineException ex){
+		} catch (UhcPlayerNotOnlineException ignored) {
 			// No effect for offline player
 			return;
 		}
@@ -51,7 +56,7 @@ public class SuperHeroesListener extends ScenarioListener{
 				player.setHealth(maxHealth);
 				break;
 			default:
-				System.out.println("No effect for: " + effect);
+				LOGGER.warning("No effect for: " + effect);
 				break;
 		}
 	}

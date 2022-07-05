@@ -27,8 +27,8 @@ public class ChildrenLeftUnattended extends ScenarioListener{
 
 			try {
 				giveTeamReward(uhcMember.getPlayer());
-			}catch (UhcPlayerNotOnlineException ex){
-				ex.printStackTrace();
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Shouldn't happen
 			}
 		}
 	}

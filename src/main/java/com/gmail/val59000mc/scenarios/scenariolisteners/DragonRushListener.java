@@ -113,8 +113,8 @@ public class DragonRushListener extends ScenarioListener{
 				Player all = spectator.getPlayer();
 				all.setGameMode(GameMode.SPECTATOR);
 				all.teleport(killer);
-			}catch (UhcPlayerNotOnlineException exeption){
-				// Nothing
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Player logged out, ignoring
 			}
 		}
 

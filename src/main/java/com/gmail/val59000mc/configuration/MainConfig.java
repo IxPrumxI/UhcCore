@@ -5,8 +5,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -25,6 +26,9 @@ import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.utils.UniversalSound;
 
 public class MainConfig extends YamlFile {
+
+	private static final Logger LOGGER = Logger.getLogger(MainConfig.class.getCanonicalName());
+
 	public static final BasicOption<Integer> MINIMAL_READY_TEAMS_PERCENTAGE_TO_START = new BasicOption<>("minimal-ready-teams-percentage-to-start",50);
 	public static final BasicOption<Integer> MINIMAL_READY_TEAMS_TO_START = new BasicOption<>("minimal-ready-teams-to-start",2);
 	public static final BasicOption<Integer> MIN_PLAYERS_TO_START = new BasicOption<>("min-players-to-start",20);
@@ -132,6 +136,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT = new BasicOption<>("countdown-ending-game-when-all-players-have-left",true);
 	public static final BasicOption<Boolean> DEBUG = new BasicOption<>("debug",false);
 	public static final BasicOption<Boolean> ONE_PLAYER_MODE = new BasicOption<>("one-player-mode",false);
+	public static final BasicOption<String> LOGGING_LEVEL = new BasicOption<>("logging-level", "INFO");
 
 	// Pre-generate world
 	public static final BasicOption<Boolean> ENABLE_PRE_GENERATE_WORLD = new BasicOption<>("pre-generate-world.enable",true);
@@ -239,7 +244,7 @@ public class MainConfig extends YamlFile {
 			try {
 				saveWithComments();
 			} catch (IOException ex) {
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to save config file", ex);
 			}
 		}
 	}
@@ -258,7 +263,7 @@ public class MainConfig extends YamlFile {
 					updatedList = true;
 					newKeys.add(scenario.get().getKey());
 				}else {
-					Bukkit.getLogger().warning("[UhcCore] Invalid scenario key, " + key + " removing ...");
+					LOGGER.warning("Invalid scenario key, " + key + " removing ...");
 				}
 			}
 		}
@@ -280,7 +285,7 @@ public class MainConfig extends YamlFile {
 					options.add((Option<?>) obj);
 				}
 			}catch (ReflectiveOperationException ex){
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Unable to get option fields", ex);
 			}
 		}
 

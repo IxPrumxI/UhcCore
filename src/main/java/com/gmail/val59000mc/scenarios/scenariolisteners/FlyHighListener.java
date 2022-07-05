@@ -13,8 +13,8 @@ public class FlyHighListener extends ScenarioListener{
 		getPlayerManager().getOnlinePlayingPlayers().forEach(uhcPlayer -> {
 			try{
 				uhcPlayer.getPlayer().getInventory().addItem(UniversalMaterial.ELYTRA.getStack());
-			}catch (UhcPlayerNotOnlineException ex){
-				// No elytra for offline players.
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Shouldn't happen
 			}
 		});
 	}

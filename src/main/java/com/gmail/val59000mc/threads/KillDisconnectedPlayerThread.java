@@ -14,8 +14,12 @@ import org.bukkit.entity.Player;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class KillDisconnectedPlayerThread implements Runnable{
+
+	private static final Logger LOGGER = Logger.getLogger(KillDisconnectedPlayerThread.class.getCanonicalName());
 
 	private final PlayerDeathHandler playerDeathHandler;
 	private final UUID uuid;
@@ -46,8 +50,8 @@ public class KillDisconnectedPlayerThread implements Runnable{
 			PlayerManager pm = gm.getPlayerManager();
 			try {
 				uhcPlayer = pm.getUhcPlayer(uuid);
-			} catch (UhcPlayerDoesNotExistException e){
-				e.printStackTrace();
+			} catch (UhcPlayerDoesNotExistException e) {
+				LOGGER.log(Level.WARNING, "Not a UHC player", e);
 				return;
 			}
 

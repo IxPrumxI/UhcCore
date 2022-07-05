@@ -1,15 +1,17 @@
 package com.gmail.val59000mc.configuration.options;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class PotionEffectListOption implements Option<List<PotionEffect>> {
+
+	private static final Logger LOGGER = Logger.getLogger(PotionEffectListOption.class.getCanonicalName());
 
 	private final String path;
 
@@ -34,7 +36,7 @@ public class PotionEffectListOption implements Option<List<PotionEffect>> {
 				PotionEffect effect = new PotionEffect(type, duration, amplifier);
 				potionEffects.add(effect);
 			}catch(IllegalArgumentException e){
-				Bukkit.getLogger().warning("[UhcCore] "+potionStr+" ignored, please check the syntax. It must be formated like POTION_NAME/duration/amplifier");
+				LOGGER.warning(potionStr+" ignored, please check the syntax. It must be formated like POTION_NAME/duration/amplifier");
 			}
 		}
 

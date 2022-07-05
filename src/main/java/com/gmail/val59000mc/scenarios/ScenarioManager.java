@@ -23,8 +23,12 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ScenarioManager {
+
+	private static final Logger LOGGER = Logger.getLogger(ScenarioManager.class.getCanonicalName());
 
 	private static final int ROW = 9;
 
@@ -97,8 +101,8 @@ public class ScenarioManager {
 					Bukkit.getServer().getPluginManager().registerEvents(scenarioListener, UhcCore.getPlugin());
 				}
 			}
-		}catch (Exception ex){
-			ex.printStackTrace();
+		} catch (Exception ex) {
+			LOGGER.log(Level.WARNING, "Unable to load scenario", ex);
 		}
 	}
 
@@ -208,10 +212,10 @@ public class ScenarioManager {
 			for (String scenarioKey : defaultScenarios) {
 				Optional<Scenario> scenario = getScenarioByKey(scenarioKey);
 				if (scenario.isPresent()) {
-					Bukkit.getLogger().info("[UhcCore] Loading " + scenario.get().getKey());
+					LOGGER.info("Loading " + scenario.get().getKey());
 					enableScenario(scenario.get());
 				}else {
-					Bukkit.getLogger().warning("[UhcCore] Scenario with key " + scenarioKey + " can't be found!");
+					LOGGER.warning("Scenario with key " + scenarioKey + " can't be found!");
 				}
 			}
 		}

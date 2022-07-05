@@ -1,10 +1,12 @@
 package com.gmail.val59000mc.utils;
 
-import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.exceptions.ParseException;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import io.papermc.lib.PaperLib;
+
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -36,7 +38,7 @@ public abstract class VersionUtils{
 
 	public static VersionUtils getVersionUtils(){
 		if (versionUtils == null){
-			int version = UhcCore.getVersion();
+			int version = PaperLib.getMinecraftVersion();
 			if (version < 12){
 				versionUtils = new VersionUtils_1_8();
 			}else if (version == 12){

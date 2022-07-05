@@ -105,8 +105,8 @@ public class SilentNightListener extends ScenarioListener{
 		for (UhcPlayer uhcPlayer : getPlayerManager().getOnlinePlayingPlayers()){
 			try {
 				ProtocolUtils.setPlayerHeaderFooter(uhcPlayer.getPlayer(), tabHeader, "");
-			}catch (UhcPlayerNotOnlineException ex){
-				// Should always be online
+			} catch (UhcPlayerNotOnlineException ignored) {
+				// Shouldn't happen
 			}
 		}
 	}

@@ -2,10 +2,13 @@ package com.gmail.val59000mc.scenarios.scenariolisteners;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.customitems.UhcItems;
+import com.gmail.val59000mc.exceptions.ParseException;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.*;
+
+import io.papermc.lib.PaperLib;
+
 import com.gmail.val59000mc.configuration.YamlFile;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -16,10 +19,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FlowerPowerListener extends ScenarioListener{
+
+	private static final Logger LOGGER = Logger.getLogger(FlowerPowerListener.class.getCanonicalName());
 
 	private static final UniversalMaterial[] FLOWERS = new UniversalMaterial[]{
 			UniversalMaterial.POPPY,
@@ -46,13 +54,13 @@ public class FlowerPowerListener extends ScenarioListener{
 	public void onEnable(){
 		flowerDrops = new ArrayList<>();
 
-		String source = UhcCore.getVersion() < 13 ? "flowerpower-1.8.yml" : "flowerpower-1.13.yml";
+		String source = PaperLib.getMinecraftVersion() < 13 ? "flowerpower-1.8.yml" : "flowerpower-1.13.yml";
 		YamlFile cfg;
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "flowerpower.yml", source);
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		} catch (IOException | InvalidConfigurationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to load flowerpower.yml", ex);
 			return;
 		}
 
@@ -62,9 +70,8 @@ public class FlowerPowerListener extends ScenarioListener{
 			try {
 				JsonItemStack flowerDrop = JsonItemUtils.getItemFromJson(drop);
 				flowerDrops.add(flowerDrop);
-			}catch (Exception ex){
-				Bukkit.getLogger().severe("[UhcCore] Failed to parse FlowerPower item: "+drop+"!");
-				Bukkit.getLogger().severe(ex.getMessage());
+			} catch (ParseException ex) {
+				LOGGER.log(Level.WARNING, "Failed to parse FlowerPower item: " + drop, ex);
 			}
 		}
 	}
@@ -95,7 +102,7 @@ public class FlowerPowerListener extends ScenarioListener{
 			if (flower.equals(block)) return true;
 		}
 
-		if (UhcCore.getVersion() >= 14){
+		if (PaperLib.getMinecraftVersion() >= 14){
 			String material = block.getType().toString();
 			return material.equals("LILY_OF_THE_VALLEY") || material.equals("CORNFLOWER");
 		}

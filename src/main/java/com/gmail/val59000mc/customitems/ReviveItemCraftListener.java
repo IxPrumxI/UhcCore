@@ -39,8 +39,8 @@ public class ReviveItemCraftListener implements Craft.OnCraftListener {
 				Player player = uhcPlayer.getPlayer();
 				player.setItemOnCursor(null);
 				player.closeInventory();
-			}catch (UhcPlayerNotOnlineException ex) {
-				ex.printStackTrace();
+			}catch (UhcPlayerNotOnlineException ignored) {
+				// Player logged out mid-craft? Ignoring
 			}
 		});
 

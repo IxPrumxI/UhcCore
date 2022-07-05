@@ -11,8 +11,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class Craft {
+
+	private static final Logger LOGGER = Logger.getLogger(Craft.class.getCanonicalName());
 
 	private final String name;
 	private final List<ItemStack> recipe;
@@ -107,7 +110,7 @@ public class Craft {
 			}
 		}
 
-		Bukkit.getLogger().info("[UhcCore] "+name+" custom craft registered");
+		LOGGER.info(name+" custom craft registered");
 		Bukkit.getServer().addRecipe(craftRecipe);
 	}
 

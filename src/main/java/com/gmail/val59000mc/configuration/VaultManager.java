@@ -1,8 +1,10 @@
 package com.gmail.val59000mc.configuration;
 
 import com.gmail.val59000mc.UhcCore;
-import com.gmail.val59000mc.game.GameManager;
 import net.milkbowl.vault.economy.Economy;
+
+import java.util.logging.Logger;
+
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -10,6 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class VaultManager {
+
+	private static final Logger LOGGER = Logger.getLogger(VaultManager.class.getCanonicalName());
 
 	private static Economy economy;
 
@@ -26,7 +30,7 @@ public class VaultManager {
 		if (economyProvider != null) {
 			economy = economyProvider.getProvider();
 		}else{
-			Bukkit.getLogger().severe("[UhcCore] Error trying to load economy provider. Check that you have a economy plugin installed");
+			LOGGER.warning("Error trying to load economy provider. Check that you have a economy plugin installed");
 		}
 	}
 
@@ -43,7 +47,7 @@ public class VaultManager {
 		}
 
 		if(economy == null){
-			Bukkit.getLogger().warning("[UhcCore] Vault is not loaded! Couldn't pay "+amount+" to "+player.getName()+"!");
+			LOGGER.warning("Vault is not loaded! Couldn't pay "+amount+" to "+player.getName()+"!");
 			return;
 		}
 
@@ -60,7 +64,7 @@ public class VaultManager {
 		}
 
 		if(economy == null){
-			Bukkit.getLogger().warning("[UhcCore] Vault is not loaded! Couldn't withdraw "+amount+" to "+player.getName()+"!");
+			LOGGER.warning("Vault is not loaded! Couldn't withdraw "+amount+" to "+player.getName()+"!");
 			return;
 		}
 

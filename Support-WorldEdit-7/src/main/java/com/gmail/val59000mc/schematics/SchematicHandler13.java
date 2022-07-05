@@ -12,18 +12,21 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SchematicHandler13{
 
+	private static final Logger LOGGER = Logger.getLogger(SchematicHandler13.class.getCanonicalName());
+
 	public static ArrayList<Integer> pasteSchematic(Location loc, String path) throws Exception{
-		Bukkit.getLogger().info("[UhcCore] Pasting "+path);
+		LOGGER.info("Pasting "+path);
 		File schematic = new File(path);
 		World world = BukkitAdapter.adapt(loc.getWorld());
 
@@ -49,7 +52,7 @@ public class SchematicHandler13{
 		dimensions.add(clipboard.getDimensions().getX());
 		dimensions.add(clipboard.getDimensions().getZ());
 
-		Bukkit.getLogger().info("[UhcCore] Successfully pasted '"+path+"' at "+loc.getBlockX()+" "+loc.getBlockY()+" "+loc.getBlockZ());
+		LOGGER.info("Successfully pasted '"+path+"' at "+loc.getBlockX()+" "+loc.getBlockY()+" "+loc.getBlockZ());
 		return dimensions;
 	}
 
@@ -63,6 +66,7 @@ public class SchematicHandler13{
 			setTickingWatchdog.invoke(session, true);
 		}catch (ReflectiveOperationException ex){
 			// Couldn't turn on watchdog, old WorldEdit version?
+			LOGGER.log(Level.FINE, "Unable to enable watchdog", ex);
 		}
 	}
 

@@ -4,14 +4,18 @@ import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.configuration.YamlFile;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ScoreboardLayout {
+
+	private static final Logger LOGGER = Logger.getLogger(ScoreboardLayout.class.getCanonicalName());
 
 	private List<String> waiting;
 	private List<String> playing;
@@ -24,8 +28,8 @@ public class ScoreboardLayout {
 
 		try{
 			cfg = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "scoreboard.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		} catch (IOException | InvalidConfigurationException ex) {
+			LOGGER.log(Level.WARNING, "Unable to load scoreboard.yml", ex);
 
 			// Set default values.
 			waiting = new ArrayList<>();
@@ -92,7 +96,7 @@ public class ScoreboardLayout {
 
 		for (int i = list.size()-1; i >= 0; i--){
 			if (newList.size() == 15){
-				Bukkit.getLogger().warning("[UhcCore] Scoreboard lines can't have more than 15 lines!");
+				LOGGER.warning("Scoreboard lines can't have more than 15 lines!");
 				break;
 			}
 			newList.add(ChatColor.translateAlternateColorCodes('&',list.get(i)));

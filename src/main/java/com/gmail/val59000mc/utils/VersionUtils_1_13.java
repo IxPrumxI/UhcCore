@@ -38,8 +38,12 @@ import org.bukkit.scoreboard.Team;
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VersionUtils_1_13 extends VersionUtils{
+
+	private static final Logger LOGGER = Logger.getLogger(VersionUtils_1_13.class.getCanonicalName());
 
 	@Override
 	public ShapedRecipe createShapedRecipe(ItemStack craft, String craftKey) {
@@ -162,16 +166,11 @@ public class VersionUtils_1_13 extends VersionUtils{
 	public void removeRecipe(ItemStack item, Recipe recipe){
 		Iterator<Recipe> iterator = Bukkit.recipeIterator();
 
-		try {
-			while (iterator.hasNext()){
-				if (iterator.next().getResult().isSimilar(item)){
-					iterator.remove();
-					Bukkit.getLogger().info("[UhcCore] Removed recipe for item "+JsonItemUtils.getItemJson(item));
-				}
+		while (iterator.hasNext()){
+			if (iterator.next().getResult().isSimilar(item)){
+				iterator.remove();
+				LOGGER.fine(() -> "Removed recipe for item " + JsonItemUtils.getItemJson(item));
 			}
-		}catch (Exception ex){
-			Bukkit.getLogger().warning("[UhcCore] Failed to remove recipe for item "+JsonItemUtils.getItemJson(item)+"!");
-			ex.printStackTrace();
 		}
 	}
 
@@ -206,7 +205,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 				event.setTo(to);
 			}
 		}catch (ReflectiveOperationException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to handle nether portal event", ex);
 		}
 	}
 
@@ -284,7 +283,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 		Enchantment enchantment = Enchantment.getByName(key);
 
 		if (enchantment != null){
-			Bukkit.getLogger().warning("[UhcCore] Using old deprecated enchantment names, replace: " + key + " with " + enchantment.getKey().getKey());
+			LOGGER.warning("Using old deprecated enchantment names, replace: " + key + " with " + enchantment.getKey().getKey());
 			return enchantment;
 		}
 
@@ -292,7 +291,7 @@ public class VersionUtils_1_13 extends VersionUtils{
 
 		try{
 			namespace = NamespacedKey.minecraft(key);
-		}catch (IllegalArgumentException ex){
+		} catch (IllegalArgumentException ignored) {
 			return null;
 		}
 

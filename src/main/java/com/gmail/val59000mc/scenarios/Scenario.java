@@ -1,9 +1,11 @@
 package com.gmail.val59000mc.scenarios;
 
-import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.scenariolisteners.*;
 import com.gmail.val59000mc.utils.UniversalMaterial;
+
+import io.papermc.lib.PaperLib;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -180,7 +182,7 @@ public class Scenario {
 	}
 
 	public boolean isCompatibleWithVersion(){
-		return fromVersion <= UhcCore.getVersion();
+		return fromVersion <= PaperLib.getMinecraftVersion();
 	}
 
 	public static class Info {

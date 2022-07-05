@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
@@ -42,6 +43,8 @@ import com.pieterdebot.biomemapping.BiomeMappingAPI;
 import io.papermc.lib.PaperLib;
 
 public class MapLoader {
+
+	private static final Logger LOGGER = Logger.getLogger(MapLoader.class.getCanonicalName());
 
 	public final static String DO_DAYLIGHT_CYCLE = "doDaylightCycle";
 	public final static String DO_MOB_SPAWNING = "doMobSpawning";
@@ -96,16 +99,16 @@ public class MapLoader {
 	private void removeOceans() {
 		try {
 			if (UhcCore.getNmsAdapter().isPresent()) {
+				LOGGER.fine("Removing oceans using NMS adapter");
 				UhcCore.getNmsAdapter().get().removeOceans();
 			} else if (PaperLib.getMinecraftVersion() < 18) {
+				LOGGER.fine("Removing oceans using BiomeMapping");
 				removeOceansUsingBiomeMapping();
 			} else {
-				UhcCore.getPlugin().getLogger().warning(
-					"The 'replace-ocean-biomes' setting is not supported on this Minecraft version");
+				LOGGER.warning("The 'replace-ocean-biomes' setting is not supported on this Minecraft version");
 			}
 		} catch (Exception e) {
-			UhcCore.getPlugin().getLogger().log(
-				Level.WARNING, "Unable to remove ocean biomes", e);
+			LOGGER.log(Level.WARNING, "Unable to remove ocean biomes", e);
 		}
 	}
 
@@ -143,14 +146,14 @@ public class MapLoader {
 		String uuid = worldUuids.get(env);
 
 		if(uuid == null || uuid.equals("null")){
-			Bukkit.getLogger().info("[UhcCore] No world to delete");
+			LOGGER.info("No world to delete");
 		}else{
 			File worldDir = new File(uuid);
 			if(worldDir.exists()){
-				Bukkit.getLogger().info("[UhcCore] Deleting last world : "+uuid);
+				LOGGER.info("Deleting last world : "+uuid);
 				FileUtils.deleteFile(worldDir);
 			}else{
-				Bukkit.getLogger().info("[UhcCore] World "+uuid+" can't be removed, directory not found");
+				LOGGER.info("World "+uuid+" can't be removed, directory not found");
 			}
 		}
 	}
@@ -161,7 +164,7 @@ public class MapLoader {
 			worldName = "uhc-"+env.name().toLowerCase();
 		}
 
-		Bukkit.getLogger().info("[UhcCore] Creating new world : "+worldName);
+		LOGGER.info("Creating new world : "+worldName);
 
 		GameManager gm = GameManager.getGameManager();
 
@@ -175,7 +178,7 @@ public class MapLoader {
 			if (mapSeed == -1) {
 				Random r = new Random();
 				mapSeed = seeds.get(r.nextInt(seeds.size()));
-				Bukkit.getLogger().info("[UhcCore] Picking random seed from list : "+mapSeed);
+				LOGGER.info("Picking random seed from list : "+mapSeed);
 			}
 			wc.seed(mapSeed);
 		}else if(gm.getConfig().get(MainConfig.PICK_RANDOM_WORLD_FROM_LIST) && !worlds.isEmpty()){
@@ -198,8 +201,8 @@ public class MapLoader {
 
 		try{
 			storage = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
 			return;
 		}
 
@@ -207,7 +210,7 @@ public class MapLoader {
 		try {
 			storage.save();
 		}catch (IOException ex){
-			ex.printStackTrace();
+			LOGGER.log(Level.WARNING, "Unable to save storage.yml", ex);
 		}
 
 		wc.type(WorldType.NORMAL);
@@ -218,7 +221,7 @@ public class MapLoader {
 		String uuid = worldUuids.get(env);
 
 		if(uuid == null || uuid.equals("null")){
-			Bukkit.getLogger().info("[UhcCore] No world to load, defaulting to default behavior");
+			LOGGER.info("No world to load, defaulting to default behavior");
 			this.createNewWorld(env);
 		}else{
 			File worldDir = new File(uuid);
@@ -236,8 +239,8 @@ public class MapLoader {
 
 		try{
 			storage = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		}catch (InvalidConfigurationException ex){
-			ex.printStackTrace();
+		}catch (IOException | InvalidConfigurationException ex){
+			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
 			return;
 		}
 
@@ -342,7 +345,7 @@ public class MapLoader {
 		if (!healthRegen){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, NATURAL_REGENERATION, false);
 		}
-		if (!announceAdvancements && UhcCore.getVersion() >= 12){
+		if (!announceAdvancements && PaperLib.getMinecraftVersion() >= 12){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, ANNOUNCE_ADVANCEMENTS, false);
 		}
 		VersionUtils.getVersionUtils().setGameRuleValue(world, COMMAND_BLOCK_OUTPUT, false);
@@ -360,7 +363,7 @@ public class MapLoader {
 	}
 
 	private void copyWorld(String randomWorldName, String worldName) {
-		Bukkit.getLogger().info("[UhcCore] Copying " + randomWorldName + " to " + worldName);
+		LOGGER.info("Copying " + randomWorldName + " to " + worldName);
 		File worldDir = new File(randomWorldName);
 		if(worldDir.exists() && worldDir.isDirectory()){
 			recursiveCopy(worldDir,new File(worldName));
@@ -444,7 +447,7 @@ public class MapLoader {
 			}
 		}
 		catch (Exception ex) {
-			// Please handle all the relevant exceptions here
+			LOGGER.log(Level.WARNING, "Unable to copy files", ex);
 		}
 	}
 
@@ -465,7 +468,7 @@ public class MapLoader {
 		ChunkLoaderThread chunkLoaderThread = new ChunkLoaderThread(world, size, restEveryNumOfChunks, restDuration) {
 			@Override
 			public void onDoneLoadingWorld() {
-				Bukkit.getLogger().info("[UhcCore] Environment "+env.toString()+" 100% loaded");
+				LOGGER.info("Environment "+env.toString()+" 100% loaded");
 				if(env.equals(Environment.NORMAL) && config.get(MainConfig.ENABLE_NETHER)) {
 					generateChunks(Environment.NETHER);
 				}else {

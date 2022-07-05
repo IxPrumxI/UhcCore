@@ -44,12 +44,8 @@ public class HasteyBoysListener extends ScenarioListener{
 			}
 		}
 
-		try {
-			item.addEnchantment(Enchantment.DIG_SPEED,efficiency);
-			item.addEnchantment(Enchantment.DURABILITY,durability);
-		}catch (IllegalArgumentException ex){
-			// Nothing
-		}
+		item.addEnchantment(Enchantment.DIG_SPEED, efficiency);
+		item.addEnchantment(Enchantment.DURABILITY, durability);
 
 	}
 

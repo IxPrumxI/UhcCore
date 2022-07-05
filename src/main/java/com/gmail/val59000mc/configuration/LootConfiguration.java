@@ -2,17 +2,18 @@ package com.gmail.val59000mc.configuration;
 
 import com.gmail.val59000mc.exceptions.ParseException;
 import com.gmail.val59000mc.utils.JsonItemUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LootConfiguration<T extends Enum<T>> {
+
+	private static final Logger LOGGER = Logger.getLogger(LootConfiguration.class.getCanonicalName());
 
 	private final Class<T> classType;
 
@@ -35,7 +36,7 @@ public class LootConfiguration<T extends Enum<T>> {
 		try{
 			type = Enum.valueOf(classType, section.getName());
 		}catch(IllegalArgumentException e){
-			Bukkit.getLogger().warning("[UhcCore] Couldn't parse section '"+section.getName()+"' in mob-loot. This is not an existing entity type. Ignoring it.");
+			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in custom loot: Invalid " + classType.getSimpleName());
 			return false;
 		}
 
@@ -47,7 +48,7 @@ public class LootConfiguration<T extends Enum<T>> {
 		}
 
 		if (itemStrings.isEmpty()){
-			Bukkit.getLogger().warning("[UhcCore] Couldn't parse section '"+section.getName()+"' in custom loot. Missing loot item(s).");
+			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in custom loot: Missing loot item(s)");
 			return false;
 		}
 
@@ -55,8 +56,7 @@ public class LootConfiguration<T extends Enum<T>> {
 			try {
 				loot.add(JsonItemUtils.getItemFromJson(itemStr));
 			} catch (ParseException ex) {
-				Bukkit.getLogger().warning("[UhcCore] Couldn't parse loot '" + type.name() + "' in custom loot.");
-				ex.printStackTrace();
+				LOGGER.log(Level.WARNING, "Couldn't parse loot '" + type.name() + "' in custom loot", ex);
 				return false;
 			}
 		}

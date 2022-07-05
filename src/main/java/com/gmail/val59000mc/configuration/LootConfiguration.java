@@ -36,7 +36,7 @@ public class LootConfiguration<T extends Enum<T>> {
 		try{
 			type = Enum.valueOf(classType, section.getName());
 		}catch(IllegalArgumentException e){
-			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in mob-loot. This is not an existing entity type. Ignoring it.");
+			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in custom loot: Invalid " + classType.getSimpleName());
 			return false;
 		}
 
@@ -48,7 +48,7 @@ public class LootConfiguration<T extends Enum<T>> {
 		}
 
 		if (itemStrings.isEmpty()){
-			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in custom loot. Missing loot item(s).");
+			LOGGER.warning("Couldn't parse section '"+section.getName()+"' in custom loot: Missing loot item(s)");
 			return false;
 		}
 

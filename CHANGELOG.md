@@ -11,6 +11,7 @@
 - Fixed a bug with scenario voting where players could lose a vote by clicking an item in their hotbar
 - Fixed a scenario error message where "Silent Night" was incorrectly named "Anonymous"
 - Removed some log spam
+- Clarified a few confusing log messages
 
 ## [1.20.1] - 2022-06-14
 

@@ -179,7 +179,6 @@ public class GameManager{
 	}
 
 	public void loadNewGame() {
-		loadConfig();
 		setGameState(GameState.LOADING);
 
 		registerListeners();

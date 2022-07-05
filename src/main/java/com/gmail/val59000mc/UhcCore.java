@@ -26,10 +26,11 @@ public class UhcCore extends JavaPlugin{
 	@Override
 	public void onEnable(){
 		pl = this;
-
 		forwardingLogger = PluginForwardingHandler.createForwardingLogger(this);
-		loadNmsAdapter();
 		gameManager = new GameManager();
+
+		gameManager.loadConfig();
+		loadNmsAdapter();
 		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
 
 		// Delete files that are scheduled for deletion

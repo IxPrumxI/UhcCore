@@ -99,8 +99,10 @@ public class MapLoader {
 	private void removeOceans() {
 		try {
 			if (UhcCore.getNmsAdapter().isPresent()) {
+				LOGGER.fine("Removing oceans using NMS adapter");
 				UhcCore.getNmsAdapter().get().removeOceans();
 			} else if (PaperLib.getMinecraftVersion() < 18) {
+				LOGGER.fine("Removing oceans using BiomeMapping");
 				removeOceansUsingBiomeMapping();
 			} else {
 				LOGGER.warning("The 'replace-ocean-biomes' setting is not supported on this Minecraft version");

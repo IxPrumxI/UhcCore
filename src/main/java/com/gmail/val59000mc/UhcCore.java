@@ -1,6 +1,7 @@
 package com.gmail.val59000mc;
 
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.gmail.val59000mc.game.GameManager;
@@ -40,10 +41,10 @@ public class UhcCore extends JavaPlugin{
 	private void loadNmsAdapter() {
 		try {
 			final NmsAdapter adapter = NmsAdapterFactory.create();
-			LOGGER.info("Loaded NMS adapter: " + adapter.getClass().getName());
+			LOGGER.config(() -> "Loaded NMS adapter: " + adapter.getClass().getName());
 			nmsAdapter = Optional.of(adapter);
 		} catch (CreateNmsAdapterException e) {
-			LOGGER.info(e.getMessage());
+			LOGGER.log(Level.CONFIG, "Unable to create NMS adapter", e);
 			nmsAdapter = Optional.empty();
 		}
 	}

@@ -90,8 +90,6 @@ public class UhcCore extends JavaPlugin{
 	@Override
 	public void onDisable(){
 		gameManager.getScenarioManager().disableAllScenarios();
-
-		LOGGER.info("Plugin disabled");
 	}
 
 }

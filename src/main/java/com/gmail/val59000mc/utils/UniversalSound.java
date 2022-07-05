@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.bukkit.Sound;
 
-import com.gmail.val59000mc.UhcCore;
+import io.papermc.lib.PaperLib;
 
 public enum UniversalSound {
 	CLICK("CLICK", "UI_BUTTON_CLICK", "UI_BUTTON_CLICK"),
@@ -27,9 +27,9 @@ public enum UniversalSound {
 
 	public Sound getSound(){
 		if (sound == null){
-			if (UhcCore.getVersion() < 9){
+			if (PaperLib.getMinecraftVersion() < 9){
 				sound = Sound.valueOf(name8);
-			}else if (UhcCore.getVersion() < 13){
+			}else if (PaperLib.getMinecraftVersion() < 13){
 				sound = Sound.valueOf(name9);
 			}else {
 				sound = Sound.valueOf(name13);

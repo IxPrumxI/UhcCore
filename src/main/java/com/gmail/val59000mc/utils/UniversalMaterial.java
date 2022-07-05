@@ -1,6 +1,7 @@
 package com.gmail.val59000mc.utils;
 
-import com.gmail.val59000mc.UhcCore;
+import io.papermc.lib.PaperLib;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -213,7 +214,7 @@ public enum UniversalMaterial{
 	}
 
 	public short getData(){
-		return UhcCore.getVersion() < 13 ? id8 : 0;
+		return PaperLib.getMinecraftVersion() < 13 ? id8 : 0;
 	}
 
 	@SuppressWarnings("deprecation")

@@ -18,12 +18,8 @@ public class UhcCore extends JavaPlugin{
 
 	private static final Logger LOGGER = Logger.getLogger(UhcCore.class.getCanonicalName());
 
-	private static final int MIN_VERSION = 8;
-	private static final int MAX_VERSION = 19;
-
 	private static UhcCore pl;
 	private static Optional<NmsAdapter> nmsAdapter;
-	private static int version;
 	private Logger forwardingLogger;
 	private GameManager gameManager;
 
@@ -32,7 +28,6 @@ public class UhcCore extends JavaPlugin{
 		pl = this;
 
 		forwardingLogger = PluginForwardingHandler.createForwardingLogger(this);
-		loadServerVersion();
 		loadNmsAdapter();
 		gameManager = new GameManager();
 		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
@@ -50,29 +45,6 @@ public class UhcCore extends JavaPlugin{
 			LOGGER.info(e.getMessage());
 			nmsAdapter = Optional.empty();
 		}
-	}
-
-	// Load the Minecraft version.
-	private void loadServerVersion(){
-		String versionString = Bukkit.getBukkitVersion();
-		version = 0;
-
-		for (int i = MIN_VERSION; i <= MAX_VERSION; i ++){
-			if (versionString.contains("1." + i)){
-				version = i;
-			}
-		}
-
-		if (version == 0) {
-			version = MIN_VERSION;
-			LOGGER.warning("Failed to detect server version! " + versionString + "?");
-		}else {
-			LOGGER.info("1." + version + " Server detected!");
-		}
-	}
-
-	public static int getVersion() {
-		return version;
 	}
 
 	public static UhcCore getPlugin(){

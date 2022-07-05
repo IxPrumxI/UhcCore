@@ -11,6 +11,8 @@ import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.VersionUtils;
 
+import io.papermc.lib.PaperLib;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,7 +48,7 @@ public class AchievementHunter extends ScenarioListener implements EventExecutor
 
 	@Override
 	public void onEnable() {
-		if (UhcCore.getVersion() < 12){
+		if (PaperLib.getMinecraftVersion() < 12){
 			type = Type.ACHIEVEMENTS;
 		}else{
 			type = Type.ADVANCEMENTS;

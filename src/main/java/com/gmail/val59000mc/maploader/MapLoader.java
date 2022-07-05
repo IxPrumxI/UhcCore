@@ -343,7 +343,7 @@ public class MapLoader {
 		if (!healthRegen){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, NATURAL_REGENERATION, false);
 		}
-		if (!announceAdvancements && UhcCore.getVersion() >= 12){
+		if (!announceAdvancements && PaperLib.getMinecraftVersion() >= 12){
 			VersionUtils.getVersionUtils().setGameRuleValue(world, ANNOUNCE_ADVANCEMENTS, false);
 		}
 		VersionUtils.getVersionUtils().setGameRuleValue(world, COMMAND_BLOCK_OUTPUT, false);

@@ -5,6 +5,9 @@ import com.gmail.val59000mc.customitems.UhcItems;
 import com.gmail.val59000mc.exceptions.ParseException;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.*;
+
+import io.papermc.lib.PaperLib;
+
 import com.gmail.val59000mc.configuration.YamlFile;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -51,7 +54,7 @@ public class FlowerPowerListener extends ScenarioListener{
 	public void onEnable(){
 		flowerDrops = new ArrayList<>();
 
-		String source = UhcCore.getVersion() < 13 ? "flowerpower-1.8.yml" : "flowerpower-1.13.yml";
+		String source = PaperLib.getMinecraftVersion() < 13 ? "flowerpower-1.8.yml" : "flowerpower-1.13.yml";
 		YamlFile cfg;
 
 		try{
@@ -99,7 +102,7 @@ public class FlowerPowerListener extends ScenarioListener{
 			if (flower.equals(block)) return true;
 		}
 
-		if (UhcCore.getVersion() >= 14){
+		if (PaperLib.getMinecraftVersion() >= 14){
 			String material = block.getType().toString();
 			return material.equals("LILY_OF_THE_VALLEY") || material.equals("CORNFLOWER");
 		}

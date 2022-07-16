@@ -7,6 +7,8 @@
 - Added the `logging-level` option (see `config.yml` for more details)
 - Added some more translation strings under `team.inventory` and `team.colors` in the `lang.yml` file
 - Added `players.death-message` to `lang.yml`
+- The player elimination announcement can now be disabled by
+setting `players.eliminated` in `lang.yml` to an empty string
 
 ### Bug fixes
 

@@ -61,9 +61,4 @@ public class UhcCore extends JavaPlugin{
 		return nmsAdapter;
 	}
 
-	@Override
-	public void onDisable(){
-		gameManager.getScenarioManager().disableAllScenarios();
-	}
-
 }

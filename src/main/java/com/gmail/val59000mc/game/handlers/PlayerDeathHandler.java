@@ -74,6 +74,8 @@ public class PlayerDeathHandler {
 				player.kickPlayer(Lang.DISPLAY_MESSAGE_PREFIX + " " + Lang.KICK_DEAD);
 			}
 		}
+
+		setDeathMessage(event);
 	}
 
 	public void handleOfflinePlayerDeath(UhcPlayer uhcPlayer, @Nullable Location location, @Nullable Player killer) {
@@ -166,6 +168,14 @@ public class PlayerDeathHandler {
 		playerManager.checkIfRemainingPlayers();
 
 		return playerDrops;
+	}
+
+	private void setDeathMessage(PlayerDeathEvent event) {
+		if (Lang.PLAYERS_DEATH_MESSAGE.isEmpty()) {
+			event.setDeathMessage(null);
+		} else {
+			event.setDeathMessage(Lang.PLAYERS_DEATH_MESSAGE.replace("%original%", event.getDeathMessage()));
+		}
 	}
 
 }

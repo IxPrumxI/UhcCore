@@ -42,6 +42,7 @@ public class Lang{
 	public static String PLAYERS_WELCOME_BACK_IN_GAME;
 	public static String PLAYERS_WELCOME_BACK_SPECTATING;
 	public static String PLAYERS_ELIMINATED;
+	public static String PLAYERS_DEATH_MESSAGE;
 	public static String PLAYERS_WON_SOLO;
 	public static String PLAYERS_WON_TEAM;
 	public static String PLAYERS_ALL_HAVE_LEFT;
@@ -263,6 +264,7 @@ public class Lang{
 		PLAYERS_WELCOME_BACK_IN_GAME = getString(lang, "players.welcome-back-in-game", "You logged back in the game");
 		PLAYERS_WELCOME_BACK_SPECTATING = getString(lang, "players.welcome-back-spectating", "You are dead and are now spectating.");
 		PLAYERS_ELIMINATED = getString(lang, "players.eliminated", "%player% has been eliminated!");
+		PLAYERS_DEATH_MESSAGE = getString(lang, "players.death-message", "%original%");
 		PLAYERS_WON_SOLO = getString(lang, "players.won-solo", "%player% won the game!");
 		PLAYERS_WON_TEAM = getString(lang, "players.won-team", "Team %team% won the game!");
 		PLAYERS_ALL_HAVE_LEFT = getString(lang, "players.all-have-left", "All players have left, game will end in");

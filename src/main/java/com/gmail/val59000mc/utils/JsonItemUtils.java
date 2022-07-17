@@ -173,7 +173,7 @@ public class JsonItemUtils{
 						meta = item.getItemMeta();
 						break;
 					case "display-name":
-						meta.setDisplayName(entry.getValue().getAsString());
+						meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', entry.getValue().getAsString()));
 						break;
 					case "lore":
 						meta = parseLore(meta, entry.getValue().getAsJsonArray());

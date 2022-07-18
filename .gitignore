@@ -17,3 +17,6 @@ bin/
 
 # run-paper
 /run/
+
+# MkDocs
+/site/

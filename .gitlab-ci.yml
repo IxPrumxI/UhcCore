@@ -1,4 +1,5 @@
-image: eclipse-temurin:8-jdk
+default:
+  image: eclipse-temurin:8-jdk
 
 before_script:
   - export GRADLE_USER_HOME="$(pwd)/.gradle/"
@@ -6,6 +7,7 @@ before_script:
 stages:
 - deploy
 - release
+- docs
 
 maven_publish:
   stage: deploy
@@ -36,3 +38,24 @@ release:
           url: https://gitlab.com/api/v4/groups/uhccore/-/packages/maven/net/zerodind/uhccore/$CI_COMMIT_TAG/uhccore-$CI_COMMIT_TAG.jar
           filepath: /plugin-jar
           link_type: package
+
+pages:
+  image: python:latest
+  stage: docs
+  script:
+    - python -m pip install mkdocs
+    - python -m pip install mkdocs-material
+    - mkdocs build -d public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      changes:
+        - docs/**/*
+        - mkdocs.yml
+      when: manual
+      allow_failure: true
+    - if: $CI_COMMIT_TAG
+      when: manual
+      allow_failure: true

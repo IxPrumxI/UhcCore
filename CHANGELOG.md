@@ -5,6 +5,7 @@
 ### New features
 
 - Added the `logging-level` option (see `config.yml` for more details)
+- Added some more translation strings under `team.inventory` and `team.colors` in the `lang.yml` file
 
 ### Bug fixes
 

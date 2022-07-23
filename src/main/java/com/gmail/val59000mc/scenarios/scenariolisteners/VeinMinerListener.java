@@ -1,6 +1,7 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
 import com.gmail.val59000mc.customitems.UhcItems;
+import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.Option;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
@@ -66,13 +67,7 @@ public class VeinMinerListener extends ScenarioListener{
 
 		// Process blood diamonds.
 		if (isEnabled(Scenario.BLOOD_DIAMONDS) && oreType.get() == OreType.DIAMOND) {
-			player.getWorld().playSound(player.getLocation(), UniversalSound.PLAYER_HURT.getSound(), 1, 1);
-
-			if (player.getHealth() < vein.getOres()) {
-				VersionUtils.getVersionUtils().killPlayer(player);
-			}else {
-				player.setHealth(player.getHealth() - vein.getOres());
-			}
+			UhcPlayer.damageIrreducible(player, vein.getOres());
 		}
 
 		if (calculateToolDamage) {

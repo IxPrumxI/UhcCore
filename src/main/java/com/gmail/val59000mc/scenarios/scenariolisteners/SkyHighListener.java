@@ -72,7 +72,7 @@ public class SkyHighListener extends ScenarioListener{
 						Player player = uhcPlayer.getPlayer();
 						if (player.getLocation().getBlockY() < listener.yLayer) {
 							player.sendMessage(Lang.SCENARIO_SKYHIGH_DAMAGE);
-							player.setHealth(player.getHealth() - 1);
+							UhcPlayer.damageIrreducible(player, 1);
 						}
 					} catch (UhcPlayerNotOnlineException ignored) {
 						// Shouldn't happen

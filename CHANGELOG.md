@@ -12,6 +12,7 @@ setting `players.eliminated` in `lang.yml` to an empty string
 
 ### Bug fixes
 
+- Fixed a bug in some scenarios where health would "vanish" without playing the damage effect
 - Fixed a bug with scenario voting where players could lose a vote by clicking an item in their hotbar
 - Fixed a scenario error message where "Silent Night" was incorrectly named "Anonymous"
 - Fixed an `IllegalPluginAccessException` which could sometimes happen when shutting down the server

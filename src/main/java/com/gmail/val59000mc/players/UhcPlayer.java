@@ -403,4 +403,15 @@ public class UhcPlayer {
 		player.setHealth(player.getMaxHealth());
 	}
 
+	public static void damageIrreducible(Player player, double amount) {
+		if (amount < 0) {
+			throw new IllegalArgumentException("Amount may not be negative");
+		}
+		final double orignalHealth = player.getHealth();
+		// Play damage sound and visual effect for clients
+		player.damage(amount);
+		// Bypass damage reduction (e.g. resistance effect)
+		player.setHealth(Math.max(orignalHealth - amount, 0));
+	}
+
 }

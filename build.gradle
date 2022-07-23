@@ -88,9 +88,13 @@ tasks.named("processResources") {
 }
 
 tasks.named("runServer") {
-	minecraftVersion "1.19"
+	// The minecraft version to use can be changed via the mcVersion property
+	// For example: gradlew runServer -PmcVersion=1.8.8
+	def mcVersion = project.findProperty("mcVersion") ?: "1.19"
+	minecraftVersion mcVersion
+	runDirectory rootProject.file("run/$mcVersion")
 	javaLauncher = javaToolchains.launcherFor {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(getJavaVersionFor(mcVersion))
 	}
 	// These options enable remote debugging via JDWP on localhost:5005
 	// See "Testing your changes" in CONTRIBUTING.md for more details
@@ -123,5 +127,13 @@ publishing {
 				header(HttpHeaderAuthentication)
 			}
 		}
+	}
+}
+
+int getJavaVersionFor(String mcVersion) {
+	switch (Integer.parseInt(mcVersion.split("\\.")[1])) {
+		case 8..16: return 8
+		case 17: return 16
+		default: return 17
 	}
 }

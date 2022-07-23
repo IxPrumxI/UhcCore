@@ -18,6 +18,7 @@ setting `players.eliminated` in `lang.yml` to an empty string
 - Fixed a scenario error message where "Silent Night" was incorrectly named "Anonymous"
 - Fixed an `IllegalPluginAccessException` which could sometimes happen when shutting down the server
 - Fixed a bug with the JSON item deserializer where color codes in display names were not working
+- Fixed incorrect scenario IDs in the default `scenarios.yml` template
 - Removed some log spam
 - Clarified a few confusing log messages
 

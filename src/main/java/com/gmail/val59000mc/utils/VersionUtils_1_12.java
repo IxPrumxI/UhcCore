@@ -332,9 +332,4 @@ public class VersionUtils_1_12 extends VersionUtils{
 		meta.setUnbreakable(b);
 	}
 
-	@Override
-	public void killPlayer(Player player) {
-		player.damage(player.getHealth());
-	}
-
 }

@@ -6,7 +6,6 @@ import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.Option;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
-import com.gmail.val59000mc.utils.VersionUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
@@ -32,7 +31,7 @@ public class WeakestLinkListener extends ScenarioListener{
 		// Kill player
 		try {
 			Player player = lowest.getPlayer();
-			VersionUtils.getVersionUtils().killPlayer(player);
+			player.setHealth(0);
 		} catch (UhcPlayerNotOnlineException ignored) {
 			// Shouldn't happen
 		}

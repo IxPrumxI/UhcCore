@@ -308,12 +308,22 @@ public class VersionUtils_1_13 extends VersionUtils{
 		List<Material> items = new ArrayList<>();
 
 		for (Material material : Material.values()){
-			if (material.isItem()){
+			if (material.isItem() && !isAir(material)) {
 				items.add(material);
 			}
 		}
 
 		return items;
+	}
+
+	protected boolean isAir(Material material) {
+		// Material#isAir was introduced in 1.14
+		switch (material) {
+			case AIR:
+			case CAVE_AIR:
+			case VOID_AIR: return true;
+			default: return false;
+		}
 	}
 
 	@Nullable

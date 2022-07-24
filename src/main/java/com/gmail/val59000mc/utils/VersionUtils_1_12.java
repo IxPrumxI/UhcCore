@@ -308,7 +308,7 @@ public class VersionUtils_1_12 extends VersionUtils{
 		List<Material> items = new ArrayList<>();
 
 		for (Material material : Material.values()){
-			if (material.isItem()){
+			if (material.isItem() && material != Material.AIR) {
 				items.add(material);
 			}
 		}

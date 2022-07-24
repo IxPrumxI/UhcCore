@@ -3,8 +3,8 @@ package com.gmail.val59000mc.utils;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.maploader.MapLoader;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerPortalEvent;
 
 public class VersionUtils_1_14 extends VersionUtils_1_13{
@@ -25,6 +25,11 @@ public class VersionUtils_1_14 extends VersionUtils_1_13{
 			loc.setZ(loc.getZ() / 2d);
 			event.setTo(loc);
 		}
+	}
+
+	@Override
+	protected boolean isAir(Material material) {
+		return material.isAir();
 	}
 
 }

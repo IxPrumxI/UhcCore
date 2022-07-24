@@ -16,6 +16,7 @@ setting `players.eliminated` in `lang.yml` to an empty string
 - Fixed a bug in the Horseless scenario where players could ride zombie/skeleton horses, donkeys and mules
 - Fixed a bug in the Weakest Link scenario where players with the resistance effect could survive
 - Fixed a bug in some scenarios where health would "vanish" without playing the damage effect
+- Fixed a bug in the Randomized Drops scenario where some blocks would not drop anything at all
 - Fixed a bug with scenario voting where players could lose a vote by clicking an item in their hotbar
 - Fixed a scenario error message where "Silent Night" was incorrectly named "Anonymous"
 - Fixed a `NullPointerException` that would happen when trying to revive a nonexistent player

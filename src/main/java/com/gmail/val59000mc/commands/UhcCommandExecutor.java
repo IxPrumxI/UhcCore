@@ -51,7 +51,7 @@ public class UhcCommandExecutor implements CommandExecutor{
 
 		// debug commands
 		if (!sender.hasPermission("uhc-core.commands.debug")){
-			sender.sendMessage(ChatColor.RED + "You don't have the permission to use UHC-Core debug commands");
+			sender.sendMessage(ChatColor.RED + "You don't have the permission to use UhcCore debug commands");
 			return true;
 		}
 

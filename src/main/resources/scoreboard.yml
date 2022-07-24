@@ -31,7 +31,7 @@
 #  %teamColor% = The color of the team on tab. (Only a color so you need to put text behind it inorder for it to show.)
 
 # Title of the scoreboard
-title: '&6&lUHC-Core'
+title: '&6&lUhcCore'
 
 # Scoreboard while waiting...
 waiting:

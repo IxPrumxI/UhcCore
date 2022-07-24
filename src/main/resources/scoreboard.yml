@@ -49,7 +49,7 @@ waiting:
   - '&a%scenarios%'
   - ''
   - '&6IP:'
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'
 
 # Scoreboard while game is playing.
 playing:
@@ -61,7 +61,7 @@ playing:
   - '&6Team:'
   - '&a%members-name% &c%members-health% &lHP'
   - ''
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'
 
 
 # Scoreboard while game is in deathmatch.
@@ -70,7 +70,7 @@ deathmatch:
   - '&6Kills: &a%kills%'
   - '&6Players left: &a%alive%'
   - ''
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'
 
 # Scoreboard while in spectator
 spectating:
@@ -79,4 +79,4 @@ spectating:
   - '&6Kills: &a%kills%'
   - '&6Players left: &a%alive%'
   - ''
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'

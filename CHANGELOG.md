@@ -18,6 +18,7 @@ setting `players.eliminated` in `lang.yml` to an empty string
 - Fixed a bug in some scenarios where health would "vanish" without playing the damage effect
 - Fixed a bug with scenario voting where players could lose a vote by clicking an item in their hotbar
 - Fixed a scenario error message where "Silent Night" was incorrectly named "Anonymous"
+- Fixed a `NullPointerException` that would happen when trying to revive a nonexistent player
 - Fixed an `IllegalPluginAccessException` which could sometimes happen when shutting down the server
 - Fixed a bug with the JSON item deserializer where color codes in display names were not working
 - Fixed incorrect scenario IDs in the default `scenarios.yml` template

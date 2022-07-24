@@ -31,7 +31,7 @@
 #  %teamColor% = The color of the team on tab. (Only a color so you need to put text behind it inorder for it to show.)
 
 # Title of the scoreboard
-title: '&6&lUHC-Core'
+title: '&6&lUhcCore'
 
 # Scoreboard while waiting...
 waiting:
@@ -49,7 +49,7 @@ waiting:
   - '&a%scenarios%'
   - ''
   - '&6IP:'
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'
 
 # Scoreboard while game is playing.
 playing:
@@ -61,7 +61,7 @@ playing:
   - '&6Team:'
   - '&a%members-name% &c%members-health% &lHP'
   - ''
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'
 
 
 # Scoreboard while game is in deathmatch.
@@ -70,7 +70,7 @@ deathmatch:
   - '&6Kills: &a%kills%'
   - '&6Players left: &a%alive%'
   - ''
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'
 
 # Scoreboard while in spectator
 spectating:
@@ -79,4 +79,4 @@ spectating:
   - '&6Kills: &a%kills%'
   - '&6Players left: &a%alive%'
   - ''
-  - '&aplay.myserver.com'
+  - '&aplay.example.com'

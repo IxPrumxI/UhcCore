@@ -42,6 +42,7 @@ public class Lang{
 	public static String PLAYERS_WELCOME_BACK_IN_GAME;
 	public static String PLAYERS_WELCOME_BACK_SPECTATING;
 	public static String PLAYERS_ELIMINATED;
+	public static String PLAYERS_DEATH_MESSAGE;
 	public static String PLAYERS_WON_SOLO;
 	public static String PLAYERS_WON_TEAM;
 	public static String PLAYERS_ALL_HAVE_LEFT;
@@ -263,6 +264,7 @@ public class Lang{
 		PLAYERS_WELCOME_BACK_IN_GAME = getString(lang, "players.welcome-back-in-game", "You logged back in the game");
 		PLAYERS_WELCOME_BACK_SPECTATING = getString(lang, "players.welcome-back-spectating", "You are dead and are now spectating.");
 		PLAYERS_ELIMINATED = getString(lang, "players.eliminated", "%player% has been eliminated!");
+		PLAYERS_DEATH_MESSAGE = getString(lang, "players.death-message", "%original%");
 		PLAYERS_WON_SOLO = getString(lang, "players.won-solo", "%player% won the game!");
 		PLAYERS_WON_TEAM = getString(lang, "players.won-team", "Team %team% won the game!");
 		PLAYERS_ALL_HAVE_LEFT = getString(lang, "players.all-have-left", "All players have left, game will end in");
@@ -466,7 +468,7 @@ public class Lang{
 		SCENARIO_SWITCHEROO_SWITCH = getString(lang, "scenarios.switcheroo.switch", "&4[Switcheroo] &6You have switched positions with &3%player%");
 		SCENARIO_LOVEATFIRSTSIGHT_JOIN_ERROR = getString(lang, "scenarios.love_at_first_sight.join-error", "&cCan't join teams, Love at first sight is enabled!");
 		SCENARIO_LOVEATFIRSTSIGHT_JOIN_BROADCAST = getString(lang, "scenarios.love_at_first_sight.join-broadcast", "&4[Love At First Sight] &a%player% has joined %leader%'s team");
-		SCENARIO_SKYHIGH_DAMAGE = getString(lang, "scenarios.sky_high.damage", "&4[Sky High] &cYou're taking damage as your under y=120");
+		SCENARIO_SKYHIGH_DAMAGE = getString(lang, "scenarios.sky_high.damage", "&4[Sky High] &cYou're taking damage from being below y=120");
 		SCENARIO_TEAMINVENTORY_ERROR = getString(lang, "scenarios.team_inventory.error", "&cYou may only open your team's inventory while playing!");
 		SCENARIO_TEAMINVENTORY_DISABLED = getString(lang, "scenarios.team_inventory.disabled", "&cTeam Inventory is currently disabled!");
 		SCENARIO_TEAMINVENTORY_OPEN = getString(lang, "scenarios.team_inventory.open", "&aOpening team inventory ...");

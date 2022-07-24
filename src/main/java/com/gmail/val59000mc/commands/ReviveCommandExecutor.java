@@ -59,6 +59,7 @@ public class ReviveCommandExecutor implements CommandExecutor{
 
 		if (uuid == null){
 			caller.sendMessage(ChatColor.RED + "Player not found!");
+			return;
 		}
 
 		PlayerManager pm = gameManager.getPlayerManager();

@@ -74,6 +74,8 @@ public class PlayerDeathHandler {
 				player.kickPlayer(Lang.DISPLAY_MESSAGE_PREFIX + " " + Lang.KICK_DEAD);
 			}
 		}
+
+		setDeathMessage(event);
 	}
 
 	public void handleOfflinePlayerDeath(UhcPlayer uhcPlayer, @Nullable Location location, @Nullable Player killer) {
@@ -121,7 +123,7 @@ public class PlayerDeathHandler {
 		uhcPlayer.getStoredItems().addAll(playerDrops);
 
 		// eliminations
-		if (!scenarioManager.isEnabled(Scenario.SILENT_NIGHT) || !((SilentNightListener) scenarioManager.getScenarioListener(Scenario.SILENT_NIGHT)).isNightMode()) {
+		if (!Lang.PLAYERS_ELIMINATED.isEmpty() && shouldAnnounceEliminations()) {
 			gameManager.broadcastInfoMessage(Lang.PLAYERS_ELIMINATED.replace("%player%", uhcPlayer.getName()));
 		}
 
@@ -166,6 +168,19 @@ public class PlayerDeathHandler {
 		playerManager.checkIfRemainingPlayers();
 
 		return playerDrops;
+	}
+
+	private void setDeathMessage(PlayerDeathEvent event) {
+		if (Lang.PLAYERS_DEATH_MESSAGE.isEmpty()) {
+			event.setDeathMessage(null);
+		} else {
+			event.setDeathMessage(Lang.PLAYERS_DEATH_MESSAGE.replace("%original%", event.getDeathMessage()));
+		}
+	}
+
+	private boolean shouldAnnounceEliminations() {
+		return !scenarioManager.isEnabled(Scenario.SILENT_NIGHT) ||
+			!((SilentNightListener) scenarioManager.getScenarioListener(Scenario.SILENT_NIGHT)).isNightMode();
 	}
 
 }

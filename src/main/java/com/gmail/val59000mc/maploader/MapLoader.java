@@ -148,7 +148,7 @@ public class MapLoader {
 		if(uuid == null || uuid.equals("null")){
 			LOGGER.info("No world to delete");
 		}else{
-			File worldDir = new File(uuid);
+			final File worldDir = new File(Bukkit.getWorldContainer(), uuid);
 			if(worldDir.exists()){
 				LOGGER.info("Deleting last world : "+uuid);
 				FileUtils.deleteFile(worldDir);
@@ -224,7 +224,7 @@ public class MapLoader {
 			LOGGER.info("No world to load, defaulting to default behavior");
 			this.createNewWorld(env);
 		}else{
-			File worldDir = new File(uuid);
+			final File worldDir = new File(Bukkit.getWorldContainer(), uuid);
 			if(worldDir.exists()){
 				// Loading existing world
 				Bukkit.getServer().createWorld(new WorldCreator(uuid));
@@ -364,9 +364,9 @@ public class MapLoader {
 
 	private void copyWorld(String randomWorldName, String worldName) {
 		LOGGER.info("Copying " + randomWorldName + " to " + worldName);
-		File worldDir = new File(randomWorldName);
+		final File worldDir = new File(Bukkit.getWorldContainer(), randomWorldName);
 		if(worldDir.exists() && worldDir.isDirectory()){
-			recursiveCopy(worldDir,new File(worldName));
+			recursiveCopy(worldDir, new File(Bukkit.getWorldContainer(), worldName));
 		}
 	}
 
@@ -375,8 +375,10 @@ public class MapLoader {
 			return;
 		}
 
+		final File mainWorldFolder = Bukkit.getWorlds().get(0).getWorldFolder();
+
 		// Deleting old players files
-		File playerdata = new File(Bukkit.getServer().getWorlds().get(0).getName()+"/playerdata");
+		final File playerdata = new File(mainWorldFolder, "playerdata");
 		if(playerdata.exists() && playerdata.isDirectory()){
 			for(File playerFile : playerdata.listFiles()){
 				playerFile.delete();
@@ -384,7 +386,7 @@ public class MapLoader {
 		}
 
 		// Deleting old players stats
-		File stats = new File(Bukkit.getServer().getWorlds().get(0).getName()+"/stats");
+		final File stats = new File(mainWorldFolder, "stats");
 		if(stats.exists() && stats.isDirectory()){
 			for(File statFile : stats.listFiles()){
 				statFile.delete();
@@ -392,7 +394,7 @@ public class MapLoader {
 		}
 
 		// Deleting old players advancements
-		File advancements = new File(Bukkit.getServer().getWorlds().get(0).getName()+"/advancements");
+		final File advancements = new File(mainWorldFolder, "advancements");
 		if(advancements.exists() && advancements.isDirectory()){
 			for(File advancementFile : advancements.listFiles()){
 				advancementFile.delete();

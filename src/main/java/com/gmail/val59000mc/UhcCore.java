@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.gmail.val59000mc.game.GameManager;
-import com.gmail.val59000mc.utils.FileUtils;
 import com.gmail.val59000mc.utils.PluginForwardingHandler;
 
 import org.bukkit.Bukkit;
@@ -33,9 +32,6 @@ public class UhcCore extends JavaPlugin{
 		gameManager.loadConfig();
 		loadNmsAdapter();
 		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
-
-		// Delete files that are scheduled for deletion
-		FileUtils.removeScheduledDeletionFiles();
 	}
 
 	private void loadNmsAdapter() {
@@ -59,11 +55,6 @@ public class UhcCore extends JavaPlugin{
 
 	public static Optional<NmsAdapter> getNmsAdapter() {
 		return nmsAdapter;
-	}
-
-	@Override
-	public void onDisable(){
-		gameManager.getScenarioManager().disableAllScenarios();
 	}
 
 }

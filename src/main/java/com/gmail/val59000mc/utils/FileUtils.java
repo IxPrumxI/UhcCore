@@ -10,15 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 public class FileUtils{
 
@@ -66,80 +58,6 @@ public class FileUtils{
 		return file;
 	}
 
-	public static void removeScheduledDeletionFiles(){
-		YamlFile storage;
-
-		try{
-			storage = saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		} catch (IOException | InvalidConfigurationException ex) {
-			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
-			return;
-		}
-
-		List<String> deleteFiles = storage.getStringList("delete");
-		List<String> notDeleted = new ArrayList<>();
-		if (deleteFiles.isEmpty()){
-			return;
-		}
-
-		for (String path : deleteFiles){
-			File file = new File(path);
-
-			if (!file.exists()){
-				continue;
-			}
-
-			LOGGER.info("Deleting file: " + path);
-
-			if (!file.delete()){
-				LOGGER.warning("Failed to delete file: " + path);
-				notDeleted.add(path);
-			}
-		}
-
-		storage.set("delete", notDeleted);
-
-		try{
-			storage.save();
-		}catch (IOException ex){
-			LOGGER.log(Level.WARNING, "Unable to save storage.yml", ex);
-		}
-	}
-
-	public static void scheduleFileForDeletion(File file){
-		// Clear file
-		try{
-			FileOutputStream out = new FileOutputStream(file);
-			out.flush();
-			out.close();
-		}catch (IOException ex){
-			LOGGER.log(Level.WARNING, "Unable to delete file " + file, ex);
-		}
-
-		// Add to "delete" in storage.yml
-		YamlFile storage;
-
-		try{
-			storage = FileUtils.saveResourceIfNotAvailable(UhcCore.getPlugin(), "storage.yml");
-		}catch (IOException | InvalidConfigurationException ex){
-			LOGGER.log(Level.WARNING, "Unable to load storage.yml", ex);
-			return;
-		}
-
-		List<String> deleteFiles = storage.getStringList("delete");
-		if (deleteFiles.contains(file.getPath())){
-			return;
-		}
-		deleteFiles.add(file.getPath());
-		storage.set("delete", deleteFiles);
-
-		try{
-			storage.save();
-		}catch (IOException ex){
-			LOGGER.log(Level.WARNING, "Unable to save storage.yml", ex);
-		}
-	}
-
 	/**
 	 * Method used to upload text files to paste bin.
 	 * @param builder StringBuilder containing the text you want to be uploaded.
@@ -177,28 +95,6 @@ public class FileUtils{
 	}
 
 	/**
-	 * Returns a list of child files
-	 * @param dir Directory child files are returned for
-	 * @param deep When true files in child directories also get returned
-	 * @return List of files
-	 */
-	public static List<File> getDirFiles(File dir, boolean deep){
-		List<File> files = new ArrayList<>();
-
-		for (File file : dir.listFiles()){
-			if (file.isDirectory()){
-				if (deep){
-					files.addAll(getDirFiles(file, true));
-				}
-			}else{
-				files.add(file);
-			}
-		}
-
-		return files;
-	}
-
-	/**
 	 * Deletes file, in case of a directory all child files and directories are deleted
 	 * @param file File to delete
 	 * @return Returns true if file was deleted successfully
@@ -227,50 +123,6 @@ public class FileUtils{
 		}
 
 		return file.delete();
-	}
-
-	/**
-	 * Downloads a file from the internet
-	 * @param url Url of the file / api
-	 * @param path Path do the destination of the file
-	 * @throws IOException Thrown when file fails to download
-	 */
-	public static void downloadFile(URL url, File path) throws IOException{
-		HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-		connection.connect();
-
-		InputStream in = connection.getInputStream();
-
-		Files.copy(in, Paths.get(path.toURI()));
-
-		in.close();
-		connection.disconnect();
-	}
-
-	/**
-	 * Unzips zip file
-	 * @param zipFile Zip file
-	 * @param dir Directory to place unzipped files
-	 * @throws IOException Thrown when unzipping fails
-	 */
-	public static void unzip(ZipFile zipFile, File dir) throws IOException{
-		Enumeration<? extends ZipEntry> entries = zipFile.entries();
-
-		while(entries.hasMoreElements()){
-			ZipEntry entry = entries.nextElement();
-			File zipChild = new File(dir, entry.getName());
-
-			if (entry.isDirectory()){
-				zipChild.mkdirs();
-			}else{
-				zipChild.getParentFile().mkdirs();
-				InputStream in = zipFile.getInputStream(entry);
-				Files.copy(in, Paths.get(zipChild.toURI()));
-				in.close();
-			}
-		}
-
-		zipFile.close();
 	}
 
 }

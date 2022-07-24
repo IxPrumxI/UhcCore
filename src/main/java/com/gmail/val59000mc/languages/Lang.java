@@ -468,7 +468,7 @@ public class Lang{
 		SCENARIO_SWITCHEROO_SWITCH = getString(lang, "scenarios.switcheroo.switch", "&4[Switcheroo] &6You have switched positions with &3%player%");
 		SCENARIO_LOVEATFIRSTSIGHT_JOIN_ERROR = getString(lang, "scenarios.love_at_first_sight.join-error", "&cCan't join teams, Love at first sight is enabled!");
 		SCENARIO_LOVEATFIRSTSIGHT_JOIN_BROADCAST = getString(lang, "scenarios.love_at_first_sight.join-broadcast", "&4[Love At First Sight] &a%player% has joined %leader%'s team");
-		SCENARIO_SKYHIGH_DAMAGE = getString(lang, "scenarios.sky_high.damage", "&4[Sky High] &cYou're taking damage as your under y=120");
+		SCENARIO_SKYHIGH_DAMAGE = getString(lang, "scenarios.sky_high.damage", "&4[Sky High] &cYou're taking damage from being below y=120");
 		SCENARIO_TEAMINVENTORY_ERROR = getString(lang, "scenarios.team_inventory.error", "&cYou may only open your team's inventory while playing!");
 		SCENARIO_TEAMINVENTORY_DISABLED = getString(lang, "scenarios.team_inventory.disabled", "&cTeam Inventory is currently disabled!");
 		SCENARIO_TEAMINVENTORY_OPEN = getString(lang, "scenarios.team_inventory.open", "&aOpening team inventory ...");

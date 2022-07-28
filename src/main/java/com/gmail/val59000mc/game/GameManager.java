@@ -216,7 +216,7 @@ public class GameManager{
 
 		// scenario voting
 		if (config.get(MainConfig.ENABLE_SCENARIO_VOTING)) {
-			scenarioManager.countVotes();
+			scenarioManager.electScenarios();
 		}
 
 		Bukkit.getPluginManager().callEvent(new UhcStartingEvent());

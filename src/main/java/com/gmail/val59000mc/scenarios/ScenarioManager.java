@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class ScenarioManager {
 
@@ -280,14 +281,10 @@ public class ScenarioManager {
 
 	public Inventory getScenarioVoteInventory(UhcPlayer uhcPlayer){
 		Set<Scenario> playerVotes = uhcPlayer.getScenarioVotes();
-		List<String> blacklist = GameManager.getGameManager().getConfig().get(MainConfig.SCENARIO_VOTING_BLACKLIST);
 		Inventory inv = Bukkit.createInventory(null,6*ROW, Lang.SCENARIO_GLOBAL_INVENTORY_VOTE);
 
 		for (Scenario scenario : registeredScenarios){
-			// Don't add to menu when blacklisted / not compatible / already enabled.
-			if (blacklist.contains(scenario.getKey()) || !scenario.isCompatibleWithVersion() || isEnabled(scenario)){
-				continue;
-			}
+			if (!isVotable(scenario)) continue;
 
 			ItemStack item = scenario.getScenarioItem();
 
@@ -307,45 +304,37 @@ public class ScenarioManager {
 		}
 	}
 
-	public void countVotes() {
-		Map<Scenario, Integer> votes = new HashMap<>();
+	/**
+	 * Elect and enable the scenarios with the most votes.
+	 * <p>
+	 *     As a tiebreaker for scenarios with an equal amount
+	 *     of votes, the scenarios are elected in random order.
+	 * </p>
+	 */
+	public void electScenarios() {
+		final Map<Scenario, Integer> scenarioVotes = countVotes();
 
-		List<String> blacklist = GameManager.getGameManager().getConfig().get(MainConfig.SCENARIO_VOTING_BLACKLIST);
-		for (Scenario scenario : registeredScenarios){
-			if (!blacklist.contains(scenario.getKey())) {
-				votes.put(scenario, 0);
-			}
-		}
+		final List<Scenario> candidates = registeredScenarios.stream()
+			.filter(this::isVotable).collect(Collectors.toList());
+		Collections.shuffle(candidates); // Tiebreaker
 
-		for (UhcPlayer uhcPlayer : GameManager.getGameManager().getPlayerManager().getPlayersList()){
-			for (Scenario scenario : uhcPlayer.getScenarioVotes()){
-				int totalVotes = votes.getOrDefault(scenario, 0) + 1;
+		final int scenarioCount = GameManager.getGameManager().getConfig().get(MainConfig.ELECTED_SCENARIO_COUNT);
+		candidates.stream()
+			.sorted(Comparator.comparing(s -> scenarioVotes.getOrDefault(s, 0)).reversed())
+			.limit(scenarioCount)
+		.forEach(this::enableScenario);
+	}
+
+	private Map<Scenario, Integer> countVotes() {
+		final Map<Scenario, Integer> votes = new HashMap<>();
+		for (UhcPlayer uhcPlayer : GameManager.getGameManager().getPlayerManager().getPlayersList()) {
+			if (!uhcPlayer.isOnline()) continue;
+			for (Scenario scenario : uhcPlayer.getScenarioVotes()) {
+				final int totalVotes = votes.getOrDefault(scenario, 0) + 1;
 				votes.put(scenario, totalVotes);
 			}
 		}
-
-		int scenarioCount = GameManager.getGameManager().getConfig().get(MainConfig.ELECTED_SCENARIO_COUNT);
-		while (scenarioCount > 0){
-			// get scenario with most votes
-			Scenario scenario = null;
-			int scenarioVotes = 0;
-
-			for (Scenario s : votes.keySet()){
-				// Don't let people vote for scenarios that are enabled by default.
-				if (isEnabled(s)){
-					continue;
-				}
-
-				if (scenario == null || votes.get(s) > scenarioVotes){
-					scenario = s;
-					scenarioVotes = votes.get(s);
-				}
-			}
-
-			enableScenario(scenario);
-			votes.remove(scenario);
-			scenarioCount--;
-		}
+		return Collections.unmodifiableMap(votes);
 	}
 
 	private void loadScenarioOptions(Scenario scenario, ScenarioListener listener) throws ReflectiveOperationException, IOException, InvalidConfigurationException{
@@ -367,6 +356,13 @@ public class ScenarioManager {
 		if (cfg.addedDefaultValues()){
 			cfg.saveWithComments();
 		}
+	}
+
+	private boolean isVotable(Scenario scenario) {
+		final List<String> blacklist = GameManager.getGameManager().getConfig().get(MainConfig.SCENARIO_VOTING_BLACKLIST);
+		return !blacklist.contains(scenario.getKey())
+			&& scenario.isCompatibleWithVersion()
+			&& !isEnabled(scenario);
 	}
 
 }

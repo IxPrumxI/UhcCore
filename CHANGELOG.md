@@ -21,6 +21,7 @@ worlds, if a custom `world-container` is configured in Spigot/Paper
 - Fixed a bug in some scenarios where health would "vanish" without playing the damage effect
 - Fixed a bug in the Randomized Drops scenario where some blocks would not drop anything at all
 - Fixed a bug with scenario voting where players could lose a vote by clicking an item in their hotbar
+- Fixed a crash that occurred when starting the game if voting was enabled but there were no scenarios to vote for
 - Fixed a scenario error message where "Silent Night" was incorrectly named "Anonymous"
 - Fixed a `NullPointerException` that would happen when trying to revive a nonexistent player
 - Fixed an `IllegalPluginAccessException` which could sometimes happen when shutting down the server

@@ -4,9 +4,9 @@
 
 ### New features
 
-- Added the `enable-victory` option (see `config.yml` for more details)
-- Added the `logging-level` option (see `config.yml` for more details)
-- Added some more translation strings under `team.inventory` and `team.colors` in the `lang.yml` file
+- Added the `enable-victory` option to `config.yml`
+- Added the `logging-level` option to `config.yml`
+- Added some more translation strings to `lang.yml` under `team.inventory` and `team.colors`
 - Added `players.death-message` to `lang.yml`
 - The player elimination announcement can now be disabled by
 setting `players.eliminated` in `lang.yml` to an empty string

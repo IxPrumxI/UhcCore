@@ -136,6 +136,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> END_GAME_WHEN_ALL_PLAYERS_HAVE_LEFT = new BasicOption<>("countdown-ending-game-when-all-players-have-left",true);
 	public static final BasicOption<Boolean> DEBUG = new BasicOption<>("debug",false);
 	public static final BasicOption<Boolean> ONE_PLAYER_MODE = new BasicOption<>("one-player-mode",false);
+	public static final BasicOption<Boolean> ENABLE_VICTORY = new BasicOption<>("enable-victory", true);
 	public static final BasicOption<String> LOGGING_LEVEL = new BasicOption<>("logging-level", "INFO");
 
 	// Pre-generate world

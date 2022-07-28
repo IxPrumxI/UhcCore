@@ -4,6 +4,7 @@
 
 ### New features
 
+- Added the `enable-victory` option (see `config.yml` for more details)
 - Added the `logging-level` option (see `config.yml` for more details)
 - Added some more translation strings under `team.inventory` and `team.colors` in the `lang.yml` file
 - Added `players.death-message` to `lang.yml`

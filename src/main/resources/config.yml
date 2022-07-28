@@ -562,6 +562,8 @@ custom-events:
 debug: false
 # When set to true, the game won't end when only one player is left. This can be used to play alone in order to test games.
 one-player-mode: false
+# When set to false, victory conditions won't be checked, meaning the game never ends automatically.
+enable-victory: true
 
 # Specifies the logging level to use for the UhcCore plugin.
 # There is usually no need to change this setting, unless you need

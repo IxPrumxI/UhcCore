@@ -47,3 +47,8 @@ hastey_boys:
 timber:
   # Set to true if you want to trees drop oak planks.
   drop-planks: false
+dragon_rush:
+  # The number of attempts to make at placing eyes in the end portal.
+  eye-attempts: 12
+  # The probability (where 1 is 100%) of an eye being placed during each attempt.
+  eye-probability: 0.34

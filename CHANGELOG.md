@@ -4,6 +4,7 @@
 
 ### New features
 
+- Added the `eye-attempts` and `eye-probability` options to `dragon_rush` in `scenarios.yml`
 - Added the `enable-victory` option to `config.yml`
 - Added the `logging-level` option to `config.yml`
 - Added some more translation strings to `lang.yml` under `team.inventory` and `team.colors`

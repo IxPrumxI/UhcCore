@@ -1,7 +1,10 @@
-site_name: UhcCore
+docs_dir: content
 repo_url: https://gitlab.com/uhccore/uhccore
-edit_uri: blob/main/docs/
+edit_uri: blob/main/docs/content/
+
+site_name: UhcCore
 site_description: Minecraft server plugin which automates games of the classic UHC gamemode, with endless customization options!
+
 theme:
   name: material
   palette:

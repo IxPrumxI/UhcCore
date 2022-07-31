@@ -40,11 +40,10 @@ release:
           link_type: package
 
 pages:
-  image: python:latest
+  image: python:3.10
   stage: docs
   script:
-    - python -m pip install mkdocs
-    - python -m pip install mkdocs-material
+    - python -m pip install -r requirements.txt
     - cd docs
     - mkdocs build -d ../public
     - cd ..

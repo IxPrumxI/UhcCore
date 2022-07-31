@@ -48,6 +48,8 @@ pages:
     - cd docs
     - mkdocs build -d ../public
     - cd ..
+    - find public -type f -regex '.*\.\(htm\|html\|js\|css\|txt\|json\|svg\)$' -exec gzip -f -k {} \;
+    - find public -type f -regex '.*\.\(htm\|html\|js\|css\|txt\|json\|svg\)$' -exec brotli -f -k {} \;
   artifacts:
     paths:
       - public

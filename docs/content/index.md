@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # UhcCore
 
 UHC, or Ultra Hardcore, is a classic PvP gamemode in which players or teams

@@ -22,6 +22,8 @@ markdown_extensions:
 
 theme:
   name: material
+  logo: assets/uhccore-logo.svg
+  favicon: assets/uhccore-logo.svg
   features:
     - navigation.instant
     - navigation.tabs

@@ -4,6 +4,7 @@ edit_uri: blob/main/docs/content/
 
 site_name: UhcCore
 site_description: Minecraft server plugin which automates games of the classic UHC gamemode, with endless customization options!
+copyright: Copyright &copy; 2022 Odin Dahlström and others
 
 markdown_extensions:
   - meta
@@ -39,3 +40,12 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+
+extra:
+  social:
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/fDCaKMX
+      name: UhcCore Discord server
+    - icon: fontawesome/brands/gitlab
+      link: https://gitlab.com/uhccore
+      name: UhcCore GitLab group

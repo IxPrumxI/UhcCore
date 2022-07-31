@@ -10,6 +10,7 @@ hide:
 [q3]: #how-and-where-does-uhccore-loadstore-worlds
 [q4]: #where-can-i-find-the-default-configuration-values-how-do-i-reset-to-default
 [q5]: #is-this-plugin-free-will-it-stay-that-way
+[q6]: #i-want-to-help-contribute-code-to-this-project-where-do-i-start
 
 [discord]: https://discord.gg/fDCaKMX
 
@@ -351,7 +352,11 @@ consider [opening an issue][issues] on GitLab. This helps me keep track of
 the feature request or bug, and makes sure it doesn't get lost in an old
 Discord conversation if it takes a while before I have time to fix it.
 
--
+- You can of course also contribute code yourself in order to implement the
+feature, and I highly appreciate your help! This does require you to have some
+previous knowledge of Java programming and/or Minecraft plugin development.
+To get started, see
+["I want to help contribute code to this project, where do I start?"][q6].
 
 [issues]: https://gitlab.com/uhccore/uhccore/-/issues
 

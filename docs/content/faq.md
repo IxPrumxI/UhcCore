@@ -11,6 +11,8 @@ hide:
 [q4]: #where-can-i-find-the-default-configuration-values-how-do-i-reset-to-default
 [q5]: #is-this-plugin-free-will-it-stay-that-way
 [q6]: #i-want-to-help-contribute-code-to-this-project-where-do-i-start
+[q7]: #when-will-the-next-update-be-released-what-features-will-it-have
+[q8]: #does-uhccore-have-an-addon-api
 
 [discord]: https://discord.gg/fDCaKMX
 
@@ -316,7 +318,90 @@ You can also find information about the UhcCore commands by running
 `/help uhccore`, `/help uhccore 2` for the next help page and so on.
 In order to view more details about a specific command, use `/help <command>`.
 
+If there's something you can't find information about using the above methods,
+you can always ask in [the Discord server][discord], or look at the plugin
+source code, if that's your thing.
+
 [old-wiki]: https://github.com/Mezy/UhcCore/wiki/
+
+## Does UhcCore have an addon API?
+
+There is currently not a proper API for UhcCore, but stay tuned, because this
+is planned for a future UhcCore release! As of yet, there is no ETA (see also:
+["When will the next update be released? What features will it have?"][q7]),
+but I would estimate it to be at least a few months away, because it takes time
+to design a *good* and easy-to-use API. There are also a number of old systems
+in UhcCore that will need to be rewritten to better support such an API.
+
+Either way, if you're *really* eager to make an addon, and you are already
+familiar with Java programming and plugin development, you *can* technically
+use the UhcCore plugin JAR as a dependency and pretend that it's an API.
+This has been done in the past, since the previous plugin maintainer used
+to refer to the plugin JAR as an API. Below are Gradle/Maven dependency
+snippets in case you're interested:
+
+!!! example "Snippet: UhcCore repository"
+
+    === "Gradle"
+
+        ```groovy
+        maven {
+            name "uhccore"
+            url "https://gitlab.com/api/v4/groups/uhccore/-/packages/maven"
+        }
+        ```
+
+    === "Maven"
+
+        ```xml
+        <repository>
+            <id>uhccore</id>
+            <url>https://gitlab.com/api/v4/groups/uhccore/-/packages/maven</url>
+        </repository>
+        ```
+
+!!! example "Snippet: UhcCore plugin JAR dependency"
+
+    === "Gradle"
+
+        ```groovy
+        compileOnly "net.zerodind:uhccore:1.20.1"
+        ```
+
+    === "Maven"
+
+        ```xml
+        <dependency>
+            <groupId>net.zerodind</groupId>
+            <artifactId>uhccore</artifactId>
+            <version>1.20.1</version>
+            <scope>provided</scope>
+        </dependency>
+        ```
+
+!!! warning
+
+    Again, the plugin JAR is ***not*** a proper API, so you should expect
+    breakages even for "patch" versions (for example, a method may be renamed,
+    or a class might be removed). There will be no documentation on how to use
+    the plugin JAR as some kind of API, you will have to look at the source code
+    yourself. With that said, if you have questions about the source code, you
+    are welcome to ask in the `#dev` channel on [the Discord server][discord].
+
+## Can I add my own custom scenarios?
+
+You will be able to in the future, once UhcCore has an API. Technically you
+can already create an addon with scenarios by compiling against the plugin JAR,
+but this is not recommended unless you know what you're getting into. See
+["Does UhcCore have an addon API?"][q8] for more details.
+
+Another way of adding your own scenario would be to edit the source code of
+the plugin, which might be easier until there is an API, since you don't have
+to deal with dependencies. If you do this, please consider making a contribution
+to add your scenario to the plugin, which means that everyone can enjoy it
+once the next UhcCore update is released. See
+["I want to help contribute code to this project, where do I start?"][q6]
+for more details on how to contribute your code.
 
 ## Who is the main developer/maintainer/owner of this plugin?
 

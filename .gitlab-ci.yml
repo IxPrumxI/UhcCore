@@ -40,12 +40,18 @@ release:
           link_type: package
 
 pages:
-  image: python:latest
+  image: python:3.10-bullseye
   stage: docs
+  before_script:
+    - apt-get update
+    - apt-get install brotli
   script:
-    - python -m pip install mkdocs
-    - python -m pip install mkdocs-material
-    - mkdocs build -d public
+    - cd docs
+    - python -m pip install -r requirements.txt
+    - mkdocs build -d ../public
+    - cd ..
+    - find public -type f -regex '.*\.\(htm\|html\|js\|css\|txt\|json\|svg\)$' -exec gzip -f -k {} \;
+    - find public -type f -regex '.*\.\(htm\|html\|js\|css\|txt\|json\|svg\)$' -exec brotli -f -k {} \;
   artifacts:
     paths:
       - public
@@ -53,7 +59,7 @@ pages:
     - if: $CI_COMMIT_BRANCH
       changes:
         - docs/**/*
-        - mkdocs.yml
+        - .gitlab-ci.yml
       when: manual
       allow_failure: true
     - if: $CI_COMMIT_TAG

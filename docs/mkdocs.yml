@@ -1,0 +1,60 @@
+docs_dir: content
+repo_url: https://gitlab.com/uhccore/uhccore
+edit_uri: blob/main/docs/content/
+
+site_name: UhcCore
+site_description: Minecraft server plugin which automates games of the classic UHC gamemode, with endless customization options!
+site_url: https://uhccore.zerodind.net/
+copyright: Copyright &copy; 2022 Odin Dahlström and others
+
+markdown_extensions:
+  - meta
+  - toc:
+      permalink: true
+      permalink_title: Link to this section for reference
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - abbr
+
+theme:
+  name: material
+  logo: assets/uhccore-logo.svg
+  favicon: assets/uhccore-logo.svg
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - content.tabs.link
+  icon:
+    admonition:
+      example: fontawesome/solid/code
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+extra:
+  social:
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/fDCaKMX
+      name: UhcCore Discord server
+    - icon: fontawesome/brands/gitlab
+      link: https://gitlab.com/uhccore
+      name: UhcCore GitLab group

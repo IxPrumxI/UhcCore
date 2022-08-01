@@ -31,6 +31,9 @@ theme:
     - navigation.tabs
     - navigation.top
     - content.tabs.link
+  icon:
+    admonition:
+      example: fontawesome/solid/code
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"

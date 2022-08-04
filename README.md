@@ -54,13 +54,17 @@ generated in the `plugins/UhcCore/` directory. Changes can be taken into
 effect using the `/uhccore reload` command, but do note that some settings
 require a server restart in order to take effect.
 
+Make sure to read [the FAQ][faq] if you're having trouble, or you can also
+ask for help on [the Discord server][discord].
+
+[faq]: https://uhccore.zerodind.net/faq/
+[discord]: https://discord.gg/fDCaKMX
+
 ## Community
 
 If you have any questions about the plugin, want to discuss features
 or bugs, or just chat with the community, feel free to join
-[the UhcCore Discord server][discord-invite]!
-
-[discord-invite]: https://discord.gg/fDCaKMX
+[the UhcCore Discord server][discord]!
 
 ## Submitting feature requests and bug reports
 
@@ -69,52 +73,31 @@ fixed, you can [create an issue][issue-tracker] at the GitLab repository.
 Please be as descriptive as possible and include all relevant information,
 such as error messages and/or server logs when submitting a bug report.
 You are also welcome to discuss the matter on
-[the Discord server][discord-invite], in the `#bugs` or `#suggestions` channel.
+[the Discord server][discord], in the `#bugs` or `#suggestions` channel.
 
 [issue-tracker]: https://gitlab.com/uhccore/uhccore/-/issues
 
-## Documentation
+## Documentation and API
 
-The documentation is currently a bit lacking, but an update is in the works.
-Until then, the wiki pages from the previous plugin maintainer can be found at
-<https://github.com/Mezy/UhcCore/wiki>, and you are welcome with your
-questions on [the Discord server][discord-invite].
+Please see the FAQ for more details:
 
-An extensive list of configuration options (with comments) can be found
-in the [default configuration files][config-files].
+- ["Where can I read more about configuration, commands etc? Is there a wiki?"][faq-wiki]
+- ["Does UhcCore have an addon API?"][faq-api]
+- ["Can I add my own custom scenarios?"][faq-scenarios]
 
-[config-files]: https://gitlab.com/uhccore/uhccore/-/tree/main/src/main/resources
-
-## UhcCore API
-
-There is currently no formal API for UhcCore, but several UhcCore plugins have
-been made in the past by using the main plugin JAR as a dependency and
-listening for game events. Should you wish to do this, the plugin can be
-added as a dependency in Maven or Gradle from the following repository:
-
-```
-https://gitlab.com/api/v4/groups/uhccore/-/packages/maven
-```
-
-The Maven coordinates of the plugin JAR are:
-
-```
-net.zerodind:uhccore:1.20.1
-```
-
-Keep in mind that there is neither any complete documentation nor any
-guarantee that the plugin classes won't change in future releases.
-Stay tuned for a stable API (but there is no ETA yet)!
+[faq-wiki]: https://uhccore.zerodind.net/faq/#where-can-i-read-more-about-configuration-commands-etc-is-there-a-wiki
+[faq-api]: https://uhccore.zerodind.net/faq/#does-uhccore-have-an-addon-api
+[faq-scenarios]: https://uhccore.zerodind.net/faq/#can-i-add-my-own-custom-scenarios
 
 ## Contributing
 
-This plugin is fully free and open source software, and you may fork it as
-long as you comply with the license terms. Contributions are highly appreciated
-and can be sent as merge requests to [the GitLab repository][gitlab-repo]!
-See [CONTRIBUTING.md][contributing-md] for more details.
+Contributions are highly appreciated and can be sent as merge requests to
+[the GitLab repository][gitlab-repo]! See [CONTRIBUTING.md][contributing-md]
+and [the FAQ][faq-contrib] more for more details.
 
 [gitlab-repo]: https://gitlab.com/uhccore/uhccore
 [contributing-md]: https://gitlab.com/uhccore/uhccore/-/blob/main/CONTRIBUTING.md
+[faq-contrib]: https://uhccore.zerodind.net/faq/#i-want-to-help-contribute-code-to-this-project-where-do-i-start
 
 ## Building the plugin from source code
 

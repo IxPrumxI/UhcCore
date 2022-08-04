@@ -5,6 +5,10 @@ indent_style = tab
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{yml,yaml,md}]
+[*.md]
+indent_style = space
+indent_size = 4
+
+[*.{yml,yaml}]
 indent_style = space
 indent_size = 2

@@ -10,12 +10,12 @@ The original gamemode was [invented by the Mindcrack community][uhc-origins]
 over 10 years ago, but this plugin adds many new features:
 
 - 40+ scenarios that alter the game in fun ways, with a voting system
-  - Nether start
-  - Randomized block drops
-  - Upside down crafting
-  - Dragon rush
-  - Superheroes
-  - And many more...
+    - Nether start
+    - Randomized block drops
+    - Upside down crafting
+    - Dragon rush
+    - Superheroes
+    - And many more...
 - Easy GUI menu for team creation (no commands required)
 - Configurable start kits
 - Configurable crafting recipes
@@ -148,9 +148,9 @@ Special thanks to Mezy and val59000mc, the original authors, who maintained
 the plugin prior to version `1.20.0`. See below for historical reference:
 
 - [Mezy's plugin page](https://www.spigotmc.org/resources/uhccore-automated-uhc-for-minecraft-1-8-8-1-16.47572/)
-  - [GitHub repository](https://github.com/Mezy/UhcCore/)
+    - [GitHub repository](https://github.com/Mezy/UhcCore/)
 - [val59000mc's plugin page](https://www.spigotmc.org/resources/playuhc.3956/)
-  - [Archived Bitbucket repository](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://bitbucket.org/val59000/playuhc.git)
+    - [Archived Bitbucket repository](https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://bitbucket.org/val59000/playuhc.git)
 
 ## License
 

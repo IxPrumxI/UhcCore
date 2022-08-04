@@ -35,7 +35,7 @@ worlds, if a custom `world-container` is configured in Spigot/Paper
 - Updated the plugin to support Minecraft 1.19
 - Added the `player-death-sound` option (see `config.yml` for more details)
 - Added the `/heal` command (see `/help heal` for more details)
-  - Permission name: `uhc-core.commands.heal`
+    - Permission name: `uhc-core.commands.heal`
 
 ### Bug fixes
 

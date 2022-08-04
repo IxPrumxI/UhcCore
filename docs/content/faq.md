@@ -1,4 +1,5 @@
 ---
+description: Frequently Asked Questions about UhcCore
 hide:
   - navigation
 ---

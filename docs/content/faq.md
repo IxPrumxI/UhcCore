@@ -1,4 +1,5 @@
 ---
+description: Frequently Asked Questions about UhcCore
 hide:
   - navigation
 ---
@@ -405,7 +406,7 @@ for more details on how to contribute your code.
 
 ## Who is the main developer/maintainer/owner of this plugin?
 
-That would be me! I am a Computer Science student who loves programming and
+That would be me! I am a computer science student who loves programming and
 Minecraft, and have been using UhcCore on my private server for a while.
 I took over the plugin ownership in June of 2022, because Mezy (the previous
 owner) stopped maintaining the plugin due to a lack of interest in the project.

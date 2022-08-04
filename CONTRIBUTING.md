@@ -31,10 +31,10 @@ you can skip this step.
 - Git, to clone the repository and to submit your contribution.
 - A Java Development Kit (JDK), to run the Gradle build tool.
 - A code editor with support for Java projects using the Gradle build tool.
-  - You should also make sure that your editor has support for
-  [EditorConfig](https://editorconfig.org), perhaps by downloading a plugin.
-  This will ensure that your code is formatted consistently with the rest
-  of the code in the project.
+    - You should also make sure that your editor has support for
+    [EditorConfig](https://editorconfig.org), perhaps by downloading a plugin.
+    This will ensure that your code is formatted consistently with the rest
+    of the code in the project.
 
 ### Recommended steps
 

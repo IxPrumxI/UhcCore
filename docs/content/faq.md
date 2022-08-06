@@ -343,7 +343,9 @@ snippets in case you're interested:
 
 !!! example "Snippet: UhcCore repository"
 
-    === "Gradle"
+    === "Gradle (Groovy DSL)"
+
+        Add this to `repositories` in your `build.gradle`:
 
         ```groovy
         maven {
@@ -352,7 +354,20 @@ snippets in case you're interested:
         }
         ```
 
+    === "Gradle (Kotlin DSL)"
+
+        Add this to `repositories` in your `build.gradle.kts`:
+
+        ```kotlin
+        maven {
+            name = "uhccore"
+            url = uri("https://gitlab.com/api/v4/groups/uhccore/-/packages/maven")
+        }
+        ```
+
     === "Maven"
+
+        Add this to `repositories` in your `pom.xml`:
 
         ```xml
         <repository>
@@ -363,13 +378,25 @@ snippets in case you're interested:
 
 !!! example "Snippet: UhcCore plugin JAR dependency"
 
-    === "Gradle"
+    === "Gradle (Groovy DSL)"
+
+        Add this to `dependencies` in your `build.gradle`:
 
         ```groovy
         compileOnly "net.zerodind:uhccore:1.20.1"
         ```
 
+    === "Gradle (Kotlin DSL)"
+
+        Add this to `dependencies` in your `build.gradle.kts`:
+
+        ```kotlin
+        compileOnly("net.zerodind:uhccore:1.20.1")
+        ```
+
     === "Maven"
+
+        Add this to `dependencies` in your `pom.xml`:
 
         ```xml
         <dependency>

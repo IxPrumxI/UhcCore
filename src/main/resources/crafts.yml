@@ -22,14 +22,6 @@ custom-crafts:
     default-name: false
     limit: 2
 
-  'War Axe':
-    '1': '{"type":"IRON_INGOT"} {"type":"IRON_INGOT"} {"type":"AIR"}'
-    '2': '{"type":"IRON_INGOT"} {"type":"IRON_BLOCK"} {"type":"AIR"}'
-    '3': '{"type":"AIR"} {"type":"IRON_BLOCK"} {"type":"AIR"}'
-    craft: '{"type":"IRON_AXE","enchantments":[{"type":"DAMAGE_ALL","level":2},{"type":"FIRE_ASPECT","level":1}]}'
-    default-name: false
-    limit: 1
-
   # Example of item that when crafted will revive a team member.
   # Remove '#' symbols to enable.
   #'Team Revive':

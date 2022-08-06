@@ -118,6 +118,36 @@ can do except upgrade to a server with better performance, or try
 the tips mentioned in
 ["Why does my server crash/freeze while generating the world?"][q2].
 
+## How can I add a custom kit/craft to the game?
+
+You can add them in the kits.yml and crafts.yml configuration files. There are
+a few examples included in [the default configuration files][q4], to help you
+get started (those examples can also be removed if you prefer).
+
+When entering the value for an item in the kit or crafting recipe, you'll
+need to use a custom JSON format that UhcCore uses for items. This format is
+not documented and is generally not meant to be edited directly. Instead, you
+can use the `/iteminfo` command (provided by UhcCore) to get a correctly
+formatted JSON string to paste into your configuration file. The `/iteminfo`
+command will include all information about the item stack in your hand,
+such as item type, amount, display name, lore, enchantments etc.
+
+!!! warning
+
+    When upgrading (or downgrading) the Minecraft version of your server,
+    it is possible that some of your kits/crafts no longer work correctly if
+    the Minecraft item format has changed significantly. One example of such
+    an update would be ["The Flattening"][flattening] which happened in
+    Minecraft 1.13.
+
+    In order to fix the items in your configuration files, you can put all
+    the items into your inventory (or a chest) before upgrading, and then use
+    the `/iteminfo` command again after Minecraft has upgraded your items to
+    the new format. Note that this only works when upgrading your Minecraft
+    version. If you are downgrading, you will need to re-create the items.
+
+[flattening]: https://minecraft.fandom.com/wiki/Java_Edition_1.13/Flattening
+
 ## Why is my config/kit/craft not working or missing?
 
 The most likely reason is that you have a syntax error in your YAML file,
@@ -343,7 +373,9 @@ snippets in case you're interested:
 
 !!! example "Snippet: UhcCore repository"
 
-    === "Gradle"
+    === "Gradle (Groovy DSL)"
+
+        Add this to `repositories` in your `build.gradle`:
 
         ```groovy
         maven {
@@ -352,7 +384,20 @@ snippets in case you're interested:
         }
         ```
 
+    === "Gradle (Kotlin DSL)"
+
+        Add this to `repositories` in your `build.gradle.kts`:
+
+        ```kotlin
+        maven {
+            name = "uhccore"
+            url = uri("https://gitlab.com/api/v4/groups/uhccore/-/packages/maven")
+        }
+        ```
+
     === "Maven"
+
+        Add this to `repositories` in your `pom.xml`:
 
         ```xml
         <repository>
@@ -363,13 +408,25 @@ snippets in case you're interested:
 
 !!! example "Snippet: UhcCore plugin JAR dependency"
 
-    === "Gradle"
+    === "Gradle (Groovy DSL)"
+
+        Add this to `dependencies` in your `build.gradle`:
 
         ```groovy
         compileOnly "net.zerodind:uhccore:1.20.1"
         ```
 
+    === "Gradle (Kotlin DSL)"
+
+        Add this to `dependencies` in your `build.gradle.kts`:
+
+        ```kotlin
+        compileOnly("net.zerodind:uhccore:1.20.1")
+        ```
+
     === "Maven"
+
+        Add this to `dependencies` in your `pom.xml`:
 
         ```xml
         <dependency>

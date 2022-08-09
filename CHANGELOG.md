@@ -4,6 +4,7 @@
 
 ### New features
 
+- Updated the plugin to support Minecraft 1.19.2
 - Added the `eye-attempts` and `eye-probability` options to `dragon_rush` in `scenarios.yml`
 - Added the `enable-victory` option to `config.yml`
 - Added the `logging-level` option to `config.yml`

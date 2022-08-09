@@ -8,6 +8,8 @@
 - Added the `enable-victory` option to `config.yml`
 - Added the `logging-level` option to `config.yml`
 - Added some more translation strings to `lang.yml` under `team.inventory` and `team.colors`
+- Added `display.team-chat` to `lang.yml`
+- Added `scenarios.team_inventory.title` to `lang.yml`
 - Added `players.death-message` to `lang.yml`
 - The player elimination announcement can now be disabled by
 setting `players.eliminated` in `lang.yml` to an empty string

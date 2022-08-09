@@ -55,6 +55,7 @@ public class Lang{
 	public static String DISPLAY_MESSAGE_PREFIX;
 	public static String DISPLAY_EPISODE_MARK;
 	public static String DISPLAY_SPECTATOR_CHAT;
+	public static String DISPLAY_TEAM_CHAT;
 	public static String DISPLAY_MOTD_LOADING;
 	public static String DISPLAY_MOTD_WAITING;
 	public static String DISPLAY_MOTD_STARTING;
@@ -213,6 +214,7 @@ public class Lang{
 	public static String SCENARIO_TEAMINVENTORY_ERROR;
 	public static String SCENARIO_TEAMINVENTORY_DISABLED;
 	public static String SCENARIO_TEAMINVENTORY_OPEN;
+	public static String SCENARIO_TEAMINVENTORY_TITLE;
 	public static String SCENARIO_SILENTNIGHT_ERROR;
 	public static String SCENARIO_WEAKESTLINK_KILL;
 	public static String SCENARIO_NOGOINGBACK_ERROR;
@@ -277,6 +279,7 @@ public class Lang{
 		DISPLAY_MESSAGE_PREFIX = getString(lang, "display.message-prefix", "&a[UhcCore]&r");
 		DISPLAY_EPISODE_MARK = getString(lang, "display.episode-mark", "End of episode %episode%!");
 		DISPLAY_SPECTATOR_CHAT = getString(lang, "display.spectator-chat", "&7[Spec] &r%player%&r: %message%");
+		DISPLAY_TEAM_CHAT = getString(lang, "display.team-chat", "&a[Team] &r%player%&r: %message%");
 		DISPLAY_MOTD_LOADING = getString(lang, "display.motd-loading", "Loading ...");
 		DISPLAY_MOTD_WAITING = getString(lang, "display.motd-waiting", "Waiting ...");
 		DISPLAY_MOTD_STARTING = getString(lang, "display.motd-starting", "Starting");
@@ -472,6 +475,7 @@ public class Lang{
 		SCENARIO_TEAMINVENTORY_ERROR = getString(lang, "scenarios.team_inventory.error", "&cYou may only open your team's inventory while playing!");
 		SCENARIO_TEAMINVENTORY_DISABLED = getString(lang, "scenarios.team_inventory.disabled", "&cTeam Inventory is currently disabled!");
 		SCENARIO_TEAMINVENTORY_OPEN = getString(lang, "scenarios.team_inventory.open", "&aOpening team inventory ...");
+		SCENARIO_TEAMINVENTORY_TITLE = getString(lang, "scenarios.team_inventory.title", "&6Team Inventory");
 		SCENARIO_SILENTNIGHT_ERROR = getString(lang, "scenarios.silent_night.error", "&4[Silent Night] &cSilent Night is enabled");
 		SCENARIO_WEAKESTLINK_KILL = getString(lang, "scenarios.weakest_link.kill", "&4[Weakest Link] &c%player% has been killed!");
 		SCENARIO_NOGOINGBACK_ERROR = getString(lang, "scenarios.no_going_back.error", "&4[No Going Back] &cYou are stuck in the nether!");

@@ -19,6 +19,7 @@ worlds, if a custom `world-container` is configured in Spigot/Paper
 
 ### Bug fixes
 
+- Fixed a bug in the Randomized Drops scenario where dropped items would sometimes glitch up through blocks
 - Fixed a bug where players would be removed from the Best PvE list even if the damage was blocked
 - Fixed a bug in the Horseless scenario where players could ride zombie/skeleton horses, donkeys and mules
 - Fixed a bug in the Weakest Link scenario where players with the resistance effect could survive

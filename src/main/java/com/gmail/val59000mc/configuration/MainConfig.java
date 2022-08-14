@@ -107,6 +107,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Integer> TIME_BEFORE_SEND_BUNGEE_AFTER_END = new BasicOption<>("bungee-support.time-before-send-after-end",-1);
 
 	public static final BasicOption<Boolean> LOBBY_IN_DEFAULT_WORLD = new BasicOption<>("lobby-in-default-world", false);
+	public static final BasicOption<Boolean> USE_DEFAULT_WORLD_SPAWN = new BasicOption<>("use-default-world-spawn", false);
 
 	// Border
 	public static final BasicOption<Integer> BORDER_TIME_TO_SHRINK = new BasicOption<>("border.time-to-shrink",3600);

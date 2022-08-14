@@ -283,7 +283,7 @@
 		"name":"Achievement Hunter",
 		"description":[
 			"Players start with 5 hearts.",
-			"For every achievement players get a half heart of health."
+			"For every achievement/advancement, players get a half heart of health."
 		]
 	},
 	"nine_slots": {

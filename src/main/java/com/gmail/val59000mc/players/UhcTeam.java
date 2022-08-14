@@ -5,9 +5,7 @@ import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.exceptions.UhcTeamException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
-import com.gmail.val59000mc.scoreboard.ScoreboardManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -36,7 +34,7 @@ public class UhcTeam {
 		teamNumber = GameManager.getGameManager().getTeamManager().getNewTeamNumber();
 		teamName = "Team " + teamNumber;
 		prefix = GameManager.getGameManager().getTeamManager().getTeamPrefix();
-		teamInventory = Bukkit.createInventory(null, 9*3, ChatColor.GOLD + "Team Inventory");
+		teamInventory = Bukkit.createInventory(null, 9*3, Lang.SCENARIO_TEAMINVENTORY_TITLE);
 	}
 
 	public int getTeamNumber() {
@@ -68,7 +66,9 @@ public class UhcTeam {
 	}
 
 	public void sendChatMessageToTeamMembers(UhcPlayer sender, String message){
-		sendMessage(ChatColor.GREEN+"[Team] "+ChatColor.RESET+sender.getRealName()+": "+message);
+		sendMessage(Lang.DISPLAY_TEAM_CHAT
+			.replace("%player%", sender.getRealName())
+			.replace("%message%", message));
 	}
 
 	public void sendMessage(String message){

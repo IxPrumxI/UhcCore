@@ -14,8 +14,11 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.*;
@@ -404,14 +407,35 @@ public class UhcPlayer {
 	}
 
 	public static void damageIrreducible(Player player, double amount) {
-		if (amount < 0) {
-			throw new IllegalArgumentException("Amount may not be negative");
-		}
-		final double orignalHealth = player.getHealth();
-		// Play damage sound and visual effect for clients
+		// While it's tempting to bypass damage reduction by using Player#setHealth,
+		// that method has a number of problems. For example, it plays no sound
+		// or visual effect, and also ignores absorption and totems of undying.
+		// As a workaround, it's possible to bypass damage reduction by temporarily
+		// removing any sources of reduction, like the resistance effect or the
+		// protection enchantment.
+
+		// Step 1: Save and remove original resistance and protection
+		final Optional<PotionEffect> originalResistance = player.getActivePotionEffects().stream()
+			.filter(p -> p.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)).findAny();
+		player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+
+		final ItemStack[] originalArmor = player.getInventory().getArmorContents();
+		final ItemStack[] armorWithoutProtection = Arrays.stream(originalArmor)
+			.map(item -> {
+				if (item == null) return item;
+				final ItemStack newItem = new ItemStack(item);
+				newItem.removeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL);
+				return newItem;
+			})
+			.toArray(ItemStack[]::new);
+		player.getInventory().setArmorContents(armorWithoutProtection);
+
+		// Step 2: Deal the damage
 		player.damage(amount);
-		// Bypass damage reduction (e.g. resistance effect)
-		player.setHealth(Math.max(orignalHealth - amount, 0));
+
+		// Step 3: Restore original resistance and protection
+		originalResistance.ifPresent(player::addPotionEffect);
+		player.getInventory().setArmorContents(originalArmor);
 	}
 
 }

@@ -90,7 +90,7 @@ tasks.named("processResources") {
 tasks.named("runServer") {
 	// The minecraft version to use can be changed via the mcVersion property
 	// For example: gradlew runServer -PmcVersion=1.8.8
-	def mcVersion = project.findProperty("mcVersion") ?: "1.19"
+	def mcVersion = project.findProperty("mcVersion") ?: "1.19.2"
 	minecraftVersion mcVersion
 	runDirectory rootProject.file("run/$mcVersion")
 	javaLauncher = javaToolchains.launcherFor {

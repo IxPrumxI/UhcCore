@@ -537,6 +537,13 @@ public class PlayerManager {
 	}
 
 	public void checkIfRemainingPlayers(){
+		final GameManager gm = GameManager.getGameManager();
+		final MainConfig cfg = gm.getConfig();
+
+		if (!cfg.get(MainConfig.ENABLE_VICTORY)) {
+			return;
+		}
+
 		int playingPlayers = 0;
 		int playingPlayersOnline = 0;
 		int playingTeams = 0;
@@ -565,8 +572,6 @@ public class PlayerManager {
 			playingTeams += teamIsPlaying;
 		}
 
-		GameManager gm = GameManager.getGameManager();
-		MainConfig cfg = gm.getConfig();
 		if(playingPlayers == 0){
 			gm.endGame();
 		}

@@ -488,10 +488,14 @@ deathmatch:
 # It's recommended to use 'lobby-in-default-world' if you want to use NPC's
 permanent-world-names: false
 
-# Having this set to true will move your lobby to the world specified in your server.properties (spawn point: 0, 100, 0).
+# Having this set to true will move your lobby to the world specified in your server.properties.
 # This feature is recommended for servers with big lobbies or lobbies that need entities (like NPC's).
 # Please note that when enabled you're responsible for building a lobby, no schematic or default box will be created.
 lobby-in-default-world: false
+
+# If true, players spawn at the spawn point of the default world when using the lobby-in-default-world setting.
+# The spawn point can be set using the vanilla /setworldspawn command. If false, players are spawned at 0, 100, 0.
+use-default-world-spawn: true
 
 #Write custom seeds to be used when creating a new map
 world-seeds:
@@ -562,6 +566,8 @@ custom-events:
 debug: false
 # When set to true, the game won't end when only one player is left. This can be used to play alone in order to test games.
 one-player-mode: false
+# When set to false, victory conditions won't be checked, meaning the game never ends automatically.
+enable-victory: true
 
 # Specifies the logging level to use for the UhcCore plugin.
 # There is usually no need to change this setting, unless you need

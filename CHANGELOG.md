@@ -23,7 +23,8 @@ worlds, if a custom `world-container` is configured in Spigot/Paper
 - Fixed a bug where players would be removed from the Best PvE list even if the damage was blocked
 - Fixed a bug in the Horseless scenario where players could ride zombie/skeleton horses, donkeys and mules
 - Fixed a bug in the Weakest Link scenario where players with the resistance effect could survive
-- Fixed a bug in some scenarios where health would "vanish" without playing the damage effect
+- Fixed a bug in the Blood Diamonds and Sky High scenarios where health would "vanish" without playing the damage effect
+- Fixed a bug where absorption and totems of undying would not protect against Blood Diamonds and Sky High damage
 - Fixed a bug in the Randomized Drops scenario where some blocks would not drop anything at all
 - Fixed a bug with scenario voting where players could lose a vote by clicking an item in their hotbar
 - Fixed a crash that occurred when starting the game if voting was enabled but there were no scenarios to vote for

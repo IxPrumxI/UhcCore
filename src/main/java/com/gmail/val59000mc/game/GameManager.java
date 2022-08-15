@@ -255,13 +255,15 @@ public class GameManager{
 		Bukkit.getPluginManager().callEvent(new UhcStartedEvent());
 	}
 
-	public void broadcastMessage(String message){
-		for(UhcPlayer player : playerManager.getPlayersList()){
+	public void broadcastMessage(String message) {
+		if (message.isEmpty()) return;
+		for (UhcPlayer player : playerManager.getPlayersList()) {
 			player.sendMessage(message);
 		}
 	}
 
-	public void broadcastInfoMessage(String message){
+	public void broadcastInfoMessage(String message) {
+		if (message.isEmpty()) return;
 		broadcastMessage(Lang.DISPLAY_MESSAGE_PREFIX+" "+message);
 	}
 

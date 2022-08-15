@@ -123,7 +123,7 @@ public class PlayerDeathHandler {
 		uhcPlayer.getStoredItems().addAll(playerDrops);
 
 		// eliminations
-		if (!Lang.PLAYERS_ELIMINATED.isEmpty() && shouldAnnounceEliminations()) {
+		if (shouldAnnounceEliminations()) {
 			gameManager.broadcastInfoMessage(Lang.PLAYERS_ELIMINATED.replace("%player%", uhcPlayer.getName()));
 		}
 

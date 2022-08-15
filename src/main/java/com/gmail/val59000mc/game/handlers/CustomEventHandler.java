@@ -69,12 +69,10 @@ public class CustomEventHandler {
 				// Money rewards
 				if (reward > 0) {
 					VaultManager.addMoney(p, reward);
-					if (!message.isEmpty()) {
-						p.sendMessage(message);
-					}
+					uhcPlayer.sendMessage(message);
 				}
 			} catch (UhcPlayerNotOnlineException e) {
-				// Tignore offline players
+				// Ignore offline players
 			}
 		}
 
@@ -102,9 +100,7 @@ public class CustomEventHandler {
 
 		if (reward > 0) {
 			VaultManager.addMoney(killer, reward);
-			if (!Lang.EVENT_KILL_REWARD.isEmpty()) {
-				killer.sendMessage(Lang.EVENT_KILL_REWARD.replace("%money%", "" + reward));
-			}
+			uhcKiller.sendMessage(Lang.EVENT_KILL_REWARD.replace("%money%", Double.toString(reward)));
 		}
 
 		// If the list is empty, this will never execute
@@ -139,9 +135,7 @@ public class CustomEventHandler {
 		for(UhcPlayer player : winners) {
 			try {
 				if (reward > 0) {
-					if (!Lang.EVENT_WIN_REWARD.isEmpty()) {
-						player.getPlayer().sendMessage(Lang.EVENT_WIN_REWARD.replace("%money%", "" + reward));
-					}
+					player.sendMessage(Lang.EVENT_WIN_REWARD.replace("%money%", Double.toString(reward)));
 					VaultManager.addMoney(player.getPlayer(), reward);
 				}
 

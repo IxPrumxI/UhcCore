@@ -227,7 +227,7 @@ public class MapLoader {
 			final File worldDir = new File(Bukkit.getWorldContainer(), uuid);
 			if(worldDir.exists()){
 				// Loading existing world
-				Bukkit.getServer().createWorld(new WorldCreator(uuid));
+				Bukkit.getServer().createWorld(new WorldCreator(uuid).environment(env));
 			}else{
 				this.createNewWorld(env);
 			}

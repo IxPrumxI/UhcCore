@@ -1,5 +1,6 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
+import com.gmail.val59000mc.events.UhcStartingEvent;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.game.GameState;
@@ -23,15 +24,13 @@ public class LoveAtFirstSightListener extends ScenarioListener{
 	@Option(key = "disable-broadcasts")
 	private boolean disableBroadcasts = false;
 
-	@Override
-	public void onEnable() {
-		GameManager gm = GameManager.getGameManager();
-		if (gm.getGameState() == GameState.WAITING || gm.getGameState() == GameState.STARTING) {
-			for (UhcPlayer player : gm.getPlayerManager().getPlayersList()) {
-				if (!player.getTeam().isSolo() && !player.isTeamLeader()) {
-					player.getTeam().getMembers().remove(player);
-					player.setTeam(new UhcTeam(player));
-				}
+	// Priority above DoubleDatesListener#onGameStateChanged
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onGameStarting(UhcStartingEvent e) {
+		for (final UhcPlayer player : getPlayerManager().getPlayersList()) {
+			if (!player.getTeam().isSolo() && !player.isTeamLeader()) {
+				player.getTeam().getMembers().remove(player);
+				player.setTeam(new UhcTeam(player));
 			}
 		}
 	}

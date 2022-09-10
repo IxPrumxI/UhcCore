@@ -32,6 +32,7 @@ public class Lang{
 	public static String GAME_FINISHED;
 	public static String GAME_END_STOPPED;
 	public static String GAME_SHUTDOWN;
+	public static String GAME_STARTING_DEATHMATCH_IN;
 	public static String GAME_START_DEATHMATCH;
 	public static String GAME_BORDER_START_SHRINKING;
 	public static String GAME_FINAL_HEAL;
@@ -255,6 +256,7 @@ public class Lang{
 		GAME_END_STOPPED = getString(lang, "game.end-stopped", "Game ending stopped");
 		GAME_SHUTDOWN = getString(lang, "game.shutdown", "Server will shutdown in %time% seconds.");
 		GAME_PLEASE_WAIT_TELEPORTING = getString(lang, "game.please-wait-teleporting", "Please wait while all players are being teleported.");
+		GAME_STARTING_DEATHMATCH_IN = getString(lang, "game.starting-deathmatch-in", "Starting deathmatch in %time% seconds.");
 		GAME_START_DEATHMATCH = getString(lang, "game.start-deathmatch", "Starting the deathmatch! Prepare yourself until PVP is enabled!");
 		GAME_BORDER_START_SHRINKING = getString(lang, "game.border-start-shrinking", "The border will now begin to shrink");
 		GAME_FINAL_HEAL = getString(lang, "game.final-heal", "All players have been healed to full health");

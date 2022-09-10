@@ -35,7 +35,8 @@ worlds, if a custom `world-container` is configured in Spigot/Paper
 - Fixed an `IllegalPluginAccessException` which could sometimes happen when shutting down the server
 - Fixed a bug with the JSON item deserializer where color codes in display names were not working
 - Fixed incorrect scenario IDs in the default `scenarios.yml` template
-- Removed some log spam
+- Fixed a bug where "Scoreboard line is too long" would be spammed while starting the game
+- Removed some more log spam
 - Clarified a few confusing log messages
 
 ## [1.20.1] - 2022-06-14

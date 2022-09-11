@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.2] - 2022-09-11
 
 ### New features
 

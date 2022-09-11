@@ -247,9 +247,8 @@ found in the storage.yml file after the worlds have been created
 
 Before creating the new world, UhcCore will also look in the storage.yml
 file to see what the previous worlds were called, and then try to delete
-those worlds automatically. The UhcCore worlds are currently always stored
-in the main server directory, but you will be able to use a custom location
-in the next UhcCore update.
+those worlds automatically. The UhcCore worlds are stored in the same directory
+as your other worlds, the location of which can be configured in Spigot/Paper.
 
 !!! note
 
@@ -333,7 +332,7 @@ values, just delete the file (or move/rename it, to keep a backup). When the
 server is started, UhcCore will generate a new config file with the default
 values.
 
-[configs]: https://gitlab.com/uhccore/uhccore/-/tree/1.20.1/src/main/resources
+[configs]: https://gitlab.com/uhccore/uhccore/-/tree/1.20.2/src/main/resources
 
 ## Where can I read more about configuration, commands etc? Is there a wiki?
 
@@ -413,7 +412,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle`:
 
         ```groovy
-        compileOnly "net.zerodind:uhccore:1.20.1"
+        compileOnly "net.zerodind:uhccore:1.20.2"
         ```
 
     === "Gradle (Kotlin DSL)"
@@ -421,7 +420,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle.kts`:
 
         ```kotlin
-        compileOnly("net.zerodind:uhccore:1.20.1")
+        compileOnly("net.zerodind:uhccore:1.20.2")
         ```
 
     === "Maven"
@@ -432,7 +431,7 @@ snippets in case you're interested:
         <dependency>
             <groupId>net.zerodind</groupId>
             <artifactId>uhccore</artifactId>
-            <version>1.20.1</version>
+            <version>1.20.2</version>
             <scope>provided</scope>
         </dependency>
         ```
@@ -523,7 +522,7 @@ previous version (using its tag) and the head of the `main` branch. Just make
 sure to select the right tag matching the version you want to compare from.
 
 [changelog]: https://gitlab.com/uhccore/uhccore/-/blob/main/CHANGELOG.md
-[compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.1&to=main
+[compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.2&to=main
 
 ## I want to help contribute code to this project, where do I start?
 

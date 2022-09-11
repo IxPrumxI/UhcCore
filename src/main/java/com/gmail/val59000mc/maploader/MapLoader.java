@@ -227,7 +227,7 @@ public class MapLoader {
 			final File worldDir = new File(Bukkit.getWorldContainer(), uuid);
 			if(worldDir.exists()){
 				// Loading existing world
-				Bukkit.getServer().createWorld(new WorldCreator(uuid));
+				Bukkit.getServer().createWorld(new WorldCreator(uuid).environment(env));
 			}else{
 				this.createNewWorld(env);
 			}
@@ -326,7 +326,7 @@ public class MapLoader {
 
 		if (config.get(MainConfig.LOBBY_IN_DEFAULT_WORLD)){
 			final World defaultWorld = Bukkit.getWorlds().get(0);
-			final Location spawnLocation = config.get(MainConfig.USE_DEFAULT_WORLD_SPAWN)
+			final Location spawnLocation = config.get(MainConfig.USE_DEFAULT_WORLD_SPAWN_FOR_LOBBY)
 				? defaultWorld.getSpawnLocation().clone().add(0.5, 0, 0.5)
 				: new Location(defaultWorld, 0.5, 100, 0.5);
 			lobby = new Lobby(spawnLocation);

@@ -4,7 +4,6 @@ import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
-import com.gmail.val59000mc.game.GameState;
 import com.gmail.val59000mc.players.*;
 import com.gmail.val59000mc.scoreboard.ScoreboardLayout;
 import com.gmail.val59000mc.scoreboard.ScoreboardManager;
@@ -347,25 +346,24 @@ public class ScoreboardHandler {
 	}
 
 	public ScoreboardType getPlayerScoreboardType(UhcPlayer uhcPlayer) {
-		if (uhcPlayer.getState().equals(PlayerState.DEAD)){
+		if (uhcPlayer.getState().equals(PlayerState.DEAD)) {
 			return ScoreboardType.SPECTATING;
 		}
-
-		GameState gameState = gameManager.getGameState();
-
-		if (gameState.equals(GameState.WAITING)){
-			return ScoreboardType.WAITING;
+		switch (gameManager.getGameState()) {
+			case LOADING:
+			case WAITING:
+			case STARTING: {
+				return ScoreboardType.WAITING;
+			}
+			case PLAYING:
+			case ENDED: {
+				return ScoreboardType.PLAYING;
+			}
+			case DEATHMATCH: {
+				return ScoreboardType.DEATHMATCH;
+			}
 		}
-
-		if (gameState.equals(GameState.PLAYING) || gameState.equals(GameState.ENDED)){
-			return ScoreboardType.PLAYING;
-		}
-
-		if (gameState.equals(GameState.DEATHMATCH)){
-			return ScoreboardType.DEATHMATCH;
-		}
-
-		return ScoreboardType.PLAYING;
+		return ScoreboardType.WAITING;
 	}
 
 }

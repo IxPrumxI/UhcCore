@@ -260,11 +260,13 @@ public class UhcPlayer {
 		}
 	}
 
-	public void sendPrefixedMessage(String message){
+	public void sendPrefixedMessage(String message) {
+		if (message.isEmpty()) return;
 		sendMessage(Lang.DISPLAY_MESSAGE_PREFIX+" "+message);
 	}
 
-	public void sendMessage(String message){
+	public void sendMessage(String message) {
+		if (message.isEmpty()) return;
 		try {
 			getPlayer().sendMessage(message);
 		} catch (UhcPlayerNotOnlineException ignored) {

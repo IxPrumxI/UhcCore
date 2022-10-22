@@ -56,7 +56,7 @@ public class VeinMinerListener extends ScenarioListener{
 		vein.process();
 
 		int amount = vein.getOres() * getVeinMultiplier(oreType.get());
-		ItemStack drops = new ItemStack(oreType.get().getDrop(), amount);
+		ItemStack drops = oreType.get().getDrop().getStack(amount);
 		Location loc = player.getLocation().getBlock().getLocation().add(.5,.5,.5);
 		loc.getWorld().dropItem(loc, drops);
 

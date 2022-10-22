@@ -6,6 +6,7 @@
 
 - Added missing log and leaf types to the Timber and Fast Leaves Decay scenarios
 - Fixed a bug where a netherite axe would not work in the Timber scenario
+- Fixed a bug in some ore-related scenarios where lapis ore would drop ink sacs on Minecraft 1.12.2 and below
 
 ## [1.20.2] - 2022-09-11
 

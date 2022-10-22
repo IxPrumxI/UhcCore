@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+
+### Bug fixes
+
+- Added missing log and leaf types to the Timber and Fast Leaves Decay scenarios
+- Fixed a bug where a netherite axe would not work in the Timber scenario
+
 ## [1.20.2] - 2022-09-11
 
 ### New features

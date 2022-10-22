@@ -132,6 +132,7 @@ public enum UniversalMaterial{
 
 	WOODEN_AXE("WOOD_AXE", "WOODEN_AXE"),
 	GOLDEN_AXE("GOLD_AXE", "GOLDEN_AXE"),
+	NETHERITE_AXE,
 
 	WOODEN_SHOVEL("WOOD_SPADE", "WOODEN_SHOVEL"),
 	STONE_SHOVEL("STONE_SPADE", "STONE_SHOVEL"),
@@ -148,6 +149,9 @@ public enum UniversalMaterial{
 	JUNGLE_LEAVES("LEAVES", "JUNGLE_LEAVES", (short) 3),
 	ACACIA_LEAVES("LEAVES_2", "ACACIA_LEAVES", (short) 0),
 	DARK_OAK_LEAVES("LEAVES_2", "DARK_OAK_LEAVES", (short) 1),
+	MANGROVE_LEAVES,
+	AZALEA_LEAVES,
+	FLOWERING_AZALEA_LEAVES,
 
 	OAK_LOG("LOG", "OAK_LOG", (short) 0),
 	SPRUCE_LOG("LOG", "SPRUCE_LOG", (short) 1),
@@ -155,6 +159,14 @@ public enum UniversalMaterial{
 	JUNGLE_LOG("LOG", "JUNGLE_LOG", (short) 3),
 	ACACIA_LOG("LOG_2", "ACACIA_LOG", (short) 0),
 	DARK_OAK_LOG("LOG_2", "DARK_OAK_LOG", (short) 1),
+	MANGROVE_LOG,
+	STRIPPED_OAK_LOG,
+	STRIPPED_SPRUCE_LOG,
+	STRIPPED_BIRCH_LOG,
+	STRIPPED_JUNGLE_LOG,
+	STRIPPED_ACACIA_LOG,
+	STRIPPED_DARK_OAK_LOG,
+	STRIPPED_MANGROVE_LOG,
 
 	COOKED_BEEF("COOKED_BEEF", "COOKED_BEEF"),
 	COOKED_CHICKEN("COOKED_CHICKEN", "COOKED_CHICKEN"),
@@ -233,34 +245,42 @@ public enum UniversalMaterial{
 		return null;
 	}
 
-	public static boolean isLog(Material material){
-		return (
-				material.equals(UniversalMaterial.ACACIA_LOG.getType()) ||
-						material.equals(UniversalMaterial.BIRCH_LOG.getType()) ||
-						material.equals(UniversalMaterial.DARK_OAK_LOG.getType()) ||
-						material.equals(UniversalMaterial.JUNGLE_LOG.getType()) ||
-						material.equals(UniversalMaterial.OAK_LOG.getType()) ||
-						material.equals(UniversalMaterial.SPRUCE_LOG.getType())
-		);
+	public static boolean isLog(Material material) {
+		return material == UniversalMaterial.OAK_LOG.getType()
+			|| material == UniversalMaterial.SPRUCE_LOG.getType()
+			|| material == UniversalMaterial.BIRCH_LOG.getType()
+			|| material == UniversalMaterial.JUNGLE_LOG.getType()
+			|| material == UniversalMaterial.ACACIA_LOG.getType()
+			|| material == UniversalMaterial.DARK_OAK_LOG.getType()
+			|| material == UniversalMaterial.MANGROVE_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_OAK_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_SPRUCE_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_BIRCH_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_JUNGLE_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_ACACIA_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_DARK_OAK_LOG.getType()
+			|| material == UniversalMaterial.STRIPPED_MANGROVE_LOG.getType();
 	}
 
-	public static boolean isLeaves(Material material){
-		return (
-				material.equals(UniversalMaterial.ACACIA_LEAVES.getType()) ||
-						material.equals(UniversalMaterial.BIRCH_LEAVES.getType()) ||
-						material.equals(UniversalMaterial.DARK_OAK_LEAVES.getType()) ||
-						material.equals(UniversalMaterial.JUNGLE_LEAVES.getType()) ||
-						material.equals(UniversalMaterial.OAK_LEAVES.getType()) ||
-						material.equals(UniversalMaterial.SPRUCE_LEAVES.getType())
-		);
+	public static boolean isLeaves(Material material) {
+		return material == UniversalMaterial.OAK_LEAVES.getType()
+			|| material == UniversalMaterial.SPRUCE_LEAVES.getType()
+			|| material == UniversalMaterial.BIRCH_LEAVES.getType()
+			|| material == UniversalMaterial.JUNGLE_LEAVES.getType()
+			|| material == UniversalMaterial.ACACIA_LEAVES.getType()
+			|| material == UniversalMaterial.DARK_OAK_LEAVES.getType()
+			|| material == UniversalMaterial.MANGROVE_LEAVES.getType()
+			|| material == UniversalMaterial.AZALEA_LEAVES.getType()
+			|| material == UniversalMaterial.FLOWERING_AZALEA_LEAVES.getType();
 	}
 
 	public static boolean isAxe(Material tool) {
-		return tool == Material.DIAMOND_AXE ||
-				tool == UniversalMaterial.GOLDEN_AXE.getType() ||
-				tool == Material.IRON_AXE ||
-				tool == Material.STONE_AXE ||
-				tool == UniversalMaterial.WOODEN_AXE.getType();
+		return tool == UniversalMaterial.WOODEN_AXE.getType()
+			|| tool == Material.STONE_AXE
+			|| tool == Material.IRON_AXE
+			|| tool == UniversalMaterial.GOLDEN_AXE.getType()
+			|| tool == Material.DIAMOND_AXE
+			|| tool == UniversalMaterial.NETHERITE_AXE.getType();
 	}
 
 	@SuppressWarnings("deprecation")

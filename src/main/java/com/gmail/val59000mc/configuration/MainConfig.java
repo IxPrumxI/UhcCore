@@ -1,5 +1,10 @@
 package com.gmail.val59000mc.configuration;
 
+import com.gmail.val59000mc.configuration.options.*;
+import com.gmail.val59000mc.game.GameManager;
+import com.gmail.val59000mc.scenarios.Scenario;
+import com.gmail.val59000mc.scenarios.ScenarioManager;
+import org.bukkit.Bukkit;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,6 +17,11 @@ import org.bukkit.Difficulty;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import com.gmail.val59000mc.configuration.options.BasicOption;
 import com.gmail.val59000mc.configuration.options.EnumListOption;
 import com.gmail.val59000mc.configuration.options.EnumOption;

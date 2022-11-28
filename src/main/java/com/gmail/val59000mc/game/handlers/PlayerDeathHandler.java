@@ -152,6 +152,12 @@ public class PlayerDeathHandler {
 			UhcItems.spawnExtraXp(location, config.get(MainConfig.EXP_DROP_ON_DEATH));
 		}
 
+        if (uhcPlayer.getTeam().getPlayingMemberCount() == 1 && config.get(MainConfig.ENABLE_TEAMS_PLACEMENTS)) {
+            TeamManager teamManager = gameManager.getTeamManager();
+            UhcTeam team = uhcPlayer.getTeam();
+            team.setPlacement(teamManager.getPlayingUhcTeams().size());
+        }
+
 		uhcPlayer.setState(PlayerState.DEAD);
 
 		if (config.get(MainConfig.STRIKE_LIGHTNING_ON_DEATH)) {

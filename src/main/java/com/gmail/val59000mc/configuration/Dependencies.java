@@ -1,5 +1,7 @@
 package com.gmail.val59000mc.configuration;
 
+import com.gmail.val59000mc.UhcCore;
+import com.gmail.val59000mc.discord.DiscordListener;
 import com.gmail.val59000mc.utils.ProtocolUtils;
 
 import java.util.logging.Level;
@@ -16,6 +18,9 @@ public class Dependencies {
 	private static boolean worldEditLoaded;
 	private static boolean vaultLoaded;
 	private static boolean protocolLibLoaded;
+    private static boolean discordSRVLoaded;
+
+    private static DiscordListener discordListener;
 
 	public static void loadWorldEdit() {
 		Plugin wePlugin = Bukkit.getPluginManager().getPlugin("WorldEdit");
@@ -60,6 +65,27 @@ public class Dependencies {
 		}
 	}
 
+	public static void loadDiscordSRV() {
+		Plugin discordSRV = Bukkit.getPluginManager().getPlugin("DiscordSRV");
+		if (discordSRV == null) {
+			Bukkit.getLogger().warning("[UhcCore] DiscordSRV plugin not found.");
+			discordSRVLoaded = false;
+			return;
+		}
+
+		LOGGER.info("[UhcCore] Hooked with DiscordSRV plugin.");
+		discordSRVLoaded = true;
+
+		try {
+			discordListener = new DiscordListener();
+			Bukkit.getPluginManager().registerEvents(discordListener, UhcCore.getPlugin());
+		} catch (Exception ex) {
+			discordSRVLoaded = false;
+			LOGGER.severe("[UhcCore] Failed to load DiscordSRV.");
+			ex.printStackTrace();
+		}
+	}
+
 	public static boolean getWorldEditLoaded() {
 		return worldEditLoaded;
 	}
@@ -72,4 +98,11 @@ public class Dependencies {
 		return protocolLibLoaded;
 	}
 
+    public static boolean getDiscordSRVLoaded() {
+        return discordSRVLoaded;
+    }
+
+    public static DiscordListener getDiscordListener() {
+        return discordListener;
+    }
 }

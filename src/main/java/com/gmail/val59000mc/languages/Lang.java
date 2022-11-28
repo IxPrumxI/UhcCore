@@ -212,6 +212,7 @@ public class Lang{
 	public static String SCENARIO_LOVEATFIRSTSIGHT_JOIN_ERROR;
 	public static String SCENARIO_LOVEATFIRSTSIGHT_JOIN_BROADCAST;
 	public static String SCENARIO_SKYHIGH_DAMAGE;
+	public static String SCENARIO_NOSKYBASE_DAMAGE;
 	public static String SCENARIO_TEAMINVENTORY_ERROR;
 	public static String SCENARIO_TEAMINVENTORY_DISABLED;
 	public static String SCENARIO_TEAMINVENTORY_OPEN;
@@ -474,6 +475,8 @@ public class Lang{
 		SCENARIO_LOVEATFIRSTSIGHT_JOIN_ERROR = getString(lang, "scenarios.love_at_first_sight.join-error", "&cCan't join teams, Love at first sight is enabled!");
 		SCENARIO_LOVEATFIRSTSIGHT_JOIN_BROADCAST = getString(lang, "scenarios.love_at_first_sight.join-broadcast", "&4[Love At First Sight] &a%player% has joined %leader%'s team");
 		SCENARIO_SKYHIGH_DAMAGE = getString(lang, "scenarios.sky_high.damage", "&4[Sky High] &cYou're taking damage from being below y=120");
+		SCENARIO_SKYHIGH_DAMAGE = getString(lang, "scenarios.sky_high.damage", "&4[Sky High] &cYou're taking damage as you're under y=120");
+		SCENARIO_NOSKYBASE_DAMAGE = getString(lang, "scenarios.no_sky_base_damage", "&4[No Sky Bases] &cYou're taking damage as you're above y=120");
 		SCENARIO_TEAMINVENTORY_ERROR = getString(lang, "scenarios.team_inventory.error", "&cYou may only open your team's inventory while playing!");
 		SCENARIO_TEAMINVENTORY_DISABLED = getString(lang, "scenarios.team_inventory.disabled", "&cTeam Inventory is currently disabled!");
 		SCENARIO_TEAMINVENTORY_OPEN = getString(lang, "scenarios.team_inventory.open", "&aOpening team inventory ...");

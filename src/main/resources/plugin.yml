@@ -3,7 +3,7 @@ description: Automates games of the classic UHC gamemode, with endless customiza
 version: "${version}"
 author: val59000mc, Mezy, zerodind
 main: com.gmail.val59000mc.UhcCore
-softdepend: [WorldEdit, Vault, ProtocolLib]
+softdepend: [ WorldEdit,Vault,ProtocolLib,DiscordSRV ]
 api-version: 1.13
 commands:
   uhccore:

@@ -10,6 +10,7 @@ version = "1.20.3-SNAPSHOT"
 
 repositories {
 	mavenCentral()
+	jcenter()
 	maven { // For Spigot API
 		name "SpigotMC"
 		url "https://hub.spigotmc.org/nexus/content/groups/public/"

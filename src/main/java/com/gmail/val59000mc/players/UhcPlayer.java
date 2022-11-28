@@ -1,5 +1,6 @@
 package com.gmail.val59000mc.players;
 
+import com.gmail.val59000mc.configuration.Dependencies;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.customitems.Kit;
 import com.gmail.val59000mc.events.UhcPlayerStateChangedEvent;
@@ -9,6 +10,8 @@ import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.utils.SpigotUtils;
 import com.gmail.val59000mc.utils.TimeUtils;
+import github.scarsz.discordsrv.DiscordSRV;
+import github.scarsz.discordsrv.dependencies.jda.api.entities.Member;
 import io.papermc.lib.PaperLib;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -46,7 +49,9 @@ public class UhcPlayer {
 	private long compassPlayingLastUpdate;
 	private int browsingPage;
 
-	public UhcPlayer(UUID uuid, String name){
+	private final Member discordUser;
+
+	public UhcPlayer(UUID uuid, String name) {
 		this.uuid = uuid;
 		this.name = name;
 
@@ -64,6 +69,8 @@ public class UhcPlayer {
 
 		compassPlayingCurrentPlayer = this;
 		browsingPage = 0;
+		DiscordSRV DiscordAPI = Dependencies.getDiscordListener().getDiscordAPI();
+		discordUser = DiscordAPI.getMainGuild().getMemberById(DiscordAPI.getAccountLinkManager().getDiscordId(team.getLeader().getUuid()));
 	}
 
 	public Player getPlayer() throws UhcPlayerNotOnlineException {
@@ -402,6 +409,9 @@ public class UhcPlayer {
 		this.browsingPage = browsingPage;
 	}
 
+	public Member getDiscordUser() {
+		return discordUser;
+	}
 	@SuppressWarnings("deprecation") // Can't use attributes in 1.8
 	public void healFully() throws UhcPlayerNotOnlineException {
 		final Player player = getPlayer();

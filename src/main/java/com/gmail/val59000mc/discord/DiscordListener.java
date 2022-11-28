@@ -2,10 +2,12 @@ package com.gmail.val59000mc.discord;
 
 import com.gmail.val59000mc.UhcCore;
 import com.gmail.val59000mc.configuration.MainConfig;
+import com.gmail.val59000mc.events.UhcGameStateChangedEvent;
 import com.gmail.val59000mc.events.UhcPlayerStateChangedEvent;
 import com.gmail.val59000mc.events.UhcStartingEvent;
 import com.gmail.val59000mc.events.UhcWinEvent;
 import com.gmail.val59000mc.game.GameManager;
+import com.gmail.val59000mc.game.GameState;
 import com.gmail.val59000mc.players.*;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.scoreboard.ScoreboardManager;
@@ -88,15 +90,19 @@ public class DiscordListener implements Listener {
     updateAllowedRoles();
     updateEventOrganizers();
     updateEventCategory();
+  }
 
-    EmbedBuilder embed = new EmbedBuilder()
-            .setTitle("New UHC Game")
-            .addField("IP", getConfiguration().getString("discord.event-ip", "play.myserver.com"), true)
-            .addField("Version", "1." + UhcCore.getVersion(), true);
-    if (!isPublicEvent())
-      embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
+  public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
+    if(event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
+      EmbedBuilder embed = new EmbedBuilder()
+              .setTitle("New UHC Game")
+              .addField("IP", getConfiguration().getString("discord.event-ip", "play.myserver.com"), true)
+              .addField("Version", "1." + UhcCore.getVersion(), true);
+      if (!isPublicEvent())
+        embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
 
-    UHCChat.sendMessage(embed.build()).queue();
+      UHCChat.sendMessage(embed.build()).queue();
+    }
   }
 
   @EventHandler

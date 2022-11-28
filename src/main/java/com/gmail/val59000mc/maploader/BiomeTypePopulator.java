@@ -38,7 +38,10 @@ public class BiomeTypePopulator extends BlockPopulator{
 
     private Biome getReplacementBiome(Biome biome) {
         if (biome.toString().contains("OCEAN")) {
-            return Biome.FOREST;
+            if(biome.toString().contains("DEEP")){
+                return Biome.FOREST;
+            }
+            return Biome.PLAINS;
         }
 
         return null;

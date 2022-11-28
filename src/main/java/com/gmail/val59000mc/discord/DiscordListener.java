@@ -22,6 +22,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -204,7 +205,12 @@ public class DiscordListener implements Listener {
     if (CategoryID != null) _category = getMainGuild().getCategoryById(CategoryID);
     if (_category == null) {
       _category = getMainGuild().createCategory("UHC Event").complete();
-      getConfiguration().set("discord.category", _category.getId());
+      try{
+        getConfiguration().set("discord.category", _category.getId());
+        getConfiguration().save();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     } else _category.getManager().setName("UHC Event").queue();
     if (_category.getChannels().size() > 0) {
       for (GuildChannel channel : _category.getChannels()) {

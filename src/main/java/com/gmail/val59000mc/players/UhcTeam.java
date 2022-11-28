@@ -5,7 +5,7 @@ import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.exceptions.UhcTeamException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
-import com.gmail.val59000mc.scoreboard.ScoreboardManager;
+import github.scarsz.discordsrv.dependencies.jda.api.entities.VoiceChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -14,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -28,6 +29,10 @@ public class UhcTeam {
 	private String teamName;
 	private String prefix;
 	private final Inventory teamInventory;
+	private int placement = 0;
+
+	@Nullable
+	private VoiceChannel teamChannel;
 
 	public UhcTeam(UhcPlayer uhcPlayer) {
 		members = new ArrayList<>();
@@ -36,7 +41,7 @@ public class UhcTeam {
 		teamNumber = GameManager.getGameManager().getTeamManager().getNewTeamNumber();
 		teamName = "Team " + teamNumber;
 		prefix = GameManager.getGameManager().getTeamManager().getTeamPrefix();
-		teamInventory = Bukkit.createInventory(null, 9*3, ChatColor.GOLD + "Team Inventory");
+		teamInventory = Bukkit.createInventory(null, 9 * 3, ChatColor.GOLD + "Team Inventory");
 	}
 
 	public int getTeamNumber() {
@@ -204,12 +209,28 @@ public class UhcTeam {
 
 	}
 
-	public void setStartingLocation(Location loc){
+	public void setStartingLocation(Location loc) {
 		this.startingLocation = loc;
 	}
 
-	public Location getStartingLocation(){
+	public Location getStartingLocation() {
 		return startingLocation;
 	}
 
+	@Nullable
+	public VoiceChannel getTeamChannel() {
+		return teamChannel;
+	}
+
+	public void setTeamChannel(@Nullable VoiceChannel teamChannel) {
+		this.teamChannel = teamChannel;
+	}
+
+	public int getPlacement() {
+		return placement;
+	}
+
+	public void setPlacement(int placement) {
+		this.placement = placement;
+	}
 }

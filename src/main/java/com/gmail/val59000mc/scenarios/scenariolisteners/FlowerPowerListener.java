@@ -1,10 +1,10 @@
 package com.gmail.val59000mc.scenarios.scenariolisteners;
 
 import com.gmail.val59000mc.UhcCore;
+import com.gmail.val59000mc.configuration.YamlFile;
 import com.gmail.val59000mc.customitems.UhcItems;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.*;
-import com.gmail.val59000mc.configuration.YamlFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,15 +58,17 @@ public class FlowerPowerListener extends ScenarioListener{
 
         expPerFlower = cfg.getInt("exp-per-flower", 2);
 
-        for (String drop : cfg.getStringList("drops")){
+        for (String drop : cfg.getStringList("drops")) {
             try {
                 JsonItemStack flowerDrop = JsonItemUtils.getItemFromJson(drop);
                 flowerDrops.add(flowerDrop);
-            }catch (Exception ex){
-                Bukkit.getLogger().severe("[UhcCore] Failed to parse FlowerPower item: "+drop+"!");
+            } catch (Exception ex) {
+                Bukkit.getLogger().severe("[UhcCore] Failed to parse FlowerPower item: " + drop + "!");
                 Bukkit.getLogger().severe(ex.getMessage());
             }
         }
+
+        System.out.println("there are " + flowerDrops.size() + " flowers drops");
     }
 
     @EventHandler (priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -80,11 +82,13 @@ public class FlowerPowerListener extends ScenarioListener{
         }
 
         if (isFlower(block)){
-            Location blockLoc = block.getLocation().add(.5,.5,.5);
+            //Fixes duping exploit when breaking bisected blocks from top
+            e.getBlock().getDrops().clear();
+            Location blockLoc = block.getLocation().add(.5, .5, .5);
             block.setType(Material.AIR);
             UhcItems.spawnExtraXp(blockLoc, expPerFlower);
 
-            int random = RandomUtils.randomInteger(0, flowerDrops.size()-1);
+            int random = RandomUtils.randomInteger(0, flowerDrops.size() - 1);
             ItemStack drop = flowerDrops.get(random);
             blockLoc.getWorld().dropItem(blockLoc, drop);
         }

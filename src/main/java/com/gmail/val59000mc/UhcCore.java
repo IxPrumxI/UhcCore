@@ -5,7 +5,7 @@ import com.gmail.val59000mc.utils.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class UhcCore extends JavaPlugin{
+public class UhcCore extends JavaPlugin {
 
 	private static final int MIN_VERSION = 8;
 	private static final int MAX_VERSION = 19;
@@ -15,28 +15,13 @@ public class UhcCore extends JavaPlugin{
 	private GameManager gameManager;
 	private Updater updater;
 
-	@Override
-	public void onEnable(){
-		pl = this;
-
-		loadServerVersion();
-
-		gameManager = new GameManager();
-		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
-
-		updater = new Updater(this);
-
-		// Delete files that are scheduled for deletion
-		FileUtils.removeScheduledDeletionFiles();
-	}
-
 	// Load the Minecraft version.
-	private void loadServerVersion(){
+	private void loadServerVersion() {
 		String versionString = Bukkit.getBukkitVersion();
 		version = 0;
 
-		for (int i = MIN_VERSION; i <= MAX_VERSION; i ++){
-			if (versionString.contains("1." + i)){
+		for (int i = MIN_VERSION; i <= MAX_VERSION; i++) {
+			if (versionString.contains("1." + i)) {
 				version = i;
 			}
 		}
@@ -52,15 +37,34 @@ public class UhcCore extends JavaPlugin{
 	public static int getVersion() {
 		return version;
 	}
-	
-	public static UhcCore getPlugin(){
+
+	public static UhcCore getPlugin() {
 		return pl;
 	}
 
 	@Override
-	public void onDisable(){
+	public void onEnable() {
+		pl = this;
+		loadServerVersion();
+
+		gameManager = new GameManager();
+
+		Bukkit.getScheduler().runTaskLater(this, () -> gameManager.loadNewGame(), 1);
+
+		updater = new Updater(this);
+
+		// Delete files that are scheduled for deletion
+		FileUtils.removeScheduledDeletionFiles();
+	}
+
+	public GameManager getGameManager() {
+		return gameManager;
+	}
+
+	@Override
+	public void onDisable() {
 		gameManager.getScenarioManager().disableAllScenarios();
-		
+
 		updater.runAutoUpdate();
 		Bukkit.getLogger().info("[UhcCore] Plugin disabled");
 	}

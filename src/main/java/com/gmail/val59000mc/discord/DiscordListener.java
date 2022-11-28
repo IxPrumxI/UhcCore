@@ -10,7 +10,6 @@ import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.game.GameState;
 import com.gmail.val59000mc.players.*;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
-import com.gmail.val59000mc.scoreboard.ScoreboardManager;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.api.Subscribe;
 import github.scarsz.discordsrv.api.events.DiscordReadyEvent;
@@ -69,10 +68,6 @@ public class DiscordListener implements Listener {
     return getGameManager().getTeamManager();
   }
 
-  public ScoreboardManager getScoreboardManager() {
-    return getGameManager().getScoreboardManager();
-  }
-
   public ScenarioManager getScenarioManager() {
     return getGameManager().getScenarioManager();
   }
@@ -92,6 +87,7 @@ public class DiscordListener implements Listener {
     updateEventCategory();
   }
 
+  @EventHandler
   public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
     if(event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
       EmbedBuilder embed = new EmbedBuilder()

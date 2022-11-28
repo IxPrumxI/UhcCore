@@ -221,7 +221,7 @@ public class DiscordListener implements Listener {
     allowedRoles.clear();
     List<String> allowedRolesIDs = getConfiguration().getStringList("discord.player-must-have-roles");
     if (allowedRolesIDs.size() == 0
-            || allowedRolesIDs.get(0).toLowerCase().equals("everyone")
+            || allowedRolesIDs.get(0).equalsIgnoreCase("everyone")
             || allowedRolesIDs.contains(getMainGuild().getPublicRole().getId())) {
       allowedRoles.add(getMainGuild().getPublicRole());
     } else {
@@ -282,7 +282,7 @@ public class DiscordListener implements Listener {
     }
 
     for (Role eventOrganizer : eventOrganizers) {
-      long allow = Permission.getRaw(Permission.MESSAGE_WRITE, Permission.MESSAGE_MANAGE);
+      long allow = Permission.getRaw(Permission.MESSAGE_WRITE, Permission.MESSAGE_MANAGE, Permission.VIEW_CHANNEL);
       long deny = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
       PermissionOverride permissionOverride = UHCChat.getPermissionOverride(eventOrganizer);
       if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow

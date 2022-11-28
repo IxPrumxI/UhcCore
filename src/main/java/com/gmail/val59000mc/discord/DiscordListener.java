@@ -209,6 +209,7 @@ public class DiscordListener implements Listener {
     if (_category.getChannels().size() > 0) {
       for (GuildChannel channel : _category.getChannels()) {
         if (channel.getName().equalsIgnoreCase("uhc lobby") || channel.getName().equalsIgnoreCase("uhc")) continue;
+        if (getDiscordAPI().getChannels().containsValue(channel.getId())) continue;
         channel.delete().queue();
       }
     }

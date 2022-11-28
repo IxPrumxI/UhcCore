@@ -93,8 +93,8 @@ public class DiscordListener implements Listener {
     if(event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
       EmbedBuilder embed = new EmbedBuilder()
               .setTitle("New UHC Game")
-              .addField("IP", getConfiguration().getString("discord.event-ip", "play.myserver.com"), true)
-              .addField("Version", UhcCore.getPlugin().getServer().getVersion(), true);
+              .addField("IP", "`" + getConfiguration().getString("discord.event-ip", UhcCore.getPlugin().getServer().getIp() + ":" + UhcCore.getPlugin().getServer().getPort()) + "`", true)
+              .addField("Version", "`" + UhcCore.getPlugin().getServer().getVersion() + "`", true);
       if (!isPublicEvent())
         embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
 

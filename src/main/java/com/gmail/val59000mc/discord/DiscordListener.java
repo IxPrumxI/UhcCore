@@ -25,10 +25,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -76,6 +73,10 @@ public class DiscordListener implements Listener {
     return getGameManager().getConfig();
   }
 
+  public List<Role> getAllowedRoles() {
+	  return allowedRoles;
+  }
+
   public DiscordListener() {
     DiscordSRV.api.subscribe(this);
   }
@@ -93,7 +94,7 @@ public class DiscordListener implements Listener {
       EmbedBuilder embed = new EmbedBuilder()
               .setTitle("New UHC Game")
               .addField("IP", getConfiguration().getString("discord.event-ip", "play.myserver.com"), true)
-              .addField("Version", "1." + UhcCore.getVersion(), true);
+              .addField("Version", UhcCore.getPlugin().getServer().getVersion(), true);
       if (!isPublicEvent())
         embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
 
@@ -129,7 +130,7 @@ public class DiscordListener implements Listener {
         if (member.getVoiceState() != null && member.getVoiceState().inVoiceChannel())
           getMainGuild().moveVoiceMember(member, teamChannel).queue();
         else {
-          uhcPlayer.sendMessage(ChatColor.GREEN + "[UHC-Discord]" + ChatColor.RESET + " Please enter the voice channel for your team named: " + channelName + "\n" + teamChannel.createInvite().complete().getUrl());
+          uhcPlayer.sendMessage(ChatColor.DARK_GREEN + "[UHC-Discord]" + ChatColor.RESET + " Please enter the voice channel for your team named: " + channelName + "\n" + teamChannel.createInvite().complete().getUrl());
         }
       }
     }

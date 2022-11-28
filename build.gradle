@@ -42,7 +42,16 @@ repositories {
 		name "CodeMC"
 		url "https://repo.codemc.io/repository/maven-snapshots/"
 	}
-	flatDir { // For BiomeMapping
+	// DiscordSRV
+	maven {
+		url 'https://nexus.scarsz.me/content/groups/public/'
+	}
+	//JDA (DiscordSRV)
+	maven {
+		name 'm2-dv8tion'
+		url 'https://m2.dv8tion.net/releases'
+	}
+	flatDir { // For BiomeMapping and MCDiscordReserializer (DiscordSRV)
 		dirs "$rootDir/libs"
 	}
 }
@@ -52,6 +61,7 @@ dependencies {
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 	compileOnly "com.comphenix.protocol:ProtocolLib:4.7.0"
+	compileOnly 'com.discordsrv:discordsrv:1.22.0'
 	implementation "net.wesjd:anvilgui:1.5.3-SNAPSHOT"
 	implementation "io.papermc:paperlib:1.0.5"
 	implementation project(":Support-WorldEdit-6")
@@ -76,6 +86,7 @@ tasks.named("shadowJar") {
 	relocate "io.papermc.lib", "com.gmail.val59000mc.paperlib"
 	relocate "net.wesjd.anvilgui", "com.gmail.val59000mc.anvilgui"
 	relocate "com.pieterdebot.biomemapping", "com.gmail.val59000mc.biomemapping"
+	relocate 'net.dv8tion.jda', 'github.scarsz.discordsrv.dependencies.jda'
 }
 
 tasks.named("assemble") {

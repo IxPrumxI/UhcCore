@@ -4,15 +4,7 @@ import com.gmail.val59000mc.configuration.options.*;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
-import org.bukkit.Bukkit;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.gmail.val59000mc.utils.UniversalSound;
 import org.bukkit.Difficulty;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -22,18 +14,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import com.gmail.val59000mc.configuration.options.BasicOption;
-import com.gmail.val59000mc.configuration.options.EnumListOption;
-import com.gmail.val59000mc.configuration.options.EnumOption;
-import com.gmail.val59000mc.configuration.options.ListOption;
-import com.gmail.val59000mc.configuration.options.LootConfigOption;
-import com.gmail.val59000mc.configuration.options.Option;
-import com.gmail.val59000mc.configuration.options.PotionEffectListOption;
-import com.gmail.val59000mc.configuration.options.VeinConfigOption;
-import com.gmail.val59000mc.game.GameManager;
-import com.gmail.val59000mc.scenarios.Scenario;
-import com.gmail.val59000mc.scenarios.ScenarioManager;
-import com.gmail.val59000mc.utils.UniversalSound;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainConfig extends YamlFile {
 
@@ -48,6 +30,8 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Integer> TIME_BEFORE_START_WHEN_READY = new BasicOption<>("time-to-start-when-ready",15);
 	public static final BasicOption<Boolean> CAN_SPECTATE_AFTER_DEATH = new BasicOption<>("can-spectate-after-death",false);
 	public static final BasicOption<Boolean> CAN_SEND_MESSAGES_AFTER_DEATH = new BasicOption<>("can-send-messages-after-death",true);
+	public static final BasicOption<Boolean> ENABLE_TEAMS_PLACEMENTS = new BasicOption<>("enable-team-placements", false);
+
 	// Chat prefix
 	public static final BasicOption<Boolean> ENABLE_CHAT_PREFIX = new BasicOption<>("chat-prefix.enable",false);
 	public static final BasicOption<String> TEAM_CHAT_PREFIX = new BasicOption<>("chat-prefix.team-prefix","@");

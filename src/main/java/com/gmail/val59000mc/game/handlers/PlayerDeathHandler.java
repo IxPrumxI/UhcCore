@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
+import com.gmail.val59000mc.players.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
@@ -21,10 +22,6 @@ import com.gmail.val59000mc.customitems.UhcItems;
 import com.gmail.val59000mc.events.UhcPlayerKillEvent;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.languages.Lang;
-import com.gmail.val59000mc.players.PlayerManager;
-import com.gmail.val59000mc.players.PlayerState;
-import com.gmail.val59000mc.players.UhcPlayer;
-import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.scenarios.ScenarioManager;
 import com.gmail.val59000mc.scenarios.scenariolisteners.SilentNightListener;

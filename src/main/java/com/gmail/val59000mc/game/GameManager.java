@@ -291,6 +291,7 @@ public class GameManager{
 		Dependencies.loadWorldEdit();
 		Dependencies.loadVault();
 		Dependencies.loadProtocolLib();
+		Dependencies.loadDiscordSRV();
 
 		// Map loader
 		mapLoader.loadWorldUuids();

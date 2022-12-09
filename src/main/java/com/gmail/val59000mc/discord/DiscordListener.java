@@ -104,6 +104,7 @@ public class DiscordListener implements Listener {
 	public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
 		if (allowedRoles.isEmpty()) {
 			weirdThing = false;
+			return;
 		}
 		if (event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
 			sendMessage();

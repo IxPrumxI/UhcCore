@@ -87,7 +87,7 @@ public class DiscordListener implements Listener {
 		DiscordSRV.api.subscribe(this);
 	}
 
-	private boolean weirdThing = true;
+	public boolean didSendMessage = false;
 
 	@Subscribe
 	public void discordReadyEvent(DiscordReadyEvent ignored) {
@@ -95,23 +95,25 @@ public class DiscordListener implements Listener {
 		updateEventOrganizers();
 		updateEventCategory();
 
-		if (!weirdThing) {
-			sendMessage();
+		if (getGameManager().getGameState() == GameState.WAITING && !didSendMessage) {
+			sendNewGameMessage();
+			didSendMessage = true;
 		}
 	}
 
 	@EventHandler
 	public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
-		if (allowedRoles.isEmpty()) {
-			weirdThing = false;
+		if (getMainGuild() == null || allowedRoles.isEmpty()) {
 			return;
 		}
+
 		if (event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
-			sendMessage();
+			sendNewGameMessage();
+			didSendMessage = true;
 		}
 	}
 
-	private void sendMessage() {
+	private void sendNewGameMessage() {
 		EmbedBuilder embed = new EmbedBuilder()
 				.setTitle("New UHC Game")
 				.addField("IP", "`" + getConfiguration().getString("discord.event-ip", UhcCore.getPlugin().getServer().getIp() + ":" + UhcCore.getPlugin().getServer().getPort()) + "`", true)

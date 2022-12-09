@@ -87,7 +87,7 @@ public class DiscordListener implements Listener {
 		DiscordSRV.api.subscribe(this);
 	}
 
-	public boolean didSendMessage = false;
+	public boolean sendMessageOnReady = false;
 
 	@Subscribe
 	public void discordReadyEvent(DiscordReadyEvent ignored) {
@@ -95,21 +95,20 @@ public class DiscordListener implements Listener {
 		updateEventOrganizers();
 		updateEventCategory();
 
-		if (getGameManager().getGameState() == GameState.WAITING && !didSendMessage) {
+		if (sendMessageOnReady) {
 			sendNewGameMessage();
-			didSendMessage = true;
 		}
 	}
 
 	@EventHandler
 	public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
 		if (getMainGuild() == null || allowedRoles.isEmpty()) {
+			sendMessageOnReady = true;
 			return;
 		}
 
 		if (event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
 			sendNewGameMessage();
-			didSendMessage = true;
 		}
 	}
 
@@ -117,7 +116,7 @@ public class DiscordListener implements Listener {
 		EmbedBuilder embed = new EmbedBuilder()
 				.setTitle("New UHC Game")
 				.addField("IP", "`" + getConfiguration().getString("discord.event-ip", UhcCore.getPlugin().getServer().getIp() + ":" + UhcCore.getPlugin().getServer().getPort()) + "`", true)
-				.addField("Version", "`" + UhcCore.getPlugin().getServer().getVersion() + "`", true);
+				.addField("Version", "`" + UhcCore.getPlugin().getServer().getBukkitVersion() + "`", true);
 		if (!isPublicEvent())
 			embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
 

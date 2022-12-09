@@ -25,376 +25,398 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.logging.Logger;
 
 public class DiscordListener implements Listener {
+	private static final Logger LOGGER = Logger.getLogger(DiscordListener.class.getCanonicalName());
 
-  private final List<Role> allowedRoles = new ArrayList<>();
 
-  private final List<Role> eventOrganizers = new ArrayList<>();
+	private final List<Role> allowedRoles = new ArrayList<>();
 
-  private Category eventCategory;
+	private final List<Role> eventOrganizers = new ArrayList<>();
 
-  private TextChannel UHCChat;
+	private Category eventCategory;
 
-  private VoiceChannel UHCVoice;
+	private TextChannel UHCChat;
 
-  public DiscordSRV getDiscordAPI() {
-    return DiscordSRV.getPlugin();
-  }
+	private VoiceChannel UHCVoice;
 
-  public Guild getMainGuild() {
-    return getDiscordAPI().getMainGuild();
-  }
+	public DiscordSRV getDiscordAPI() {
+		return DiscordSRV.getPlugin();
+	}
 
-  public boolean isPublicEvent() {
-    return allowedRoles.contains(getMainGuild().getPublicRole());
-  }
+	public Guild getMainGuild() {
+		return getDiscordAPI().getMainGuild();
+	}
 
-  public GameManager getGameManager() {
-    return GameManager.getGameManager();
-  }
+	public boolean isPublicEvent() {
+		return allowedRoles.contains(getMainGuild().getPublicRole());
+	}
 
-  public PlayerManager getPlayerManager() {
-    return getGameManager().getPlayerManager();
-  }
+	public GameManager getGameManager() {
+		return GameManager.getGameManager();
+	}
 
-  public TeamManager getTeamManager() {
-    return getGameManager().getTeamManager();
-  }
+	public PlayerManager getPlayerManager() {
+		return getGameManager().getPlayerManager();
+	}
 
-  public ScenarioManager getScenarioManager() {
-    return getGameManager().getScenarioManager();
-  }
+	public TeamManager getTeamManager() {
+		return getGameManager().getTeamManager();
+	}
 
-  public MainConfig getConfiguration() {
-    return getGameManager().getConfig();
-  }
+	public ScenarioManager getScenarioManager() {
+		return getGameManager().getScenarioManager();
+	}
 
-  public List<Role> getAllowedRoles() {
-	  return allowedRoles;
-  }
+	public MainConfig getConfiguration() {
+		return getGameManager().getConfig();
+	}
 
-  public DiscordListener() {
-    DiscordSRV.api.subscribe(this);
-  }
+	public List<Role> getAllowedRoles() {
+		return allowedRoles;
+	}
 
-  @Subscribe
-  public void discordReadyEvent(DiscordReadyEvent ignored) {
-    updateAllowedRoles();
-    updateEventOrganizers();
-    updateEventCategory();
-  }
+	public DiscordListener() {
+		DiscordSRV.api.subscribe(this);
+	}
 
-  @EventHandler
-  public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
-    if(event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
-      EmbedBuilder embed = new EmbedBuilder()
-              .setTitle("New UHC Game")
-              .addField("IP", "`" + getConfiguration().getString("discord.event-ip", UhcCore.getPlugin().getServer().getIp() + ":" + UhcCore.getPlugin().getServer().getPort()) + "`", true)
-              .addField("Version", "`" + UhcCore.getPlugin().getServer().getVersion() + "`", true);
-      if (!isPublicEvent())
-        embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
+	private boolean weirdThing = true;
 
-      UHCChat.sendMessage(embed.build()).queue();
-    }
-  }
+	@Subscribe
+	public void discordReadyEvent(DiscordReadyEvent ignored) {
+		updateAllowedRoles();
+		updateEventOrganizers();
+		updateEventCategory();
 
-  @EventHandler
-  public void onUhcStartedEvent(UhcStartingEvent ignored) {
-    for (VoiceChannel voiceChannel : eventCategory.getVoiceChannels()) {
-      if (voiceChannel.equals(UHCVoice)) continue;
-      voiceChannel.delete().queue();
-    }
+		if (!weirdThing) {
+			sendMessage();
+		}
+	}
 
-    EmbedBuilder embed = new EmbedBuilder()
-            .setAuthor("UHC Game has started!")
-            .setTitle("Teams:");
+	@EventHandler
+	public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
+		if (allowedRoles.isEmpty()) {
+			weirdThing = false;
+		}
+		if (event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
+			sendMessage();
+		}
+	}
 
-    Iterator<UhcTeam> teamsIterator = getTeamManager().getUhcTeams().stream().iterator();
-    while (teamsIterator.hasNext()) {
-      UhcTeam team = teamsIterator.next();
-      String channelName = "Team " + team.getTeamNumber();
-      if (team.getTeamName() != null) channelName = team.getTeamName();
-      embed.addField(channelName, team.getMembers().stream().map(m -> m.getDiscordUser().getAsMention()).collect(Collectors.joining(" - ")), true);
-      if (team.getMemberCount() == 1) continue;
-      VoiceChannel teamChannel = eventCategory.createVoiceChannel(channelName).complete();
-      team.setTeamChannel(teamChannel);
-      teamChannel.putPermissionOverride(getMainGuild().getPublicRole()).setDeny(Permission.VIEW_CHANNEL).queue();
+	private void sendMessage() {
+		EmbedBuilder embed = new EmbedBuilder()
+				.setTitle("New UHC Game")
+				.addField("IP", "`" + getConfiguration().getString("discord.event-ip", UhcCore.getPlugin().getServer().getIp() + ":" + UhcCore.getPlugin().getServer().getPort()) + "`", true)
+				.addField("Version", "`" + UhcCore.getPlugin().getServer().getVersion() + "`", true);
+		if (!isPublicEvent())
+			embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
 
-      for (UhcPlayer uhcPlayer : team.getMembers()) {
-        Member member = uhcPlayer.getDiscordUser();
-        teamChannel.putPermissionOverride(member).setAllow(Permission.VIEW_CHANNEL, Permission.VOICE_CONNECT).queue();
-        if (member.getVoiceState() != null && member.getVoiceState().inVoiceChannel())
-          getMainGuild().moveVoiceMember(member, teamChannel).queue();
-        else {
-          uhcPlayer.sendMessage(ChatColor.DARK_GREEN + "[UHC-Discord]" + ChatColor.RESET + " Please enter the voice channel for your team named: " + channelName + "\n" + teamChannel.createInvite().complete().getUrl());
-        }
-      }
-    }
+		UHCChat.sendMessage(embed.build()).queue();
+	}
 
-    UHCChat.sendMessage(embed.build()).queue();
+	@EventHandler
+	public void onUhcStartedEvent(UhcStartingEvent ignored) {
+		for (VoiceChannel voiceChannel : eventCategory.getVoiceChannels()) {
+			if (voiceChannel.equals(UHCVoice)) continue;
+			voiceChannel.delete().queue();
+		}
 
-  }
+		EmbedBuilder embed = new EmbedBuilder()
+				.setAuthor("UHC Game has started!")
+				.setTitle("Teams:");
 
-  @EventHandler
-  public void onPlayerDeathEvent(PlayerDeathEvent event) {
-    if (UHCChat == null) return;
-    UhcPlayer uhcPlayer = getPlayerManager().getUhcPlayer(event.getEntity());
-    Player killer = event.getEntity().getKiller();
-    User user = uhcPlayer.getDiscordUser().getUser();
-    MessageEmbed embed = new EmbedBuilder()
-            .setAuthor(killer == null ? "You dead!" : getPlayerManager().getUhcPlayer(killer).getDiscordUser().getAsMention() + " Killed you!")
-            .setThumbnail(user.getAvatarUrl())
-            .setDescription(event.getDeathMessage())
-            .setTimestamp(Instant.now())
-            .build();
+		Iterator<UhcTeam> teamsIterator = getTeamManager().getUhcTeams().stream().iterator();
+		while (teamsIterator.hasNext()) {
+			UhcTeam team = teamsIterator.next();
+			String channelName = "Team " + team.getTeamNumber();
+			if (team.getTeamName() != null) channelName = team.getTeamName();
+			embed.addField(channelName, team.getMembers().stream().map(m -> m.getDiscordUser().getAsMention()).collect(Collectors.joining(" - ")), true);
+			if (team.getMemberCount() == 1) continue;
+			VoiceChannel teamChannel = eventCategory.createVoiceChannel(channelName).complete();
+			team.setTeamChannel(teamChannel);
+			teamChannel.putPermissionOverride(getMainGuild().getPublicRole()).setDeny(Permission.VIEW_CHANNEL).queue();
 
-    UHCChat.sendMessage(user.getAsMention()).embed(embed).queue();
-  }
+			for (UhcPlayer uhcPlayer : team.getMembers()) {
+				Member member = uhcPlayer.getDiscordUser();
+				teamChannel.putPermissionOverride(member).setAllow(Permission.VIEW_CHANNEL, Permission.VOICE_CONNECT).queue();
+				if (member.getVoiceState() != null && member.getVoiceState().inVoiceChannel())
+					getMainGuild().moveVoiceMember(member, teamChannel).queue();
+				else {
+					uhcPlayer.sendMessage(ChatColor.DARK_GREEN + "[UHC-Discord]" + ChatColor.RESET + " Please enter the voice channel for your team named: " + channelName + "\n" + teamChannel.createInvite().complete().getUrl());
+				}
+			}
+		}
 
-  @EventHandler
-  public void onPlayerRevive(UhcPlayerStateChangedEvent event) {
-    if (UHCChat == null) return;
-    if (event.getOldPlayerState() == null) return;
-    if (event.getOldPlayerState().equals(PlayerState.DEAD) && event.getNewPlayerState().equals(PlayerState.PLAYING)) {
-      UhcPlayer uhcPlayer = event.getPlayer();
-      User user = uhcPlayer.getDiscordUser().getUser();
-      MessageEmbed embed = new EmbedBuilder()
-              .setTitle("You got revived!")
-              .setThumbnail(user.getAvatarUrl())
-              .setTimestamp(Instant.now())
-              .build();
+		UHCChat.sendMessage(embed.build()).queue();
 
-      UHCChat.sendMessage(user.getAsMention()).embed(embed).queue();
-    }
-  }
+	}
 
-  @EventHandler
-  public void onGameWin(UhcWinEvent event) {
-    EmbedBuilder embed = new EmbedBuilder()
-            .setAuthor("UHC Game has Ended!")
-            .setTimestamp(Instant.now());
-    if (getConfiguration().get(MainConfig.ENABLE_TEAMS_PLACEMENTS)) {
-      embed.setTitle("Placements:");
+	@EventHandler
+	public void onPlayerDeathEvent(PlayerDeathEvent event) {
+		if (UHCChat == null) return;
+		UhcPlayer uhcPlayer = getPlayerManager().getUhcPlayer(event.getEntity());
+		Player killer = event.getEntity().getKiller();
+		User user = uhcPlayer.getDiscordUser().getUser();
+		MessageEmbed embed = new EmbedBuilder()
+				.setAuthor(killer == null ? "You dead!" : getPlayerManager().getUhcPlayer(killer).getDiscordUser().getAsMention() + " Killed you!")
+				.setThumbnail(user.getAvatarUrl())
+				.setDescription(event.getDeathMessage())
+				.setTimestamp(Instant.now())
+				.build();
 
-      getTeamManager().getUhcTeams().sort(Comparator.comparingInt(UhcTeam::getPlacement).reversed());
+		UHCChat.sendMessage(user.getAsMention()).embed(embed).queue();
+	}
 
-      for (UhcTeam team : getTeamManager().getUhcTeams()) {
-        if(team.getPlacement() == 0) continue;
-        String teamName = "Team " + team.getTeamNumber();
-        if (team.getTeamName() != null) teamName = team.getTeamName();
-        embed.addField("#" + team.getPlacement() + " " + teamName, team.getMembers().stream().map(m -> m.getDiscordUser().getAsMention()).collect(Collectors.joining(" - ")), true);
-      }
-    } else {
-      embed
-              .setTitle("Winners:")
-              .setDescription(event.getWinners().stream().map(m -> m.getDiscordUser().getAsMention()).collect(Collectors.joining(" - ")));
-    }
-    UHCChat.sendMessage(embed.build()).queue();
+	@EventHandler
+	public void onPlayerRevive(UhcPlayerStateChangedEvent event) {
+		if (UHCChat == null) return;
+		if (event.getOldPlayerState() == null) return;
+		if (event.getOldPlayerState().equals(PlayerState.DEAD) && event.getNewPlayerState().equals(PlayerState.PLAYING)) {
+			UhcPlayer uhcPlayer = event.getPlayer();
+			User user = uhcPlayer.getDiscordUser().getUser();
+			MessageEmbed embed = new EmbedBuilder()
+					.setTitle("You got revived!")
+					.setThumbnail(user.getAvatarUrl())
+					.setTimestamp(Instant.now())
+					.build();
 
-    for (VoiceChannel voiceChannel : eventCategory.getVoiceChannels()) {
-      if (voiceChannel.equals(UHCVoice)) continue;
-      for (Member member : voiceChannel.getMembers()) getMainGuild().moveVoiceMember(member, UHCVoice).queue();
-      voiceChannel.delete().queueAfter(10, TimeUnit.SECONDS);
-    }
-  }
+			UHCChat.sendMessage(user.getAsMention()).embed(embed).queue();
+		}
+	}
 
-  public void updateEventCategory() {
-    String CategoryID = getConfiguration().getString("discord.category");
-    Category _category = null;
-    if (CategoryID != null) _category = getMainGuild().getCategoryById(CategoryID);
-    if (_category == null) {
-      _category = getMainGuild().createCategory("UHC Event").complete();
-      try{
-        getConfiguration().set("discord.category", _category.getId());
-        getConfiguration().save();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    } else _category.getManager().setName("UHC Event").queue();
-    if (_category.getChannels().size() > 0) {
-      for (GuildChannel channel : _category.getChannels()) {
-        if (channel.getName().equalsIgnoreCase("uhc lobby") || channel.getName().equalsIgnoreCase("uhc")) continue;
-        if (getDiscordAPI().getChannels().containsValue(channel.getId())) continue;
-        channel.delete().queue();
-      }
-    }
-    eventCategory = _category;
-    updateUHCChat();
-    updateUHCVoice();
-  }
+	@EventHandler
+	public void onGameWin(UhcWinEvent event) {
+		EmbedBuilder embed = new EmbedBuilder()
+				.setAuthor("UHC Game has Ended!")
+				.setTimestamp(Instant.now());
+		if (getConfiguration().get(MainConfig.ENABLE_TEAMS_PLACEMENTS)) {
+			embed.setTitle("Placements:");
 
-  public void updateAllowedRoles() {
-    allowedRoles.clear();
-    List<String> allowedRolesIDs = getConfiguration().getStringList("discord.player-must-have-roles");
-    if (allowedRolesIDs.size() == 0
-            || allowedRolesIDs.get(0).equalsIgnoreCase("everyone")
-            || allowedRolesIDs.contains(getMainGuild().getPublicRole().getId())) {
-      allowedRoles.add(getMainGuild().getPublicRole());
-    } else {
-      for (String allowedRoleID : allowedRolesIDs) {
-        Role role = getMainGuild().getRoleById(allowedRoleID);
-        if (role != null) allowedRoles.add(role);
-      }
-    }
-  }
+			getTeamManager().getUhcTeams().sort(Comparator.comparingInt(UhcTeam::getPlacement).reversed());
 
-  public void updateEventOrganizers() {
-    eventOrganizers.clear();
-    List<String> eventOrganizersIDs = getConfiguration().getStringList("discord.event-organizer-roles");
-    for (String eventOrganizerRoleID : eventOrganizersIDs) {
-      Role role = getMainGuild().getRoleById(eventOrganizerRoleID);
-      if (role != null) eventOrganizers.add(role);
-    }
-  }
+			for (UhcTeam team : getTeamManager().getUhcTeams()) {
+				if (team.getPlacement() == 0) continue;
+				String teamName = "Team " + team.getTeamNumber();
+				if (team.getTeamName() != null) teamName = team.getTeamName();
+				embed.addField("#" + team.getPlacement() + " " + teamName, team.getMembers().stream().map(m -> m.getDiscordUser().getAsMention()).collect(Collectors.joining(" - ")), true);
+			}
+		} else {
+			embed
+					.setTitle("Winners:")
+					.setDescription(event.getWinners().stream().map(m -> m.getDiscordUser().getAsMention()).collect(Collectors.joining(" - ")));
+		}
+		UHCChat.sendMessage(embed.build()).queue();
 
-  public void updateUHCChat() {
-    if (eventCategory == null) return;
+		for (VoiceChannel voiceChannel : eventCategory.getVoiceChannels()) {
+			if (voiceChannel.equals(UHCVoice)) continue;
+			for (Member member : voiceChannel.getMembers()) getMainGuild().moveVoiceMember(member, UHCVoice).queue();
+			voiceChannel.delete().queueAfter(10, TimeUnit.SECONDS);
+		}
+	}
 
-    if (UHCChat == null) for (TextChannel textChannel : eventCategory.getTextChannels()) {
-      if (textChannel.getName().equalsIgnoreCase("uhc")) {
-        UHCChat = textChannel;
-        break;
-      }
-    }
-    if (UHCChat == null) {
-      ChannelAction<TextChannel> channelAction = eventCategory.createTextChannel("uhc");
-      for (Role eventOrganizer : eventOrganizers) {
-        channelAction = channelAction.addPermissionOverride(eventOrganizer,
-                Permission.getRaw(Permission.MESSAGE_WRITE, Permission.MESSAGE_MANAGE),
-                Permission.getRaw(Permission.EMPTY_PERMISSIONS));
-      }
-      if (isPublicEvent()) {
-        channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
-                Permission.getRaw(Permission.MESSAGE_READ),
-                Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE));
-      } else {
-        for (Role allowedRole : allowedRoles) {
-          channelAction = channelAction.addPermissionOverride(allowedRole,
-                  Permission.getRaw(Permission.MESSAGE_READ),
-                  Permission.getRaw(Permission.MESSAGE_WRITE));
-        }
-        channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
-                Permission.getRaw(Permission.EMPTY_PERMISSIONS),
-                Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE, Permission.MESSAGE_READ));
-      }
-      UHCChat = channelAction.complete();
-    } else updateUHCChatPermissions();
-  }
+	public void updateEventCategory() {
+		String CategoryID = getConfiguration().getString("discord.category");
+		Category _category = null;
+		if (CategoryID != null) _category = getMainGuild().getCategoryById(CategoryID);
+		if (_category == null) {
+			_category = getMainGuild().createCategory("UHC Event").complete();
+			try {
+				getConfiguration().set("discord.category", _category.getId());
+				getConfiguration().save();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else _category.getManager().setName("UHC Event").queue();
+		if (_category.getChannels().size() > 0) {
+			for (GuildChannel channel : _category.getChannels()) {
+				if (channel.getName().equalsIgnoreCase("uhc lobby") || channel.getName().equalsIgnoreCase("uhc"))
+					continue;
+				if (getDiscordAPI().getChannels().containsValue(channel.getId())) continue;
+				channel.delete().queue();
+			}
+		}
+		eventCategory = _category;
+		updateUHCChat();
+		updateUHCVoice();
+	}
 
-  public void updateUHCChatPermissions() {
-    if (UHCChat == null) {
-      updateUHCChat();
-      return;
-    }
+	public void updateAllowedRoles() {
+		allowedRoles.clear();
+		List<String> allowedRolesIDs = getConfiguration().getStringList("discord.player-must-have-roles");
+		if (allowedRolesIDs.size() == 0
+				|| allowedRolesIDs.get(0).equalsIgnoreCase("everyone")
+				|| allowedRolesIDs.contains(getMainGuild().getPublicRole().getId())) {
+			allowedRoles.add(getMainGuild().getPublicRole());
+		} else {
+			for (String allowedRoleID : allowedRolesIDs) {
+				Role role = getMainGuild().getRoleById(allowedRoleID);
+				if (role != null) allowedRoles.add(role);
+			}
+		}
 
-    for (Role eventOrganizer : eventOrganizers) {
-      long allow = Permission.getRaw(Permission.MESSAGE_WRITE, Permission.MESSAGE_MANAGE, Permission.VIEW_CHANNEL);
-      long deny = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
-      PermissionOverride permissionOverride = UHCChat.getPermissionOverride(eventOrganizer);
-      if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-              && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
-      UHCChat.putPermissionOverride(eventOrganizer).setAllow(allow).setDeny(deny).queue();
-    }
+		LOGGER.info("Allowed Roles: " + allowedRoles.stream().map(Role::getName).collect(Collectors.joining(", ")));
+	}
 
-    if (isPublicEvent()) {
-      long allow = Permission.getRaw(Permission.MESSAGE_READ);
-      long deny = Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE);
-      PermissionOverride permissionOverride = UHCChat.getPermissionOverride(getMainGuild().getPublicRole());
-      if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-              && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
-      UHCChat.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
-    } else {
-      for (Role allowedRole : allowedRoles) {
-        long allow = Permission.getRaw(Permission.MESSAGE_READ);
-        long deny = Permission.getRaw(Permission.MESSAGE_WRITE);
-        PermissionOverride permissionOverride = UHCChat.getPermissionOverride(allowedRole);
-        if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-                && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
-        UHCChat.putPermissionOverride(allowedRole).setAllow(allow).setDeny(deny).queue();
-      }
-      long allow = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
-      long deny = Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE, Permission.MESSAGE_READ);
-      PermissionOverride permissionOverride = UHCChat.getPermissionOverride(getMainGuild().getPublicRole());
-      if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-              && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
-      UHCChat.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
-    }
-  }
+	public void updateEventOrganizers() {
+		eventOrganizers.clear();
+		List<String> eventOrganizersIDs = getConfiguration().getStringList("discord.event-organizer-roles");
+		for (String eventOrganizerRoleID : eventOrganizersIDs) {
+			Role role = getMainGuild().getRoleById(eventOrganizerRoleID);
+			if (role != null) eventOrganizers.add(role);
+		}
+	}
 
-  public void updateUHCVoice() {
-    if (eventCategory == null) return;
-    if (UHCVoice == null) for (VoiceChannel voiceChannel : eventCategory.getVoiceChannels()) {
-      if (voiceChannel.getName().equalsIgnoreCase("uhc lobby")) {
-        UHCVoice = voiceChannel;
-        break;
-      }
-    }
-    if (UHCVoice == null) {
-      ChannelAction<VoiceChannel> channelAction = eventCategory.createVoiceChannel("UHC Lobby");
-      for (Role eventOrganizer : eventOrganizers) {
-        channelAction = channelAction.addPermissionOverride(eventOrganizer,
-                Permission.ALL_VOICE_PERMISSIONS,
-                Permission.getRaw(Permission.EMPTY_PERMISSIONS));
-      }
-      if (isPublicEvent()) {
-        channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
-                Permission.getRaw(Permission.VOICE_CONNECT),
-                Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK));
-      } else {
-        for (Role allowedRole : allowedRoles) {
-          channelAction = channelAction.addPermissionOverride(allowedRole,
-                  Permission.getRaw(Permission.VOICE_CONNECT, Permission.VIEW_CHANNEL),
-                  Permission.getRaw(Permission.EMPTY_PERMISSIONS));
-        }
-        channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
-                Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? Permission.VOICE_SPEAK : null),
-                Permission.getRaw(Permission.VOICE_MUTE_OTHERS, getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK, Permission.VIEW_CHANNEL));
-      }
-      UHCVoice = channelAction.complete();
-    } else updateUHCVoicePermissions();
-  }
+	public void updateUHCChat() {
+		if (eventCategory == null) return;
 
-  public void updateUHCVoicePermissions() {
-    if (UHCVoice == null) {
-      updateUHCVoice();
-      return;
-    }
+		if (UHCChat == null) for (TextChannel textChannel : eventCategory.getTextChannels()) {
+			if (textChannel.getName().equalsIgnoreCase("uhc")) {
+				UHCChat = textChannel;
+				break;
+			}
+		}
+		if (UHCChat == null) {
+			ChannelAction<TextChannel> channelAction = eventCategory.createTextChannel("uhc");
+			for (Role eventOrganizer : eventOrganizers) {
+				channelAction = channelAction.addPermissionOverride(eventOrganizer,
+						Permission.getRaw(Permission.MESSAGE_WRITE, Permission.MESSAGE_MANAGE),
+						Permission.getRaw(Permission.EMPTY_PERMISSIONS));
+			}
+			if (isPublicEvent()) {
+				channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
+						Permission.getRaw(Permission.MESSAGE_READ),
+						Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE));
+			} else {
+				for (Role allowedRole : allowedRoles) {
+					channelAction = channelAction.addPermissionOverride(allowedRole,
+							Permission.getRaw(Permission.MESSAGE_READ),
+							Permission.getRaw(Permission.MESSAGE_WRITE));
+				}
+				channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
+						Permission.getRaw(Permission.EMPTY_PERMISSIONS),
+						Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE, Permission.MESSAGE_READ));
+			}
+			UHCChat = channelAction.complete();
+		} else updateUHCChatPermissions();
+	}
 
-    for (Role eventOrganizer : eventOrganizers) {
-      long allow = Permission.ALL_VOICE_PERMISSIONS;
-      long deny = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
-      PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(eventOrganizer);
-      if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-              && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
-      UHCVoice.putPermissionOverride(eventOrganizer).setAllow(allow).setDeny(deny).queue();
-    }
+	public void updateUHCChatPermissions() {
+		if (UHCChat == null) {
+			updateUHCChat();
+			return;
+		}
 
-    if (isPublicEvent()) {
-      long allow = Permission.getRaw(Permission.VOICE_CONNECT);
-      long deny = Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK);
-      PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(getMainGuild().getPublicRole());
-      if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-              && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
-      UHCVoice.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
-    } else {
-      for (Role allowedRole : allowedRoles) {
-        long allow = Permission.getRaw(Permission.VOICE_CONNECT, Permission.VIEW_CHANNEL);
-        long deny = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
-        PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(allowedRole);
-        if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-                && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
-        UHCVoice.putPermissionOverride(allowedRole).setAllow(allow).setDeny(deny).queue();
-      }
-      long allow = Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? Permission.VOICE_SPEAK : null);
-      long deny = Permission.getRaw(Permission.VOICE_MUTE_OTHERS, getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK, Permission.VIEW_CHANNEL);
-      PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(getMainGuild().getPublicRole());
-      if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
-              && (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
-      UHCVoice.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
-    }
-  }
+		for (Role eventOrganizer : eventOrganizers) {
+			long allow = Permission.getRaw(Permission.MESSAGE_WRITE, Permission.MESSAGE_MANAGE, Permission.VIEW_CHANNEL);
+			long deny = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
+			PermissionOverride permissionOverride = UHCChat.getPermissionOverride(eventOrganizer);
+			if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+					&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
+			UHCChat.putPermissionOverride(eventOrganizer).setAllow(allow).setDeny(deny).queue();
+		}
+
+		if (isPublicEvent()) {
+			long allow = Permission.getRaw(Permission.MESSAGE_READ);
+			long deny = Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE);
+			PermissionOverride permissionOverride = UHCChat.getPermissionOverride(getMainGuild().getPublicRole());
+			if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+					&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
+			UHCChat.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
+		} else {
+			for (Role allowedRole : allowedRoles) {
+				long allow = Permission.getRaw(Permission.MESSAGE_READ);
+				long deny = Permission.getRaw(Permission.MESSAGE_WRITE);
+				PermissionOverride permissionOverride = UHCChat.getPermissionOverride(allowedRole);
+				if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+						&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
+				UHCChat.putPermissionOverride(allowedRole).setAllow(allow).setDeny(deny).queue();
+			}
+			long allow = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
+			long deny = Permission.getRaw(Permission.MESSAGE_MANAGE, Permission.MESSAGE_WRITE, Permission.MESSAGE_READ);
+			PermissionOverride permissionOverride = UHCChat.getPermissionOverride(getMainGuild().getPublicRole());
+			if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+					&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
+			UHCChat.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
+		}
+	}
+
+	public void updateUHCVoice() {
+		if (eventCategory == null) return;
+		if (UHCVoice == null) for (VoiceChannel voiceChannel : eventCategory.getVoiceChannels()) {
+			if (voiceChannel.getName().equalsIgnoreCase("uhc lobby")) {
+				UHCVoice = voiceChannel;
+				break;
+			}
+		}
+		if (UHCVoice == null) {
+			ChannelAction<VoiceChannel> channelAction = eventCategory.createVoiceChannel("UHC Lobby");
+			for (Role eventOrganizer : eventOrganizers) {
+				channelAction = channelAction.addPermissionOverride(eventOrganizer,
+						Permission.ALL_VOICE_PERMISSIONS,
+						Permission.getRaw(Permission.EMPTY_PERMISSIONS));
+			}
+			if (isPublicEvent()) {
+				channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
+						Permission.getRaw(Permission.VOICE_CONNECT),
+						Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK));
+			} else {
+				for (Role allowedRole : allowedRoles) {
+					channelAction = channelAction.addPermissionOverride(allowedRole,
+							Permission.getRaw(Permission.VOICE_CONNECT, Permission.VIEW_CHANNEL),
+							Permission.getRaw(Permission.EMPTY_PERMISSIONS));
+				}
+				channelAction = channelAction.addPermissionOverride(getMainGuild().getPublicRole(),
+						Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? Permission.VOICE_SPEAK : null),
+						Permission.getRaw(Permission.VOICE_MUTE_OTHERS, getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK, Permission.VIEW_CHANNEL));
+			}
+			UHCVoice = channelAction.complete();
+		} else updateUHCVoicePermissions();
+	}
+
+	public void updateUHCVoicePermissions() {
+		if (UHCVoice == null) {
+			updateUHCVoice();
+			return;
+		}
+
+		for (Role eventOrganizer : eventOrganizers) {
+			long allow = Permission.ALL_VOICE_PERMISSIONS;
+			long deny = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
+			PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(eventOrganizer);
+			if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+					&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
+			UHCVoice.putPermissionOverride(eventOrganizer).setAllow(allow).setDeny(deny).queue();
+		}
+
+		if (isPublicEvent()) {
+			long allow = Permission.getRaw(Permission.VOICE_CONNECT);
+			long deny = Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK);
+			PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(getMainGuild().getPublicRole());
+			if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+					&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
+			UHCVoice.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
+		} else {
+			for (Role allowedRole : allowedRoles) {
+				long allow = Permission.getRaw(Permission.VOICE_CONNECT, Permission.VIEW_CHANNEL);
+				long deny = Permission.getRaw(Permission.EMPTY_PERMISSIONS);
+				PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(allowedRole);
+				if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+						&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) continue;
+				UHCVoice.putPermissionOverride(allowedRole).setAllow(allow).setDeny(deny).queue();
+			}
+			long allow = Permission.getRaw(getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? Permission.VOICE_SPEAK : null);
+			long deny = Permission.getRaw(Permission.VOICE_MUTE_OTHERS, getConfiguration().getBoolean("discord.can-players-speak-in-lobby", false) ? null : Permission.VOICE_SPEAK, Permission.VIEW_CHANNEL);
+			PermissionOverride permissionOverride = UHCVoice.getPermissionOverride(getMainGuild().getPublicRole());
+			if ((permissionOverride != null ? permissionOverride.getAllowedRaw() : 0) == allow
+					&& (permissionOverride != null ? permissionOverride.getDeniedRaw() : 0) == deny) return;
+			UHCVoice.putPermissionOverride(getMainGuild().getPublicRole()).setAllow(allow).setDeny(deny).queue();
+		}
+	}
 }

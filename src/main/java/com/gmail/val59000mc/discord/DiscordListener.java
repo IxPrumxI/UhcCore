@@ -87,7 +87,7 @@ public class DiscordListener implements Listener {
 		DiscordSRV.api.subscribe(this);
 	}
 
-	public boolean sendMessageOnReady = false;
+	volatile boolean canSendMessage = false;
 
 	@Subscribe
 	public void discordReadyEvent(DiscordReadyEvent ignored) {
@@ -95,19 +95,19 @@ public class DiscordListener implements Listener {
 		updateEventOrganizers();
 		updateEventCategory();
 
-		if (sendMessageOnReady) {
-			sendNewGameMessage();
-		}
+		canSendMessage = true;
 	}
 
 	@EventHandler
 	public void onUhcReadyEvent(UhcGameStateChangedEvent event) {
-		if (getMainGuild() == null || allowedRoles.isEmpty()) {
-			sendMessageOnReady = true;
-			return;
-		}
-
 		if (event.getNewGameState() == GameState.WAITING && event.getOldGameState() == GameState.LOADING) {
+			while(!canSendMessage) {
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			sendNewGameMessage();
 		}
 	}

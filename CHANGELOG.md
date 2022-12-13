@@ -2,8 +2,15 @@
 
 ## [Unreleased]
 
+## New features
+
+- Added the `log-break-limit` option to `timber` in `scenarios.yml`
+- An axe is now required in order to fell a tree in the Timber scenario
+
 ### Bug fixes
 
+- Fixed a bug in the Timber scenario where some diagonal branches would not be chopped down
+- Fixed a StackOverflowError that could happen when chopping very large trees in the Timber scenario
 - Added missing log and leaf types to the Timber and Fast Leaves Decay scenarios
 - Fixed a bug where a netherite axe would not work in the Timber scenario
 - Fixed a bug in some ore-related scenarios where lapis ore would drop ink sacs on Minecraft 1.12.2 and below

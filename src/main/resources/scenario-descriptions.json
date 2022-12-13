@@ -41,7 +41,7 @@
 	"timber":{
 		"name":"Timber",
 		"description":[
-			"Breaking a log of a tree will cause the whole tree to fall down."
+			"Breaking one log of a tree with an axe will cause the whole tree to fall down."
 		]
 	},
 	"horseless":{

@@ -45,8 +45,12 @@ hastey_boys:
   # Set to true if crafting wooden tools should create stone tools instead.
   stone-tools: false
 timber:
-  # Set to true if you want to trees drop oak planks.
+  # If true, item damage will be applied to the axe used to fell the tree.
+  calculate-axe-damage: true
+  # If true, the tree will drop 4 planks instead of a log, for each log block.
   drop-planks: false
+  # The maximum tree size to process, in number of log blocks (to avoid overloading the server).
+  log-break-limit: 1000
 dragon_rush:
   # The number of attempts to make at placing eyes in the end portal.
   eye-attempts: 12

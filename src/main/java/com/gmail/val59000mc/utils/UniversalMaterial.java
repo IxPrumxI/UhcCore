@@ -28,6 +28,7 @@ public enum UniversalMaterial{
 	STATIONARY_LAVA("STATIONARY_LAVA", "LAVA"),
 	SUGAR_CANE_BLOCK("SUGAR_CANE_BLOCK", "SUGAR_CANE"),
 	CAVE_AIR("CAVE_AIR", "CAVE_AIR"),
+	GRASS_BLOCK("GRASS", "GRASS_BLOCK"),
 
 	SKELETON_SKULL("SKULL_ITEM","SKELETON_SKULL", (short) 0),
 	WITHER_SKELETON_SKULL("SKULL_ITEM","WITHER_SKELETON_SKULL", (short) 1),
@@ -200,13 +201,10 @@ public enum UniversalMaterial{
 	public Material getType() {
 		if (material == null) {
 			try {
-				material = Material.valueOf(name13);
-			} catch (IllegalArgumentException ignored1) {
-				try {
-					material = Material.valueOf(name8);
-				} catch (IllegalArgumentException ignored2) {
-					// 1.9+ item on 1.8 server.
-				}
+				if (PaperLib.getMinecraftVersion() > 12) material = Material.valueOf(name13);
+				else material = Material.valueOf(name8);
+			} catch (IllegalArgumentException ignored) {
+
 			}
 		}
 

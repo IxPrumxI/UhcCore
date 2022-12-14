@@ -44,8 +44,11 @@ public class HasteyBoysListener extends ScenarioListener{
 			}
 		}
 
-		item.addEnchantment(Enchantment.DIG_SPEED, efficiency);
-		item.addEnchantment(Enchantment.DURABILITY, durability);
+		// Try to enchant the item, give up if it's not an enchantable tool
+		try {
+			item.addEnchantment(Enchantment.DIG_SPEED, efficiency);
+			item.addEnchantment(Enchantment.DURABILITY, durability);
+		} catch (IllegalArgumentException ignored) {}
 
 	}
 

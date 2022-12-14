@@ -3,8 +3,7 @@ package com.gmail.val59000mc.listeners;
 import com.gmail.val59000mc.configuration.MainConfig;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.maploader.CaveOresOnlyPopulator;
-import com.gmail.val59000mc.maploader.SurgarCanePopulator;
-
+import com.gmail.val59000mc.maploader.SugarCanePopulator;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +20,7 @@ public class WorldListener implements Listener{
 		String overworldUuid = gm.getMapLoader().getUhcWorldUuid(World.Environment.NORMAL);
 
 		if (world.getName().equals(overworldUuid) && cfg.get(MainConfig.ENABLE_GENERATE_SUGARCANE)){
-			world.getPopulators().add(new SurgarCanePopulator(cfg.get(MainConfig.GENERATE_SUGARCANE_PERCENTAGE)));
+			world.getPopulators().add(new SugarCanePopulator(cfg.get(MainConfig.GENERATE_SUGARCANE_PERCENTAGE)));
 		}
 		if (world.getName().equals(overworldUuid) && cfg.get(MainConfig.CAVE_ORES_ONLY)){
 			world.getPopulators().add(new CaveOresOnlyPopulator());

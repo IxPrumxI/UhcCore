@@ -440,4 +440,21 @@ public class UhcPlayer {
 		player.getInventory().setArmorContents(originalArmor);
 	}
 
+	public static void damageItemInMainHand(Player player, int amount) {
+		final ItemStack item = player.getItemInHand();
+		item.setDurability((short) (item.getDurability() + amount));
+		if (shouldBreak(item)) {
+			player.setItemInHand(null);
+		}
+	}
+
+	private static boolean shouldBreak(ItemStack item) {
+		// Behavior is different on older Minecraft versions, see https://bugs.mojang.com/browse/MC-120664
+		if (PaperLib.isVersion(13, 1)) { // 1.13.1+
+			return item.getDurability() >= item.getType().getMaxDurability();
+		} else { // 1.8.8 - 1.13
+			return item.getDurability() > item.getType().getMaxDurability();
+		}
+	}
+
 }

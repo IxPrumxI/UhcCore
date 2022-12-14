@@ -9,6 +9,8 @@
 
 ### Bug fixes
 
+- Fixed a bug in the Timber and Vein Miner scenarios where tools would receive negative durability instead of breaking
+- Fixed a bug in the Randomized Drops scenario where tools would be repaired instead of damaged when breaking blocks
 - Fixed a bug where the `generate-sugar-cane` option would not work on Minecraft 1.12.2 and below
 - Fixed a bug in the Timber scenario where some diagonal branches would not be chopped down
 - Fixed a StackOverflowError that could happen when chopping very large trees in the Timber scenario

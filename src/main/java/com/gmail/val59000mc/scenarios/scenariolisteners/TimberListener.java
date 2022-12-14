@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.Option;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.FloodFill;
@@ -41,7 +42,7 @@ public class TimberListener extends ScenarioListener {
 			}
 
 			if (calculateAxeDamage) {
-				tool.setDurability((short) (tool.getDurability() + treeLogs.size()));
+				UhcPlayer.damageItemInMainHand(e.getPlayer(), treeLogs.size());
 			}
 		}
 	}

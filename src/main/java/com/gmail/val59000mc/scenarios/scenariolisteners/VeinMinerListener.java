@@ -71,7 +71,7 @@ public class VeinMinerListener extends ScenarioListener{
 		}
 
 		if (calculateToolDamage) {
-			tool.setDurability((short) (tool.getDurability() + vein.getOres()));
+			UhcPlayer.damageItemInMainHand(player, vein.getOres());
 		}
 	}
 

@@ -8,11 +8,11 @@ import com.gmail.val59000mc.utils.VersionUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.gmail.val59000mc.players.UhcPlayer;
 import com.gmail.val59000mc.scenarios.ScenarioListener;
 import com.gmail.val59000mc.utils.RandomUtils;
 
@@ -54,13 +54,7 @@ public class RandomizedDropsListener extends ScenarioListener{
 		Location dropLocation = block.getLocation().add(0.5, 0.5, 0.5);
 		dropLocation.getWorld().dropItem(dropLocation, blockDrop);
 
-		Player player = event.getPlayer();
-		ItemStack tool = player.getItemInHand();
-
-		if (tool != null && tool.hasItemMeta() && tool.getDurability() > 1) {
-			tool.setDurability((short) (tool.getDurability()-1));
-			player.setItemInHand(tool);
-		}
+		UhcPlayer.damageItemInMainHand(event.getPlayer(), 1);
 	}
 
 }

@@ -37,7 +37,7 @@ public class DoubleOresListener extends ScenarioListener {
 				count *= 2;
 			}
 
-			drop = new ItemStack(oreType.get().getDrop(), count);
+			drop = oreType.get().getDrop().getStack(count);
 			UhcItems.spawnExtraXp(loc,xp);
 		}
 

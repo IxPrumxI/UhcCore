@@ -32,6 +32,7 @@ public class SugarCanePopulator extends BlockPopulator{
 				loc.add(0, 1, 0);
 				Block below = loc.getBlock().getRelative(BlockFace.DOWN);
 
+				// Scan down from highest block to find the ground
 				while (below.getType() == Material.AIR || UniversalMaterial.isLeaves(below.getType())) {
 					loc.setY(loc.getY()-1);
 					below = loc.getBlock().getRelative(BlockFace.DOWN);
@@ -41,7 +42,7 @@ public class SugarCanePopulator extends BlockPopulator{
 
 				if (percentage <= random.nextInt(100) || (below.getType() != Material.SAND && below.getType() != UniversalMaterial.GRASS_BLOCK.getType())) continue;
 
-				if (!validWaterCheck(below)) continue;
+				if (!hasAdjacentWater(below)) continue;
 
 				int height = random.nextInt(3) + 2;
 				Location location = block.getLocation();
@@ -55,24 +56,26 @@ public class SugarCanePopulator extends BlockPopulator{
 			}
 		}
 	}
-	@SuppressWarnings("deprecation")
-	private boolean validWaterCheck(Block block) {
-		Material water = UniversalMaterial.STATIONARY_WATER.getType();
 
-		Block[] blocks = {block.getRelative(BlockFace.NORTH),
-				block.getRelative(BlockFace.SOUTH),
-				block.getRelative(BlockFace.EAST),
-				block.getRelative(BlockFace.WEST)};
+	private boolean hasAdjacentWater(Block block) {
+		Block[] neighbors = {
+			block.getRelative(BlockFace.NORTH),
+			block.getRelative(BlockFace.SOUTH),
+			block.getRelative(BlockFace.EAST),
+			block.getRelative(BlockFace.WEST)
+		};
 
-		for (Block blk : blocks) {
-			if (blk.getType() != water) continue;
+		for (Block neighbor : neighbors) {
+			// Skip non-water blocks
+			if (neighbor.getType() != UniversalMaterial.STATIONARY_WATER.getType()) continue;
+			// Skip non-source blocks (e.g. flowing water)
 			if (PaperLib.getMinecraftVersion() > 12) {
-				Levelled data = (Levelled) blk.getBlockData();
+				Levelled data = (Levelled) neighbor.getBlockData();
 				if (data.getLevel() != 0) continue;
 			} else {
-				if (blk.getData() != 0) continue;
+				if (neighbor.getData() != 0) continue;
 			}
-			return true;
+			return true; // Found an adjacent water source block!
 		}
 		return false;
 	}

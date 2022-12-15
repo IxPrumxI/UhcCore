@@ -1,46 +1,38 @@
 package com.gmail.val59000mc.utils;
 
-import org.apache.commons.lang.Validate;
-import org.bukkit.Material;
-
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum OreType {
-	COAL(           Material.COAL,                      UniversalMaterial.COAL_ORE,     UniversalMaterial.DEEPSLATE_COAL_ORE,       false),
-	COPPER(         UniversalMaterial.COPPER_INGOT,     UniversalMaterial.COPPER_ORE,   UniversalMaterial.DEEPSLATE_COPPER_ORE,     true),
-	LAPIS_LAZULi(   UniversalMaterial.LAPIS_LAZULI,     Material.LAPIS_ORE,             UniversalMaterial.DEEPSLATE_LAPIS_ORE,      false),
-	IRON(           UniversalMaterial.IRON_INGOT,       Material.IRON_ORE,              UniversalMaterial.DEEPSLATE_IRON_ORE,       true),
-	GOLD(           UniversalMaterial.GOLD_INGOT,       UniversalMaterial.GOLD_ORE,     UniversalMaterial.DEEPSLATE_GOLD_ORE,       true),
-	REDSTONE(       UniversalMaterial.REDSTONE,         UniversalMaterial.REDSTONE_ORE, UniversalMaterial.DEEPSLATE_REDSTONE_ORE,   false),
-	DIAMOND(        Material.DIAMOND,                   UniversalMaterial.DIAMOND_ORE,  UniversalMaterial.DEEPSLATE_DIAMOND_ORE,    false),
-	EMERALD(        Material.EMERALD,                   Material.EMERALD_ORE,           UniversalMaterial.DEEPSLATE_EMERALD_ORE,    false),
-	NETHER_QUARTZ(  UniversalMaterial.QUARTZ,           UniversalMaterial.NETHER_QUARTZ_ORE,    null,                       false),
-	NETHER_GOLD(    UniversalMaterial.GOLD_INGOT,       UniversalMaterial.NETHER_GOLD_ORE,      null,                       true),
-	ANCIENT_DEBRIS( UniversalMaterial.NETHERITE_SCRAP,  UniversalMaterial.ANCIENT_DEBRIS,       null,                       true);
+import org.apache.commons.lang.Validate;
+import org.bukkit.Material;
 
-	private final Material drop;
+public enum OreType {
+	COAL(UniversalMaterial.COAL, UniversalMaterial.COAL_ORE, UniversalMaterial.DEEPSLATE_COAL_ORE, false),
+	COPPER(UniversalMaterial.COPPER_INGOT, UniversalMaterial.COPPER_ORE, UniversalMaterial.DEEPSLATE_COPPER_ORE, true),
+	LAPIS_LAZULI(UniversalMaterial.LAPIS_LAZULI, Material.LAPIS_ORE, UniversalMaterial.DEEPSLATE_LAPIS_ORE, false),
+	IRON(UniversalMaterial.IRON_INGOT, Material.IRON_ORE, UniversalMaterial.DEEPSLATE_IRON_ORE, true),
+	GOLD(UniversalMaterial.GOLD_INGOT, UniversalMaterial.GOLD_ORE, UniversalMaterial.DEEPSLATE_GOLD_ORE, true),
+	REDSTONE(UniversalMaterial.REDSTONE, UniversalMaterial.REDSTONE_ORE, UniversalMaterial.DEEPSLATE_REDSTONE_ORE, false),
+	DIAMOND(UniversalMaterial.DIAMOND, UniversalMaterial.DIAMOND_ORE, UniversalMaterial.DEEPSLATE_DIAMOND_ORE, false),
+	EMERALD(UniversalMaterial.EMERALD, Material.EMERALD_ORE, UniversalMaterial.DEEPSLATE_EMERALD_ORE, false),
+	NETHER_QUARTZ(UniversalMaterial.QUARTZ, UniversalMaterial.NETHER_QUARTZ_ORE, null, false),
+	NETHER_GOLD(UniversalMaterial.GOLD_INGOT, UniversalMaterial.NETHER_GOLD_ORE, null, true),
+	ANCIENT_DEBRIS(UniversalMaterial.NETHERITE_SCRAP, UniversalMaterial.ANCIENT_DEBRIS, null, true);
+
+	private final UniversalMaterial drop;
 	private final Material normal;
 	private final Material deepslate;
 	private final boolean needsSmelting;
 
-	OreType(Material drop, Material normal, UniversalMaterial deepslate, boolean needsSmelting) {
+	OreType(UniversalMaterial drop, Material normal, UniversalMaterial deepslate, boolean needsSmelting) {
 		this.drop = drop;
 		this.normal = normal;
-		this.deepslate = deepslate  == null ? null : deepslate.getType();
+		this.deepslate = deepslate == null ? null : deepslate.getType();
 		this.needsSmelting = needsSmelting;
 	}
 
-	OreType(Material drop, UniversalMaterial normal, UniversalMaterial deepslate, boolean needsSmelting) {
-		this(drop, normal.getType(), deepslate, needsSmelting);
-	}
-
 	OreType(UniversalMaterial drop, UniversalMaterial normal, UniversalMaterial deepslate, boolean needsSmelting) {
-		this(drop.getType(), normal.getType(), deepslate, needsSmelting);
-	}
-
-	OreType(UniversalMaterial drop, Material normal, UniversalMaterial deepslate, boolean needsSmelting) {
-		this(drop.getType(), normal, deepslate, needsSmelting);
+		this(drop, normal.getType(), deepslate, needsSmelting);
 	}
 
 	public static Optional<OreType> valueOf(Material material) {
@@ -69,7 +61,7 @@ public enum OreType {
 						tool == Material.STONE_PICKAXE ||
 						tool == UniversalMaterial.WOODEN_PICKAXE.getType();
 			case COPPER:
-			case LAPIS_LAZULi:
+			case LAPIS_LAZULI:
 			case IRON:
 				return tool == UniversalMaterial.NETHERITE_PICKAXE.getType() ||
 						tool == Material.DIAMOND_PICKAXE ||
@@ -101,7 +93,7 @@ public enum OreType {
 			case IRON:
 			case NETHER_GOLD:
 				return 2;
-			case LAPIS_LAZULi:
+			case LAPIS_LAZULI:
 			case GOLD:
 			case DIAMOND:
 			case EMERALD:
@@ -119,7 +111,7 @@ public enum OreType {
 		return normal == material || deepslate == material;
 	}
 
-	public Material getDrop() {
+	public UniversalMaterial getDrop() {
 		return drop;
 	}
 

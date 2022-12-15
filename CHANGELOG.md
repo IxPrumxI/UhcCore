@@ -1,5 +1,24 @@
 # Changelog
 
+## [Unreleased]
+
+## New features
+
+- Added the `log-break-limit` option to `timber` in `scenarios.yml`
+- An axe is now required in order to fell a tree in the Timber scenario
+
+### Bug fixes
+
+- Fixed a bug in the Timber and Vein Miner scenarios where tools would receive negative durability instead of breaking
+- Fixed a bug in the Randomized Drops scenario where tools would be repaired instead of damaged when breaking blocks
+- Fixed a bug where the `generate-sugar-cane` option would not work on Minecraft 1.12.2 and below
+- Fixed a bug in the Timber scenario where some diagonal branches would not be chopped down
+- Fixed a StackOverflowError that could happen when chopping very large trees in the Timber scenario
+- Added missing log and leaf types to the Timber and Fast Leaves Decay scenarios
+- Fixed a bug where a netherite axe would not work in the Timber scenario
+- Fixed a bug in some ore-related scenarios where lapis ore would drop ink sacs on Minecraft 1.12.2 and below
+- Fixed an IllegalArgumentException that would sometimes happen in the Hastey Boys scenario
+
 ## [1.20.2] - 2022-09-11
 
 ### New features

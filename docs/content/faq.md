@@ -332,7 +332,7 @@ values, just delete the file (or move/rename it, to keep a backup). When the
 server is started, UhcCore will generate a new config file with the default
 values.
 
-[configs]: https://gitlab.com/uhccore/uhccore/-/tree/1.20.2/src/main/resources
+[configs]: https://gitlab.com/uhccore/uhccore/-/tree/1.20.3/src/main/resources
 
 ## Where can I read more about configuration, commands etc? Is there a wiki?
 
@@ -412,7 +412,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle`:
 
         ```groovy
-        compileOnly "net.zerodind:uhccore:1.20.2"
+        compileOnly "net.zerodind:uhccore:1.20.3"
         ```
 
     === "Gradle (Kotlin DSL)"
@@ -420,7 +420,7 @@ snippets in case you're interested:
         Add this to `dependencies` in your `build.gradle.kts`:
 
         ```kotlin
-        compileOnly("net.zerodind:uhccore:1.20.2")
+        compileOnly("net.zerodind:uhccore:1.20.3")
         ```
 
     === "Maven"
@@ -431,7 +431,7 @@ snippets in case you're interested:
         <dependency>
             <groupId>net.zerodind</groupId>
             <artifactId>uhccore</artifactId>
-            <version>1.20.2</version>
+            <version>1.20.3</version>
             <scope>provided</scope>
         </dependency>
         ```
@@ -522,7 +522,7 @@ previous version (using its tag) and the head of the `main` branch. Just make
 sure to select the right tag matching the version you want to compare from.
 
 [changelog]: https://gitlab.com/uhccore/uhccore/-/blob/main/CHANGELOG.md
-[compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.2&to=main
+[compare]: https://gitlab.com/uhccore/uhccore/-/compare?from=1.20.3&to=main
 
 ## I want to help contribute code to this project, where do I start?
 

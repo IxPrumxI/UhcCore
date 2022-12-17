@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.20.3] - 2022-12-17
 
 ## New features
 

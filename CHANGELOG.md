@@ -4,6 +4,7 @@
 
 ## New features
 
+- Updated the plugin to support Minecraft 1.19.3
 - Added the `log-break-limit` option to `timber` in `scenarios.yml`
 - An axe is now required in order to fell a tree in the Timber scenario
 

@@ -17,6 +17,7 @@ import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
 import github.scarsz.discordsrv.dependencies.jda.api.Permission;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.*;
 import github.scarsz.discordsrv.dependencies.jda.api.requests.restaction.ChannelAction;
+import io.papermc.lib.PaperLib;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -116,7 +117,7 @@ public class DiscordListener implements Listener {
 		EmbedBuilder embed = new EmbedBuilder()
 				.setTitle("New UHC Game")
 				.addField("IP", "`" + getConfiguration().getString("discord.event-ip", UhcCore.getPlugin().getServer().getIp() + ":" + UhcCore.getPlugin().getServer().getPort()) + "`", true)
-				.addField("Version", "`" + UhcCore.getPlugin().getServer().getBukkitVersion() + "`", true);
+				.addField("Version", "`1." + PaperLib.getMinecraftVersion() + "." + PaperLib.getMinecraftPatchVersion() + "`", true);
 		if (!isPublicEvent())
 			embed.setDescription("Players must have one of these roles inorder to play in this event:\n" + allowedRoles.stream().map(IMentionable::getAsMention).collect(Collectors.joining(" - ")));
 

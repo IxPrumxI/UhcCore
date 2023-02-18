@@ -418,8 +418,7 @@ hearts-below-name: true
 
 spectating:
   # This controls the method of spectating.
-  # FREE = The player can move around freely.
-  # SPECTATOR_GAMEMODE = The player will be put in spectator mode and will be able to teleport to anyone.
+  # FREE = The player can move around freely. Even to enemy teams.
   # TEAMMATE_RADIUS = The player will be put in spectator mode and will be able to move around in a radius around the nearest teammate they are spectating.
   # TEAMMATE_SPECTATOR_GAMEMODE = The player will be put in spectator mode and will be able to teleport to their nearest teammate.
   mode: FREE

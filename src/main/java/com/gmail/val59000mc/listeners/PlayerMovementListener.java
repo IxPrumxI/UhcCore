@@ -45,6 +45,7 @@ public class PlayerMovementListener implements Listener{
 	}
 
 	private void handleSpectatorNearAlive(PlayerMoveEvent event){
+		if(event.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
 		try {
 			MainConfig.SPECTATING_MODES mode = config.get(MainConfig.SPECTATING_MODE);
 			if (mode == MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS) {

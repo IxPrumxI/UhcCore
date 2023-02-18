@@ -96,26 +96,19 @@ public class TeleportListener implements Listener{
 			PlayerManager playerManager = GameManager.getGameManager().getPlayerManager();
 			MainConfig config = GameManager.getGameManager().getConfig();
 			MainConfig.SPECTATING_MODES mode = config.get(MainConfig.SPECTATING_MODE);
-			if (mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_SPECTATOR_GAMEMODE)) {
+			if (mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_SPECTATOR_GAMEMODE) || mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)){
 				UhcPlayer player = playerManager.getOrCreateUhcPlayer(e.getPlayer());
 				UhcPlayer spectatedPlayer = playerManager.getOrCreateUhcPlayer((Player) e.getPlayer().getSpectatorTarget());
 				// If not in the same team as the player being spectated, teleport back to the nearest teammate.
 				if (!spectatedPlayer.getTeam().equals(player.getTeam()) && player.getTeam().getOnlinePlayingMembers().size() > 0) {
 					try{
+						if(player.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
 						e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
 						e.getPlayer().sendMessage(Lang.PLAYERS_SPECTATE_TEAMMATE_ONLY_ERROR);
 						e.setCancelled(true);
 					} catch (UhcPlayerNotOnlineException ex) {
 						// ignore, as we will allow the teleport.
 					}
-				}
-			}
-
-			if(!GameManager.getGameManager().getConfig().get(MainConfig.SPECTATING_TELEPORT)) {
-				Player player = e.getPlayer();
-				if (!player.hasPermission("uhc-core.commands.teleport-admin")) {
-					e.setCancelled(true);
-					player.sendMessage(Lang.COMMAND_SPECTATING_TELEPORT_ERROR);
 				}
 			}
 		}

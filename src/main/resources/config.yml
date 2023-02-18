@@ -416,9 +416,15 @@ hearts-on-tab: true
 # Set to true if you want to enable hearts below player names.
 hearts-below-name: true
 
-# Set it to true to give the spectating players access to the '/teleport <player>' command to teleport to playing players.
-# Setting this to false also blocks the vanilla spectator mode GUI from working.
-spectating-teleport: true
+spectating:
+  # This controls the method of spectating.
+  # FREE = The player can move around freely.
+  # SPECTATOR_GAMEMODE = The player will be put in spectator mode and will be able to teleport to anyone.
+  # TEAMMATE_RADIUS = The player will be put in spectator mode and will be able to move around in a radius around the nearest teammate they are spectating.
+  # TEAMMATE_SPECTATOR_GAMEMODE = The player will be put in spectator mode and will be able to teleport to their nearest teammate.
+  mode: FREE
+  # If mode is set to TEAMMATE_RADIUS, this controls the radius around the nearest teammate the player can move around in.
+  radius: 50
 
 # Options to pre-generate the world
 # It's highly recommended you enable this for big games!

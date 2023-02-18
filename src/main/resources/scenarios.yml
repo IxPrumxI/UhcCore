@@ -56,7 +56,3 @@ dragon_rush:
   eye-attempts: 12
   # The probability (where 1 is 100%) of an eye being placed during each attempt.
   eye-probability: 0.34
-spectators_near_alive:
-  # If dead players have online playing teammate they cannot go more than the specified spectators radius away from him or the nearest teammate.
-  spectators-radius: 50
-

@@ -402,6 +402,25 @@ public class UhcPlayer {
 		this.browsingPage = browsingPage;
 	}
 
+	public UhcPlayer getClosestTeammate() {
+		UhcPlayer closetTeammate = null;
+		try {
+			Location spectatorLocation = this.getPlayer().getLocation();
+			for (UhcPlayer teammate : this.getTeam().getOnlinePlayingMembers()) {
+				if (closetTeammate == null) {
+					closetTeammate = teammate;
+					continue;
+				}
+				double teammateDistance = teammate.getPlayer().getLocation().distance(spectatorLocation);
+				double closetTeammateDistance = closetTeammate.getPlayer().getLocation().distance(spectatorLocation);
+				if (teammateDistance < closetTeammateDistance) closetTeammate = teammate;
+			}
+		} catch (UhcPlayerNotOnlineException ignored) {
+			// This should never happen as the player is online
+		}
+		return closetTeammate;
+	}
+
 	@SuppressWarnings("deprecation") // Can't use attributes in 1.8
 	public void healFully() throws UhcPlayerNotOnlineException {
 		final Player player = getPlayer();
@@ -456,5 +475,4 @@ public class UhcPlayer {
 			return item.getDurability() > item.getType().getMaxDurability();
 		}
 	}
-
 }

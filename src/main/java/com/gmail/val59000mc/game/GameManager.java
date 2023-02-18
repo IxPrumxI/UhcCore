@@ -321,14 +321,14 @@ public class GameManager{
 		listeners.add(new PlayerChatListener(playerManager, config));
 		listeners.add(new PlayerDamageListener(this));
 		listeners.add(new ItemsListener(gameManager, config, playerManager, teamManager, scenarioManager, scoreboardHandler));
-		listeners.add(new TeleportListener());
+		listeners.add(new TeleportListener(gameManager));
 		listeners.add(new PlayerDeathListener(playerDeathHandler));
 		listeners.add(new EntityDeathListener(playerManager, config, playerDeathHandler));
 		listeners.add(new CraftListener());
 		listeners.add(new PingListener());
 		listeners.add(new BlockListener(this));
 		listeners.add(new WorldListener());
-		listeners.add(new PlayerMovementListener(playerManager));
+		listeners.add(new PlayerMovementListener(playerManager, config));
 		listeners.add(new EntityDamageListener(this));
 		listeners.add(new PlayerHungerGainListener(playerManager));
 		for(Listener listener : listeners){

@@ -1,5 +1,14 @@
 package com.gmail.val59000mc.configuration;
 
+import com.gmail.val59000mc.configuration.options.*;
+import com.gmail.val59000mc.game.GameManager;
+import com.gmail.val59000mc.scenarios.Scenario;
+import com.gmail.val59000mc.scenarios.ScenarioManager;
+import com.gmail.val59000mc.utils.UniversalSound;
+import org.bukkit.Difficulty;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -7,23 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bukkit.Difficulty;
-import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-
-import com.gmail.val59000mc.configuration.options.BasicOption;
-import com.gmail.val59000mc.configuration.options.EnumListOption;
-import com.gmail.val59000mc.configuration.options.EnumOption;
-import com.gmail.val59000mc.configuration.options.ListOption;
-import com.gmail.val59000mc.configuration.options.LootConfigOption;
-import com.gmail.val59000mc.configuration.options.Option;
-import com.gmail.val59000mc.configuration.options.PotionEffectListOption;
-import com.gmail.val59000mc.configuration.options.VeinConfigOption;
-import com.gmail.val59000mc.game.GameManager;
-import com.gmail.val59000mc.scenarios.Scenario;
-import com.gmail.val59000mc.scenarios.ScenarioManager;
-import com.gmail.val59000mc.utils.UniversalSound;
 
 public class MainConfig extends YamlFile {
 
@@ -59,7 +51,15 @@ public class MainConfig extends YamlFile {
 
 	public static final BasicOption<Boolean> HEARTS_ON_TAB = new BasicOption<>("hearts-on-tab", true);
 	public static final BasicOption<Boolean> HEARTS_BELOW_NAME = new BasicOption<>("hearts-below-name", false);
-	public static final BasicOption<Boolean> SPECTATING_TELEPORT = new BasicOption<>("spectating-teleport",false);
+	public static final BasicOption<Boolean> SPECTATING_TELEPORT = new BasicOption<>("spectating.spectating-teleport",false);
+	public enum SPECTATING_MODES {
+		FREE,
+		TEAMMATE_RADIUS,
+		SPECTATOR_GAMEMODE,
+		TEAMMATE_SPECTATOR_GAMEMODE
+	}
+	public static final EnumOption<SPECTATING_MODES> SPECTATING_MODE = new EnumOption<>("spectating.mode", SPECTATING_MODES.FREE);
+	public static final BasicOption<Integer> SPECTATING_RADIUS = new BasicOption<>("spectating.radius", 50);
 	public static final BasicOption<Boolean> ENABLE_KITS_PERMISSIONS = new BasicOption<>("enable-kits-permissions",false);
 
 	// Customize game behavior

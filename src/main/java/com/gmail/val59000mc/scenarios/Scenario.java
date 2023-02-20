@@ -111,7 +111,7 @@ public class Scenario {
 			MONSTERS_INC,
 			ACHIEVEMENT_HUNTER,
 			NINE_SLOTS,
-			NETHER_START,
+			NETHER_START
 	};
 
 	private final String key;

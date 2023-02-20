@@ -420,7 +420,7 @@ spectating:
   # This controls the method of spectating.
   # Spectator mode:
   # FREE = The player can move around freely. Even teleport to enemy teams.
-  # TEAMMATE_RADIUS = The player will be able to move around in a radius around the nearest teammate. He will be able to spectate as the nearest teammate as well.
+  # TEAMMATE_RADIUS = The player will be able to move around in a radius around the nearest teammate. They will be able to spectate as the nearest teammate as well.
   # TEAMMATE_SPECTATOR_GAMEMODE = The player will be forced to spectate as the nearest teammate.
   mode: FREE
   # If mode is set to TEAMMATE_RADIUS, this controls the radius around the nearest teammate the player can move around in.

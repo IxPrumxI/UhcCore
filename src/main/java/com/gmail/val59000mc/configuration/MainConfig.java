@@ -52,13 +52,7 @@ public class MainConfig extends YamlFile {
 	public static final BasicOption<Boolean> HEARTS_ON_TAB = new BasicOption<>("hearts-on-tab", true);
 	public static final BasicOption<Boolean> HEARTS_BELOW_NAME = new BasicOption<>("hearts-below-name", false);
 	public static final BasicOption<Boolean> SPECTATING_TELEPORT = new BasicOption<>("spectating.spectating-teleport",false);
-	public enum SPECTATING_MODES {
-		FREE,
-		TEAMMATE_RADIUS,
-		SPECTATOR_GAMEMODE,
-		TEAMMATE_SPECTATOR_GAMEMODE
-	}
-	public static final EnumOption<SPECTATING_MODES> SPECTATING_MODE = new EnumOption<>("spectating.mode", SPECTATING_MODES.FREE);
+	public static final EnumOption<SpectatingMode> SPECTATING_MODE = new EnumOption<>("spectating.mode", SpectatingMode.FREE);
 	public static final BasicOption<Integer> SPECTATING_RADIUS = new BasicOption<>("spectating.radius", 50);
 	public static final BasicOption<Boolean> ENABLE_KITS_PERMISSIONS = new BasicOption<>("enable-kits-permissions",false);
 

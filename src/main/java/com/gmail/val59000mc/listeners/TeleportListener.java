@@ -1,6 +1,7 @@
 package com.gmail.val59000mc.listeners;
 
 import com.gmail.val59000mc.configuration.MainConfig;
+import com.gmail.val59000mc.configuration.SpectatingMode;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.game.GameManager;
 import com.gmail.val59000mc.game.GameState;
@@ -94,14 +95,14 @@ public class TeleportListener implements Listener{
 	public void onPlayerTeleport(PlayerTeleportEvent e){
 		PlayerManager playerManager = GameManager.getGameManager().getPlayerManager();
 		MainConfig config = GameManager.getGameManager().getConfig();
-		MainConfig.SPECTATING_MODES mode = config.get(MainConfig.SPECTATING_MODE);
+		SpectatingMode mode = config.get(MainConfig.SPECTATING_MODE);
 		if(!(this.gm.getGameState().equals(GameState.PLAYING) || this.gm.getGameState().equals(GameState.DEATHMATCH))) return;
-		if (mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_SPECTATOR_GAMEMODE) || mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)){
+		if (mode.equals(SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE) || mode.equals(SpectatingMode.TEAMMATE_RADIUS)){
 			UhcPlayer player = playerManager.getOrCreateUhcPlayer(e.getPlayer());
 			if(player.isDeath() && e.getPlayer().getSpectatorTarget() == null) {
 				if(player.getTeam().getOnlinePlayingMembers().size() > 0) {
 					try {
-						if(mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
+						if(mode.equals(SpectatingMode.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
 						else e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
 					} catch (UhcPlayerNotOnlineException ignored) {}
 
@@ -112,7 +113,7 @@ public class TeleportListener implements Listener{
 			if (!spectatedPlayer.getTeam().equals(player.getTeam()) && player.getTeam().getOnlinePlayingMembers().size() > 0) {
 				try{
 					if(player.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
-					if(mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
+					if(mode.equals(SpectatingMode.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
 					else e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
 					e.getPlayer().sendMessage(Lang.PLAYERS_SPECTATE_TEAMMATE_ONLY_ERROR);
 					e.setCancelled(true);

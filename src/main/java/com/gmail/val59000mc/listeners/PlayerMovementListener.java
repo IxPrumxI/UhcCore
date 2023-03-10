@@ -1,6 +1,7 @@
 package com.gmail.val59000mc.listeners;
 
 import com.gmail.val59000mc.configuration.MainConfig;
+import com.gmail.val59000mc.configuration.SpectatingMode;
 import com.gmail.val59000mc.exceptions.UhcPlayerNotOnlineException;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.PlayerState;
@@ -47,8 +48,8 @@ public class PlayerMovementListener implements Listener{
 	private void handleSpectatorNearAlive(PlayerMoveEvent event){
 		if(event.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
 		try {
-			MainConfig.SPECTATING_MODES mode = config.get(MainConfig.SPECTATING_MODE);
-			if (mode == MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS) {
+			SpectatingMode mode = config.get(MainConfig.SPECTATING_MODE);
+			if (mode == SpectatingMode.TEAMMATE_RADIUS) {
 				int radius = config.get(MainConfig.SPECTATING_RADIUS);
 				UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
 				if (uhcPlayer.getState().equals(PlayerState.DEAD)) {
@@ -65,7 +66,7 @@ public class PlayerMovementListener implements Listener{
 						}
 					}
 				}
-			} else if (mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_SPECTATOR_GAMEMODE)) {
+			} else if (mode.equals(SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE)) {
 				UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
 				if (uhcPlayer.isDeath() && uhcPlayer.getTeam().getOnlinePlayingMembers().size() > 0) {
 					UhcPlayer closestTeammate = uhcPlayer.getClosestTeammate();

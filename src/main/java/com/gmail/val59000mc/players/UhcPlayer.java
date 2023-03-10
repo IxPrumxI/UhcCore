@@ -475,4 +475,5 @@ public class UhcPlayer {
 			return item.getDurability() > item.getType().getMaxDurability();
 		}
 	}
+
 }

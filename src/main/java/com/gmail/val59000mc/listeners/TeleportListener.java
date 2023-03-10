@@ -92,23 +92,30 @@ public class TeleportListener implements Listener{
 
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent e){
-		if (e.getCause() == TeleportCause.SPECTATE){
-			PlayerManager playerManager = GameManager.getGameManager().getPlayerManager();
-			MainConfig config = GameManager.getGameManager().getConfig();
-			MainConfig.SPECTATING_MODES mode = config.get(MainConfig.SPECTATING_MODE);
-			if (mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_SPECTATOR_GAMEMODE) || mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)){
-				UhcPlayer player = playerManager.getOrCreateUhcPlayer(e.getPlayer());
-				UhcPlayer spectatedPlayer = playerManager.getOrCreateUhcPlayer((Player) e.getPlayer().getSpectatorTarget());
-				// If not in the same team as the player being spectated, teleport back to the nearest teammate.
-				if (!spectatedPlayer.getTeam().equals(player.getTeam()) && player.getTeam().getOnlinePlayingMembers().size() > 0) {
-					try{
-						if(player.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
+		PlayerManager playerManager = GameManager.getGameManager().getPlayerManager();
+		MainConfig config = GameManager.getGameManager().getConfig();
+		MainConfig.SPECTATING_MODES mode = config.get(MainConfig.SPECTATING_MODE);
+		if(!(this.gm.getGameState().equals(GameState.PLAYING) || this.gm.getGameState().equals(GameState.DEATHMATCH))) return;
+		if (mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_SPECTATOR_GAMEMODE) || mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)){
+			UhcPlayer player = playerManager.getOrCreateUhcPlayer(e.getPlayer());
+			if(player.isDeath() && e.getPlayer().getSpectatorTarget() == null) {
+				if(player.getTeam().getOnlinePlayingMembers().size() > 0) {
+					try {
 						e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
-						e.getPlayer().sendMessage(Lang.PLAYERS_SPECTATE_TEAMMATE_ONLY_ERROR);
-						e.setCancelled(true);
-					} catch (UhcPlayerNotOnlineException ex) {
-						// ignore, as we will allow the teleport.
-					}
+					} catch (UhcPlayerNotOnlineException ignored) {}
+
+				} else return;
+			}
+			UhcPlayer spectatedPlayer = playerManager.getOrCreateUhcPlayer((Player) e.getPlayer().getSpectatorTarget());
+			// If not in the same team as the player being spectated, teleport back to the nearest teammate.
+			if (!spectatedPlayer.getTeam().equals(player.getTeam()) && player.getTeam().getOnlinePlayingMembers().size() > 0) {
+				try{
+					if(player.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
+					e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
+					e.getPlayer().sendMessage(Lang.PLAYERS_SPECTATE_TEAMMATE_ONLY_ERROR);
+					e.setCancelled(true);
+				} catch (UhcPlayerNotOnlineException ex) {
+					// ignore, as we will allow the teleport.
 				}
 			}
 		}

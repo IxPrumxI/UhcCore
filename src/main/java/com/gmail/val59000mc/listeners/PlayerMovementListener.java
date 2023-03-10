@@ -65,6 +65,12 @@ public class PlayerMovementListener implements Listener{
 						}
 					}
 				}
+			} else if (mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_SPECTATOR_GAMEMODE)) {
+				UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
+				if (uhcPlayer.isDeath() && uhcPlayer.getTeam().getOnlinePlayingMembers().size() > 0) {
+					UhcPlayer closestTeammate = uhcPlayer.getClosestTeammate();
+					uhcPlayer.getPlayer().setSpectatorTarget(closestTeammate.getPlayer());
+				}
 			}
 		} catch (UhcPlayerNotOnlineException e) {
 			throw new RuntimeException(e);

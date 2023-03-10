@@ -416,6 +416,10 @@ hearts-on-tab: true
 # Set to true if you want to enable hearts below player names.
 hearts-below-name: true
 
+# Set it to true to give the spectating players access to the '/teleport <player>' command to teleport to playing players.
+# Setting this to false also blocks the vanilla spectator mode GUI from working.
+spectating-teleport: true
+
 spectating:
   # This controls the method of spectating.
   # Spectator mode:

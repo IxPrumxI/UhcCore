@@ -101,7 +101,8 @@ public class TeleportListener implements Listener{
 			if(player.isDeath() && e.getPlayer().getSpectatorTarget() == null) {
 				if(player.getTeam().getOnlinePlayingMembers().size() > 0) {
 					try {
-						e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
+						if(mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
+						else e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
 					} catch (UhcPlayerNotOnlineException ignored) {}
 
 				} else return;
@@ -111,7 +112,8 @@ public class TeleportListener implements Listener{
 			if (!spectatedPlayer.getTeam().equals(player.getTeam()) && player.getTeam().getOnlinePlayingMembers().size() > 0) {
 				try{
 					if(player.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
-					e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
+					if(mode.equals(MainConfig.SPECTATING_MODES.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
+					else e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
 					e.getPlayer().sendMessage(Lang.PLAYERS_SPECTATE_TEAMMATE_ONLY_ERROR);
 					e.setCancelled(true);
 				} catch (UhcPlayerNotOnlineException ex) {

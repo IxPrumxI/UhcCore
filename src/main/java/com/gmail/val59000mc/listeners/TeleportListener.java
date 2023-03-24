@@ -8,6 +8,7 @@ import com.gmail.val59000mc.game.GameState;
 import com.gmail.val59000mc.languages.Lang;
 import com.gmail.val59000mc.players.PlayerManager;
 import com.gmail.val59000mc.players.UhcPlayer;
+import com.gmail.val59000mc.players.UhcTeam;
 import com.gmail.val59000mc.scenarios.Scenario;
 import com.gmail.val59000mc.utils.LocationUtils;
 import com.gmail.val59000mc.utils.VersionUtils;
@@ -96,32 +97,61 @@ public class TeleportListener implements Listener{
 		PlayerManager playerManager = GameManager.getGameManager().getPlayerManager();
 		MainConfig config = GameManager.getGameManager().getConfig();
 		SpectatingMode mode = config.get(MainConfig.SPECTATING_MODE);
-		if(!(this.gm.getGameState().equals(GameState.PLAYING) || this.gm.getGameState().equals(GameState.DEATHMATCH))) return;
-		if (mode.equals(SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE) || mode.equals(SpectatingMode.TEAMMATE_RADIUS)){
-			UhcPlayer player = playerManager.getOrCreateUhcPlayer(e.getPlayer());
-			if(player.isDeath() && e.getPlayer().getSpectatorTarget() == null) {
-				if(player.getTeam().getOnlinePlayingMembers().size() > 0) {
-					try {
-						if(mode.equals(SpectatingMode.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
-						else e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
-					} catch (UhcPlayerNotOnlineException ignored) {}
+		if(
+			e.getPlayer().hasPermission("uhc-core.commands.teleport-admin") ||
+			!(this.gm.getGameState().equals(GameState.PLAYING) || this.gm.getGameState().equals(GameState.DEATHMATCH)) ||
+			mode.equals(SpectatingMode.FREE) ||
+			!e.getCause().equals(TeleportCause.SPECTATE)) return;
+		UhcPlayer player = playerManager.getOrCreateUhcPlayer(e.getPlayer());
+		if(!player.isDeath() || player.getTeam().getOnlinePlayingMembers().size() == 0) return;
 
-				} else return;
-			}
-			UhcPlayer spectatedPlayer = playerManager.getOrCreateUhcPlayer((Player) e.getPlayer().getSpectatorTarget());
-			// If not in the same team as the player being spectated, teleport back to the nearest teammate.
-			if (!spectatedPlayer.getTeam().equals(player.getTeam()) && player.getTeam().getOnlinePlayingMembers().size() > 0) {
-				try{
-					if(player.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
-					if(mode.equals(SpectatingMode.TEAMMATE_RADIUS)) e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
-					else e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
-					e.getPlayer().sendMessage(Lang.PLAYERS_SPECTATE_TEAMMATE_ONLY_ERROR);
-					e.setCancelled(true);
-				} catch (UhcPlayerNotOnlineException ex) {
-					// ignore, as we will allow the teleport.
-				}
+		if(mode == SpectatingMode.TEAMMATE_RADIUS) {
+			handleTeammateRadius(e, player);
+		} else if(mode == SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE) {
+			handleSpectatorGamemode(e, player);
+		} else if(mode == SpectatingMode.NO_SPECTATOR_GUI) {
+			handleNoSpectatorGUI(e);
+		}
+	}
+
+	// Reimplement the commented code above.
+	private void handleTeammateRadius(PlayerTeleportEvent e, UhcPlayer player) {
+		// Make sure the player is not teleporting to a teammate.
+		// If they are, teleport them to the closest teammate.
+		UhcTeam team = player.getTeam();
+		if(e.getPlayer().getSpectatorTarget() != null) {
+			UhcPlayer spectatedPlayer = GameManager.getGameManager().getPlayerManager().getOrCreateUhcPlayer((Player) e.getPlayer().getSpectatorTarget());
+			if(team.equals(spectatedPlayer.getTeam())) return;
+
+			try {
+				e.getPlayer().teleport(player.getClosestTeammate().getPlayer());
+			} catch (UhcPlayerNotOnlineException ex) {
+				// ignore, shouldn't happen.
 			}
 		}
+	}
+
+	private void handleSpectatorGamemode(PlayerTeleportEvent e, UhcPlayer player) {
+		// Make sure the player is always spectating a teammate.
+		// If they are not, force them to spectate the closest teammate.
+		UhcTeam team = player.getTeam();
+		if(e.getPlayer().getSpectatorTarget() != null) {
+			UhcPlayer spectatedPlayer = GameManager.getGameManager().getPlayerManager().getOrCreateUhcPlayer((Player) e.getPlayer().getSpectatorTarget());
+			if(team.equals(spectatedPlayer.getTeam())) return;
+		}
+
+		// This will get executed if the player is not spectating a teammate.
+		try {
+			e.getPlayer().setSpectatorTarget(player.getClosestTeammate().getPlayer());
+		} catch (UhcPlayerNotOnlineException ex) {
+			// ignore, shouldn't happen.
+		}
+	}
+
+	private void handleNoSpectatorGUI(PlayerTeleportEvent e) {
+		// Make sure the player can't teleport using the spectator gui menu.
+		e.setCancelled(true);
+		e.getPlayer().setSpectatorTarget(null);
 	}
 
 	private void createEndSpawnAir(Location loc){

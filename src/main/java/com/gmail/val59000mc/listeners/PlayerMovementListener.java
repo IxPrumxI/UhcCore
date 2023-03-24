@@ -47,31 +47,59 @@ public class PlayerMovementListener implements Listener{
 
 	private void handleSpectatorNearAlive(PlayerMoveEvent event){
 		if(event.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
+		SpectatingMode mode = config.get(MainConfig.SPECTATING_MODE);
+		if (mode == SpectatingMode.TEAMMATE_RADIUS) {
+			int radius = config.get(MainConfig.SPECTATING_RADIUS);
+			handleTeammateRadius(event, radius);
+		} else if (mode == SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE) {
+			handleTeammateSpectator(event);
+		} else if (mode == SpectatingMode.SPECTATOR_GAMEMODE) {
+			handleSpectatorGamemode(event);
+		}
+	}
+
+	private void handleTeammateRadius(PlayerMoveEvent event, int radius) {
 		try {
-			SpectatingMode mode = config.get(MainConfig.SPECTATING_MODE);
-			if (mode == SpectatingMode.TEAMMATE_RADIUS) {
-				int radius = config.get(MainConfig.SPECTATING_RADIUS);
-				UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
-				if (uhcPlayer.getState().equals(PlayerState.DEAD)) {
-					UhcPlayer closestTeammate = uhcPlayer.getClosestTeammate();
-					if (closestTeammate.getPlayer().getLocation().distance(uhcPlayer.getPlayer().getLocation()) > radius) {
-						uhcPlayer.getPlayer().teleport(closestTeammate.getPlayer());
-					}
-				} else {
-					List<UhcPlayer> spectators = uhcPlayer.getTeam().getMembers(p -> p.getState().equals(PlayerState.DEAD) && p.isOnline());
-					for (UhcPlayer spectator : spectators) {
-						UhcPlayer closestTeammate = spectator.getClosestTeammate();
-						if (closestTeammate.getPlayer().getLocation().distance(spectator.getPlayer().getLocation()) > radius) {
-							spectator.getPlayer().teleport(closestTeammate.getPlayer());
-						}
+			UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
+			if (uhcPlayer.getState().equals(PlayerState.DEAD)) {
+				UhcPlayer closestTeammate = uhcPlayer.getClosestTeammate();
+				if (closestTeammate.getPlayer().getLocation().distance(uhcPlayer.getPlayer().getLocation()) > radius) {
+					uhcPlayer.getPlayer().teleport(closestTeammate.getPlayer());
+				}
+			} else {
+				List<UhcPlayer> spectators = uhcPlayer.getTeam().getMembers(p -> p.getState().equals(PlayerState.DEAD) && p.isOnline());
+				for (UhcPlayer spectator : spectators) {
+					UhcPlayer closestTeammate = spectator.getClosestTeammate();
+					if (closestTeammate.getPlayer().getLocation().distance(spectator.getPlayer().getLocation()) > radius) {
+						spectator.getPlayer().teleport(closestTeammate.getPlayer());
 					}
 				}
-			} else if (mode.equals(SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE)) {
-				UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
-				if (uhcPlayer.isDeath() && uhcPlayer.getTeam().getOnlinePlayingMembers().size() > 0) {
-					UhcPlayer closestTeammate = uhcPlayer.getClosestTeammate();
-					uhcPlayer.getPlayer().setSpectatorTarget(closestTeammate.getPlayer());
-				}
+			}
+		} catch (UhcPlayerNotOnlineException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// This is such that when the player first dies, once they move they will be forced to spectate their closest teammate.
+	private void handleTeammateSpectator(PlayerMoveEvent event) {
+		try {
+			UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
+			if (uhcPlayer.isDeath() && uhcPlayer.getTeam().getOnlinePlayingMembers().size() > 0) {
+				UhcPlayer closestTeammate = uhcPlayer.getClosestTeammate();
+				uhcPlayer.getPlayer().setSpectatorTarget(closestTeammate.getPlayer());
+			}
+		} catch (UhcPlayerNotOnlineException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// This is to only allow the player to spectate using the spectator GUI.
+	private void handleSpectatorGamemode(PlayerMoveEvent event) {
+		try {
+			UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
+			if (uhcPlayer.isDeath()) {
+				UhcPlayer closestTeammate = uhcPlayer.getClosestTeammate();
+				uhcPlayer.getPlayer().setSpectatorTarget(closestTeammate.getPlayer());
 			}
 		} catch (UhcPlayerNotOnlineException e) {
 			throw new RuntimeException(e);

@@ -48,17 +48,17 @@ public class PlayerMovementListener implements Listener{
 	private void handleSpectatorNearAlive(PlayerMoveEvent event){
 		if(event.getPlayer().hasPermission("uhc-core.commands.teleport-admin")) return;
 		SpectatingMode mode = config.get(MainConfig.SPECTATING_MODE);
-		if (mode == SpectatingMode.TEAMMATE_RADIUS) {
+		if (mode == SpectatingMode.RESTRICTED_RADIUS) {
 			int radius = config.get(MainConfig.SPECTATING_RADIUS);
-			handleTeammateRadius(event, radius);
-		} else if (mode == SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE) {
-			handleTeammateSpectator(event);
-		} else if (mode == SpectatingMode.SPECTATOR_GAMEMODE) {
-			handleSpectatorGamemode(event);
+			handleRestrictedRadius(event, radius);
+		} else if (mode == SpectatingMode.RESTRICTED_POV) {
+			handleRestrictedPov(event);
+		} else if (mode == SpectatingMode.RESTRICTED_TEAMMATE_POV) {
+			handleRestrictedTeammatePOV(event);
 		}
 	}
 
-	private void handleTeammateRadius(PlayerMoveEvent event, int radius) {
+	private void handleRestrictedRadius(PlayerMoveEvent event, int radius) {
 		try {
 			UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
 			if (uhcPlayer.getState().equals(PlayerState.DEAD)) {
@@ -81,7 +81,7 @@ public class PlayerMovementListener implements Listener{
 	}
 
 	// This is such that when the player first dies, once they move they will be forced to spectate their closest teammate.
-	private void handleTeammateSpectator(PlayerMoveEvent event) {
+	private void handleRestrictedTeammatePOV(PlayerMoveEvent event) {
 		try {
 			UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
 			if (uhcPlayer.isDeath() && uhcPlayer.getTeam().getOnlinePlayingMembers().size() > 0) {
@@ -94,7 +94,7 @@ public class PlayerMovementListener implements Listener{
 	}
 
 	// This is to only allow the player to spectate using the spectator GUI.
-	private void handleSpectatorGamemode(PlayerMoveEvent event) {
+	private void handleRestrictedPov(PlayerMoveEvent event) {
 		try {
 			UhcPlayer uhcPlayer = playerManager.getOrCreateUhcPlayer(event.getPlayer());
 			if (uhcPlayer.isDeath()) {

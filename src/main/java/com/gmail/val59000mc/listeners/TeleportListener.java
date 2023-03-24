@@ -105,17 +105,17 @@ public class TeleportListener implements Listener{
 		UhcPlayer player = playerManager.getOrCreateUhcPlayer(e.getPlayer());
 		if(!player.isDeath() || player.getTeam().getOnlinePlayingMembers().size() == 0) return;
 
-		if(mode == SpectatingMode.TEAMMATE_RADIUS) {
-			handleTeammateRadius(e, player);
-		} else if(mode == SpectatingMode.TEAMMATE_SPECTATOR_GAMEMODE) {
-			handleSpectatorGamemode(e, player);
-		} else if(mode == SpectatingMode.NO_SPECTATOR_GUI) {
-			handleNoSpectatorGUI(e);
+		if(mode == SpectatingMode.RESTRICTED_RADIUS) {
+			handleRestrictedRadius(e, player);
+		} else if(mode == SpectatingMode.RESTRICTED_NO_TELEPORT) {
+			handleRestrictedNoTeleport(e);
+		} else if(mode == SpectatingMode.RESTRICTED_TEAMMATE_POV) {
+			handleRestrictedTeammatePOV(e, player);
 		}
 	}
 
 	// Reimplement the commented code above.
-	private void handleTeammateRadius(PlayerTeleportEvent e, UhcPlayer player) {
+	private void handleRestrictedRadius(PlayerTeleportEvent e, UhcPlayer player) {
 		// Make sure the player is not teleporting to a teammate.
 		// If they are, teleport them to the closest teammate.
 		UhcTeam team = player.getTeam();
@@ -131,7 +131,7 @@ public class TeleportListener implements Listener{
 		}
 	}
 
-	private void handleSpectatorGamemode(PlayerTeleportEvent e, UhcPlayer player) {
+	private void handleRestrictedTeammatePOV(PlayerTeleportEvent e, UhcPlayer player) {
 		// Make sure the player is always spectating a teammate.
 		// If they are not, force them to spectate the closest teammate.
 		UhcTeam team = player.getTeam();
@@ -148,7 +148,7 @@ public class TeleportListener implements Listener{
 		}
 	}
 
-	private void handleNoSpectatorGUI(PlayerTeleportEvent e) {
+	private void handleRestrictedNoTeleport(PlayerTeleportEvent e) {
 		// Make sure the player can't teleport using the spectator gui menu.
 		e.setCancelled(true);
 		e.getPlayer().setSpectatorTarget(null);

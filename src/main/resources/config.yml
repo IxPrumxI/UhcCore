@@ -424,12 +424,12 @@ spectating:
   # This controls the method of spectating.
   # Spectator mode:
   # FREE = The player can move around freely. Even teleport to enemy teams.
-  # NO_SPECTATOR_GUI = The player can move around freely. But can't teleport. Same functionality as spectating-teleport: false
-  # TEAMMATE_RADIUS = The player will be able to move around in a radius around the nearest teammate. They will be able to spectate as the nearest teammate as well.
-  # SPECTATOR_MODE = The player will be able to use the vanilla spectator GUI to teleport to players.
-  # TEAMMATE_SPECTATOR_GAMEMODE = The player will be forced to spectate as the nearest teammate.
+  # RESTRICTED_RADIUS = The player will be able to move around in a radius around the nearest teammate. They will be able to spectate as the nearest teammate as well.
+  # RESTRICTED_NO_TELEPORT = The player can move around freely. But can't teleport. Same functionality as spectating-teleport: false
+  # RESTRICTED_POV = The player will be only able to spectate as the nearest teammate and can change to enemy players.
+  # RESTRICTED_TEAMMATE_POV = The player will be forced to spectate as the nearest teammate.
   mode: FREE
-  # If mode is set to TEAMMATE_RADIUS, this controls the radius around the nearest teammate the player can move around in.
+  # If mode is set to RESTRICTED_RADIUS, this controls the radius around the nearest teammate the player can move around in.
   radius: 50
 
 # Options to pre-generate the world

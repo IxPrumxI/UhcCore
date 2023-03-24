@@ -403,22 +403,22 @@ public class UhcPlayer {
 	}
 
 	public UhcPlayer getClosestTeammate() {
-		UhcPlayer closetTeammate = null;
+		UhcPlayer closestTeammate = null;
 		try {
 			Location spectatorLocation = this.getPlayer().getLocation();
 			for (UhcPlayer teammate : this.getTeam().getOnlinePlayingMembers()) {
-				if (closetTeammate == null) {
-					closetTeammate = teammate;
+				if (closestTeammate == null) {
+					closestTeammate = teammate;
 					continue;
 				}
 				double teammateDistance = teammate.getPlayer().getLocation().distance(spectatorLocation);
-				double closetTeammateDistance = closetTeammate.getPlayer().getLocation().distance(spectatorLocation);
-				if (teammateDistance < closetTeammateDistance) closetTeammate = teammate;
+				double closestTeammateDistance = closestTeammate.getPlayer().getLocation().distance(spectatorLocation);
+				if (teammateDistance < closestTeammateDistance) closestTeammate = teammate;
 			}
 		} catch (UhcPlayerNotOnlineException ignored) {
 			// This should never happen as the player is online
 		}
-		return closetTeammate;
+		return closestTeammate;
 	}
 
 	@SuppressWarnings("deprecation") // Can't use attributes in 1.8

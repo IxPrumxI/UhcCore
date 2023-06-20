@@ -19,6 +19,7 @@ public class SpectatorNearAliveListener extends ScenarioListener {
   @EventHandler
   public void onPlayerMove(PlayerMoveEvent event) throws UhcPlayerNotOnlineException {
     UhcPlayer uhcPlayer = getPlayerManager().getOrCreateUhcPlayer(event.getPlayer());
+    if(uhcPlayer.getTeam() == null || uhcPlayer.getTeam().isSolo()) return;
     if (uhcPlayer.getState().equals(PlayerState.DEAD)) {
       UhcPlayer closestTeammate = getClosestTeammate(uhcPlayer);
       if (closestTeammate.getPlayer().getLocation().distance(uhcPlayer.getPlayer().getLocation()) > spectatorsRadius) {
